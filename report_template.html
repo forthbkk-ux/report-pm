@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="th">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-  <title>รายงานการบำรุงรักษา Analog Gateway</title>
+  <title>ระบบบันทึกรายงานการบำรุงรักษา (PM) - Analog Gateway & Base Station</title>
   <style>
     /* Embedded Authentic TH Sarabun New WebFonts (TTF + WOFF) */
     @font-face {
@@ -40,17 +40,14 @@
     body {
       margin: 0;
       padding: 0;
-      background-color: #525659;
+      background-color: #f1f5f9;
       font-family: 'TH Sarabun New', 'THSarabunNew', Tahoma, sans-serif;
-      color: #000;
+      color: #0f172a;
       line-height: 1.25;
       font-size: 15px;
     }
 
     /* Common Utility */
-    .red-text {
-      color: #e50914 !important;
-    }
     .black-text {
       color: #000000 !important;
     }
@@ -64,98 +61,286 @@
       white-space: nowrap !important;
     }
 
-    /* Floating Toolbar (Desktop & Mobile) */
-    .toolbar {
-      position: fixed;
-      top: 15px;
-      right: 25px;
+    /* ================= SCREEN-ONLY MODERN TOP NAVIGATION ================= */
+    .app-header {
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06);
+      z-index: 1000;
+      padding: 10px 20px;
+    }
+
+    .app-header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .header-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .app-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .app-logo-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35);
+    }
+
+    .app-title-group h1 {
+      margin: 0;
+      font-size: 19px;
+      font-weight: bold;
+      color: #0f172a;
+      line-height: 1.2;
+    }
+
+    .app-title-group p {
+      margin: 0;
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    /* Tab Switcher */
+    .report-tabs {
+      display: inline-flex;
+      background: #f1f5f9;
+      padding: 4px;
+      border-radius: 14px;
+      border: 1px solid #e2e8f0;
+      gap: 4px;
+    }
+
+    .tab-btn {
+      padding: 6px 16px;
+      font-family: 'TH Sarabun New', sans-serif;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 10px;
+      border: none;
+      background: transparent;
+      color: #64748b;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tab-btn:hover {
+      color: #0f172a;
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    .tab-btn.active {
+      background: #ffffff;
+      color: #0284c7;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Top Action Buttons */
+    .action-btns {
       display: flex;
       align-items: center;
       gap: 8px;
-      z-index: 1000;
-      background: rgba(15, 23, 42, 0.94);
-      backdrop-filter: blur(10px);
-      padding: 7px 16px;
-      border-radius: 30px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .toolbar-group {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .toolbar-label {
-      color: #94a3b8;
-      font-size: 14px;
-      font-weight: normal;
-      white-space: nowrap;
-    }
-
-    .toolbar-select {
-      background: #1e293b;
-      color: #ffffff;
-      border: 1px solid #475569;
-      border-radius: 14px;
-      padding: 3px 8px;
-      font-family: 'TH Sarabun New', sans-serif;
-      font-size: 15px;
-      cursor: pointer;
-      outline: none;
-      transition: all 0.2s ease;
-    }
-
-    .toolbar-select:focus, .toolbar-select:hover {
-      border-color: #38bdf8;
-      background: #0f172a;
-    }
-
-    .toolbar-divider {
-      width: 1px;
-      height: 22px;
-      background: rgba(255, 255, 255, 0.2);
-      margin: 0 4px;
+      flex-wrap: wrap;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 6px 13px;
+      padding: 7px 16px;
       font-family: 'TH Sarabun New', sans-serif;
-      font-size: 15.5px;
+      font-size: 16px;
       font-weight: bold;
       border: none;
-      border-radius: 20px;
+      border-radius: 10px;
       cursor: pointer;
       transition: all 0.2s ease;
       color: white;
       white-space: nowrap;
+      text-decoration: none;
     }
 
-    .btn-primary {
-      background: #0284c7;
+    .btn-save-pdf {
+      background: #16a34a;
+      box-shadow: 0 2px 8px rgba(22, 163, 74, 0.3);
     }
-    .btn-primary:hover {
+    .btn-save-pdf:hover {
+      background: #15803d;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(22, 163, 74, 0.35);
+    }
+
+    .btn-print {
+      background: #0284c7;
+      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.25);
+    }
+    .btn-print:hover {
       background: #0369a1;
       transform: translateY(-1px);
     }
 
-    .btn-secondary {
-      background: #475569;
+    .btn-check-all {
+      background: #eab308;
+      color: #713f12;
+      box-shadow: 0 2px 8px rgba(234, 179, 8, 0.2);
     }
-    .btn-secondary:hover {
-      background: #334155;
+    .btn-check-all:hover {
+      background: #ca8a04;
+      color: #ffffff;
+      transform: translateY(-1px);
     }
 
-    /* Page Container */
+    .btn-reset {
+      background: #f1f5f9;
+      color: #64748b;
+      border: 1px solid #cbd5e1;
+    }
+    .btn-reset:hover {
+      background: #e2e8f0;
+      color: #334155;
+    }
+
+    /* Controls Bar: Station & Operator */
+    .controls-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 14px;
+      background: #f8fafc;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      flex-wrap: wrap;
+    }
+
+    .controls-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+
+    .control-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .control-label {
+      font-size: 14.5px;
+      font-weight: bold;
+      color: #334155;
+      white-space: nowrap;
+    }
+
+    .control-select {
+      background: #ffffff;
+      color: #0f172a;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 4px 10px;
+      font-family: 'TH Sarabun New', sans-serif;
+      font-size: 15.5px;
+      font-weight: normal;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .control-select:focus, .control-select:hover {
+      border-color: #0284c7;
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+    }
+
+    .page-jump-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .page-jump-btn {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: #475569;
+      padding: 3px 10px;
+      border-radius: 8px;
+      font-family: 'TH Sarabun New', sans-serif;
+      font-size: 14.5px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .page-jump-btn:hover {
+      background: #e0f2fe;
+      color: #0284c7;
+      border-color: #38bdf8;
+    }
+
+    /* ================= PAGE CONTAINER & PAPER ================= */
     .page-container {
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 25px 0 60px 0;
+      padding: 24px 0 60px 0;
+    }
+
+    .report-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .page-wrapper {
+      position: relative;
+      margin-bottom: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Screen-Only Page Ribbon */
+    .page-badge-ribbon {
+      position: absolute;
+      top: -12px;
+      left: 20px;
+      background: #0284c7;
+      color: #ffffff;
+      padding: 2px 14px;
+      border-radius: 6px;
+      font-size: 13.5px;
+      font-weight: bold;
+      box-shadow: 0 2px 6px rgba(2, 132, 199, 0.35);
+      z-index: 10;
+      letter-spacing: 0.3px;
     }
 
     .page {
@@ -163,9 +348,9 @@
       min-height: 297mm;
       height: 297mm;
       padding: 12mm 16mm 12mm 16mm;
-      margin-bottom: 25px;
       background: #ffffff;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      border-radius: 6px;
       position: relative;
       box-sizing: border-box;
       display: flex;
@@ -173,7 +358,7 @@
       overflow: hidden;
     }
 
-    /* Input Styling */
+    /* Screen Input Field Visual Cues (Easy to spot & tap) */
     input[type="text"] {
       font-family: 'TH Sarabun New', sans-serif;
       font-size: inherit;
@@ -183,25 +368,31 @@
       padding: 0 2px;
       vertical-align: baseline;
       font-weight: normal;
+      color: #000000 !important;
     }
 
-    input[type="text"]:focus {
-      background-color: #fef9c3 !important;
-      border-radius: 2px;
-    }
-
-    /* All newly filled inputs in table MUST be solid black */
     .table-input {
       color: #000000 !important;
       font-weight: normal !important;
-      border-bottom: 1px dashed #94a3b8;
-      background-color: rgba(0, 0, 0, 0.02);
+      border-bottom: 1.5px dashed #38bdf8;
+      background-color: rgba(2, 132, 199, 0.04);
       padding: 0 4px;
+      border-radius: 3px;
+      transition: all 0.2s ease;
     }
 
     .table-input:hover {
-      background-color: rgba(2, 132, 199, 0.06);
+      background-color: rgba(2, 132, 199, 0.1);
       border-bottom-color: #0284c7;
+    }
+
+    .table-input:focus,
+    .dotted-input:focus,
+    .editable-span:focus {
+      background-color: #fef08a !important;
+      outline: none;
+      box-shadow: 0 0 0 2px #38bdf8;
+      border-radius: 3px;
     }
 
     .dotted-input {
@@ -214,20 +405,18 @@
       outline: none;
       display: inline-block;
       vertical-align: baseline;
-    }
-    .editable-span:focus {
-      background-color: #fef9c3 !important;
-      border-radius: 2px;
+      color: #000000 !important;
+      border-radius: 3px;
+      padding: 0 2px;
     }
 
-    /* Dropdown field in form (Station & Operator) */
     .dropdown-field {
       color: #000000 !important;
       font-family: 'TH Sarabun New', 'THSarabunNew', Tahoma, sans-serif;
       font-size: 15.5px;
       font-weight: normal;
-      border: 1px dashed #94a3b8;
-      background-color: rgba(0, 0, 0, 0.02);
+      border: 1px dashed #0284c7;
+      background-color: rgba(2, 132, 199, 0.05);
       padding: 1px 6px;
       border-radius: 4px;
       cursor: pointer;
@@ -238,7 +427,7 @@
 
     .dropdown-field:hover, .dropdown-field:focus {
       border-color: #0284c7;
-      background-color: #fef9c3 !important;
+      background-color: #fef08a !important;
     }
 
     .sig-select {
@@ -262,6 +451,13 @@
       user-select: none;
       vertical-align: middle;
       font-weight: normal;
+      padding: 1px 3px;
+      border-radius: 4px;
+      transition: background-color 0.15s ease;
+    }
+
+    .black-chk-wrap:hover {
+      background-color: rgba(2, 132, 199, 0.08);
     }
 
     .black-chk-input {
@@ -469,10 +665,11 @@
       color: #000000 !important;
       user-select: none;
       min-width: 28px;
+      transition: background-color 0.15s ease;
     }
 
     .cell-check:hover {
-      background-color: #f1f5f9;
+      background-color: #e0f2fe;
     }
 
     .note-input {
@@ -572,14 +769,6 @@
       background: #dc2626;
     }
 
-    .btn-success {
-      background: #16a34a;
-    }
-    .btn-success:hover {
-      background: #15803d;
-      transform: translateY(-1px);
-    }
-
     /* Toast Notification */
     .toast {
       position: fixed;
@@ -588,10 +777,11 @@
       transform: translateX(-50%) translateY(100px);
       background: rgba(15, 23, 42, 0.95);
       color: white;
-      padding: 10px 20px;
+      padding: 10px 22px;
       border-radius: 25px;
-      font-size: 15px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      font-size: 16px;
+      font-weight: bold;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
       z-index: 2000;
       opacity: 0;
       transition: all 0.3s ease;
@@ -624,21 +814,21 @@
       background: #ffffff;
       color: #0f172a;
       width: 100%;
-      max-width: 390px;
+      max-width: 400px;
       border-radius: 18px;
-      padding: 22px 20px;
+      padding: 24px 20px;
       box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45);
       text-align: center;
       font-family: 'TH Sarabun New', Tahoma, sans-serif;
     }
 
     .pdf-spinner {
-      width: 44px;
-      height: 44px;
+      width: 46px;
+      height: 46px;
       border: 4px solid #e2e8f0;
       border-top-color: #0284c7;
       border-radius: 50%;
-      margin: 0 auto 12px auto;
+      margin: 0 auto 14px auto;
       animation: pdfSpin 0.8s linear infinite;
     }
 
@@ -647,16 +837,16 @@
     }
 
     .pdf-modal-title {
-      font-size: 21px;
+      font-size: 22px;
       font-weight: bold;
       margin-bottom: 6px;
       color: #0f172a;
     }
 
     .pdf-modal-sub {
-      font-size: 16px;
+      font-size: 16.5px;
       color: #475569;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
       line-height: 1.35;
       word-break: break-word;
     }
@@ -691,14 +881,74 @@
       margin-bottom: 0;
     }
 
-    /* ================= MOBILE OPTIMIZATION ================= */
+    /* ================= MOBILE VIEWPORT OPTIMIZATIONS ================= */
     @media screen and (max-width: 768px) {
-      body:not(.pdf-export-mode) {
-        background-color: #e2e8f0;
+      .app-header {
+        padding: 8px 12px;
+      }
+
+      .app-brand {
+        width: 100%;
+      }
+
+      .report-tabs {
+        width: 100%;
+      }
+
+      .tab-btn {
+        flex: 1;
+        padding: 5px 8px;
+        font-size: 14.5px;
+        justify-content: center;
+      }
+
+      .action-btns {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+      }
+
+      .btn {
+        padding: 7px 8px;
+        font-size: 14.5px;
+        justify-content: center;
+      }
+
+      .controls-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 8px 10px;
+      }
+
+      .controls-left {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+      }
+
+      .control-item {
+        width: 100%;
+      }
+
+      .control-select {
+        flex: 1;
+        width: 100%;
+      }
+
+      .page-jump-group {
+        justify-content: center;
+        width: 100%;
       }
 
       body:not(.pdf-export-mode) .page-container {
-        padding: 10px 6px 115px 6px;
+        padding: 12px 6px 60px 6px;
+      }
+
+      body:not(.pdf-export-mode) .page-wrapper {
+        width: 100%;
+        margin-bottom: 20px;
       }
 
       body:not(.pdf-export-mode) .page {
@@ -706,12 +956,17 @@
         max-width: 100%;
         height: auto;
         min-height: auto;
-        padding: 18px 12px;
-        margin-bottom: 18px;
+        padding: 20px 12px;
         border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
+      }
+
+      body:not(.pdf-export-mode) .page-badge-ribbon {
+        top: -10px;
+        left: 10px;
+        font-size: 12px;
       }
 
       body:not(.pdf-export-mode) .p1-station-box {
@@ -730,7 +985,6 @@
       body:not(.pdf-export-mode) .table-input {
         min-width: 75px;
         padding: 2px 4px;
-        background-color: #f8fafc;
       }
 
       body:not(.pdf-export-mode) .cell-check {
@@ -747,59 +1001,9 @@
       body:not(.pdf-export-mode) .photo-box {
         height: 180px;
       }
-
-      .toolbar {
-        top: auto;
-        bottom: 10px;
-        right: 8px;
-        left: 8px;
-        flex-direction: column;
-        gap: 6px;
-        padding: 8px 10px;
-        border-radius: 18px;
-        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
-      }
-
-      .toolbar-row-top {
-        display: flex;
-        width: 100%;
-        gap: 6px;
-      }
-
-      .toolbar-group {
-        flex: 1;
-        min-width: 0;
-      }
-
-      .toolbar-label {
-        font-size: 13px;
-      }
-
-      .toolbar-select {
-        width: 100%;
-        font-size: 13.5px;
-        padding: 3px 6px;
-      }
-
-      .toolbar-divider {
-        display: none;
-      }
-
-      .toolbar-row-btns {
-        display: flex;
-        width: 100%;
-        gap: 6px;
-      }
-
-      .btn {
-        padding: 7px 10px;
-        font-size: 14.5px;
-        flex: 1;
-        justify-content: center;
-      }
     }
 
-    /* ================= DIRECT PDF EXPORT MODE (A4 EXACT ON MOBILE & PC) ================= */
+    /* ================= DIRECT PDF EXPORT MODE (IDENTICAL TO ORIGINAL A4) ================= */
     body.pdf-export-mode {
       background: #ffffff !important;
       font-size: 15px !important;
@@ -810,7 +1014,8 @@
     }
 
     body.pdf-export-mode .no-print,
-    body.pdf-export-mode .toolbar,
+    body.pdf-export-mode .app-header,
+    body.pdf-export-mode .page-badge-ribbon,
     body.pdf-export-mode .toast,
     body.pdf-export-mode .photo-overlay,
     body.pdf-export-mode .btn-del {
@@ -822,6 +1027,12 @@
       margin: 0 !important;
       width: 794px !important;
       align-items: flex-start !important;
+    }
+
+    body.pdf-export-mode .page-wrapper {
+      margin: 0 !important;
+      padding: 0 !important;
+      box-shadow: none !important;
     }
 
     body.pdf-export-mode .page {
@@ -844,6 +1055,7 @@
       border-bottom: none !important;
       background: transparent !important;
       color: #000000 !important;
+      box-shadow: none !important;
     }
 
     body.pdf-export-mode .dotted-input {
@@ -861,7 +1073,7 @@
       box-shadow: none !important;
     }
 
-    /* ================= PRINT SETUP (A4 EXACT WITHOUT BROWSER HEADERS) ================= */
+    /* ================= PRINT SETUP (IDENTICAL TO ORIGINAL A4) ================= */
     @media print {
       body {
         background: transparent !important;
@@ -871,7 +1083,8 @@
       }
 
       .no-print,
-      .toolbar,
+      .app-header,
+      .page-badge-ribbon,
       .toast,
       .pdf-modal-backdrop,
       .photo-overlay,
@@ -879,9 +1092,23 @@
         display: none !important;
       }
 
+      body.mode-ag #group-bs {
+        display: none !important;
+      }
+
+      body.mode-bs #group-ag {
+        display: none !important;
+      }
+
       .page-container {
         padding: 0 !important;
         margin: 0 !important;
+      }
+
+      .page-wrapper {
+        margin: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
       }
 
       .page {
@@ -911,6 +1138,7 @@
         border-bottom: none !important;
         background: transparent !important;
         color: #000000 !important;
+        box-shadow: none !important;
       }
 
       .dotted-input {
@@ -943,64 +1171,120 @@
     }
   </style>
 </head>
-<body spellcheck="false">
+<body class="mode-ag" spellcheck="false">
+  <!-- Screen-Only Top App Header & Controls -->
+  <header class="app-header no-print">
+    <div class="app-header-inner">
+      <div class="header-top-row">
+        <div class="app-brand">
+          <div class="app-logo-badge">📋</div>
+          <div class="app-title-group">
+            <h1>รายงานการบำรุงรักษา (PM) SHF</h1>
+            <p>ระบบบันทึกและส่งออกเอกสาร A4 สำหรับ Analog Gateway และ Base Station</p>
+          </div>
+        </div>
 
-  <!-- Floating Toolbar -->
-  <div class="toolbar no-print">
-    <div class="toolbar-row-top">
-      <div class="toolbar-group">
-        <label class="toolbar-label" for="bar-station-select">🏢 สถานี:</label>
-        <select id="bar-station-select" class="toolbar-select" onchange="onStationSelect(this.value)">
-          <option value="ที่ว่าการอำเภอห้วยกระเจา">1. ห้วยกระเจา (กาญจนบุรี)</option>
-          <option value="ที่ว่าการอำเภอคลองลาน">2. คลองลาน (กำแพงเพชร)</option>
-          <option value="ที่ว่าการอำเภอเขาสวนกวาง">3. เขาสวนกวาง (ขอนแก่น)</option>
-          <option value="ที่ว่าการอำเภอเขาคิชฌกูฏ">4. เขาคิชฌกูฏ (จันทบุรี)</option>
-          <option value="ที่ว่าการอำเภอย่านตาขาว" selected>5. ย่านตาขาว (ตรัง)</option>
-          <option value="ที่ว่าการอำเภอวังน้ำเขียว">6. วังน้ำเขียว (นครราชสีมา)</option>
-          <option value="ที่ว่าการอำเภอหัวไทร">7. หัวไทร (นครศรีธรรมราช)</option>
-          <option value="ที่ว่าการอำเภอดงเจริญ">8. ดงเจริญ (พิจิตร)</option>
-        </select>
+        <!-- Report Tabs -->
+        <div class="report-tabs">
+          <button class="tab-btn active" id="tab-btn-ag" onclick="switchReportMode('ag')">
+            <span>🏢</span> 1. Analog Gateway
+          </button>
+          <button class="tab-btn" id="tab-btn-bs" onclick="switchReportMode('bs')">
+            <span>📡</span> 2. Base Station
+          </button>
+          <button class="tab-btn" id="tab-btn-all" onclick="switchReportMode('all')">
+            <span>📄</span> แสดงทั้งหมด (6 หน้า)
+          </button>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-btns">
+          <button class="btn btn-save-pdf" onclick="savePdfToDevice()" title="บันทึกและดาวน์โหลดไฟล์ PDF ขนาด A4 ลงเครื่อง">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
+            บันทึก PDF ลงเครื่อง
+          </button>
+          <button class="btn btn-print" onclick="window.print()" title="สั่งพิมพ์ออกเครื่องพิมพ์">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/><path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/></svg>
+            พิมพ์
+          </button>
+          <button class="btn btn-check-all" onclick="checkAllNormal()" title="ติ๊ก 'ปกติ' ทุกข้อในตารางอัตโนมัติ">
+            ⭐ ติ๊กปกติทั้งหมด
+          </button>
+          <button class="btn btn-reset" onclick="resetForm()" title="ล้างข้อมูลที่กรอกทั้งหมด">
+            🔄 ล้างข้อมูล
+          </button>
+        </div>
       </div>
-      <div class="toolbar-group">
-        <label class="toolbar-label" for="bar-operator-select">👤 ผู้ดำเนินการ:</label>
-        <select id="bar-operator-select" class="toolbar-select" onchange="onOperatorSelect(this.value)">
-          <option value="นางสาวดวงดาว ทวีศรีพายัพ">นางสาวดวงดาว ทวีศรีพายัพ</option>
-          <option value="นางสาวสุรีรัตน์ รอดโพธิ์ทอง">นางสาวสุรีรัตน์ รอดโพธิ์ทอง</option>
-          <option value="นายปรัชนนท์ กัลยามณีกร">นายปรัชนนท์ กัลยามณีกร</option>
-          <option value="นายอนุรักษ์ แก้วเชียงทอง">นายอนุรักษ์ แก้วเชียงทอง</option>
-          <option value="นายศักดิภัช สว่างเนตร">นายศักดิภัช สว่างเนตร</option>
-          <option value="นายอุทัย หนาดสำโรง">นายอุทัย หนาดสำโรง</option>
-          <option value="นายอุเทน บุญมี">นายอุเทน บุญมี</option>
-          <option value="นายสมสอาด ถาวร">นายสมสอาด ถาวร</option>
-          <option value="นายวิสิฐศักดิ์ พอกเพิ่มดี">นายวิสิฐศักดิ์ พอกเพิ่มดี</option>
-          <option value="นายชนะ ปักษีเลิศ">นายชนะ ปักษีเลิศ</option>
-          <option value="นายธงชัย วัฒนพล">นายธงชัย วัฒนพล</option>
-          <option value="นายทักษิณ บุญไว">นายทักษิณ บุญไว</option>
-          <option value="นายวัชระ มานะดี">นายวัชระ มานะดี</option>
-          <option value="นายอนุศักดิ์ สมาน">นายอนุศักดิ์ สมาน</option>
-          <option value="นายสมประสงค์ มลฑลจุลเกศ" selected>นายสมประสงค์ มลฑลจุลเกศ</option>
-          <option value="นายคิรากร ดอนมูลไพร">นายคิรากร ดอนมูลไพร</option>
-          <option value="นายนพคุณ บุญเพ็ญ">นายนพคุณ บุญเพ็ญ</option>
-          <option value="นายสมพงษ์ ซิ้มเจริญ">นายสมพงษ์ ซิ้มเจริญ</option>
-        </select>
+
+      <!-- Controls Row: Station & Operator Dropdowns & Page Jump -->
+      <div class="controls-bar">
+        <div class="controls-left">
+          <!-- AG Station Selector -->
+          <div class="control-item" id="bar-group-ag-station">
+            <label class="control-label" for="bar-station-select-ag">🏢 สถานี AG (8 อำเภอ):</label>
+            <select id="bar-station-select-ag" class="control-select" onchange="onStationSelect(this.value)">
+              <option value="ที่ว่าการอำเภอห้วยกระเจา">1. ห้วยกระเจา (กาญจนบุรี)</option>
+              <option value="ที่ว่าการอำเภอคลองลาน">2. คลองลาน (กำแพงเพชร)</option>
+              <option value="ที่ว่าการอำเภอเขาสวนกวาง">3. เขาสวนกวาง (ขอนแก่น)</option>
+              <option value="ที่ว่าการอำเภอเขาคิชฌกูฏ">4. เขาคิชฌกูฏ (จันทบุรี)</option>
+              <option value="ที่ว่าการอำเภอย่านตาขาว" selected>5. ย่านตาขาว (ตรัง)</option>
+              <option value="ที่ว่าการอำเภอวังน้ำเขียว">6. วังน้ำเขียว (นครราชสีมา)</option>
+              <option value="ที่ว่าการอำเภอหัวไทร">7. หัวไทร (นครศรีธรรมราช)</option>
+              <option value="ที่ว่าการอำเภอดงเจริญ">8. ดงเจริญ (พิจิตร)</option>
+            </select>
+          </div>
+
+          <!-- BS Station Selector -->
+          <div class="control-item" id="bar-group-bs-station" style="display: none;">
+            <label class="control-label" for="bar-station-select-bs">📡 สถานีแม่ข่าย BS (8 สถานที่):</label>
+            <select id="bar-station-select-bs" class="control-select" onchange="onBaseStationSelect(this.value)">
+              <option value="แม่ข่าย Base Station เลาขวัญ">1. เลาขวัญ (กาญจนบุรี)</option>
+              <option value="แม่ข่าย Base Station ปางศิลาทอง">2. ปางศิลาทอง (กำแพงเพชร)</option>
+              <option value="แม่ข่าย Base Station อุบลรัตน์">3. อุบลรัตน์ (ขอนแก่น)</option>
+              <option value="แม่ข่าย Base Station เขาคิชฌกูฎ">4. เขาคิชฌกูฎ (จันทบุรี)</option>
+              <option value="แม่ข่าย Base Station ช่อง" selected>5. ช่อง (นาโยง, ตรัง)</option>
+              <option value="แม่ข่าย Base Station ปากช่อง">6. ปากช่อง (นครราชสีมา)</option>
+              <option value="แม่ข่าย Base Station ปากพนัง">7. ปากพนัง (นครศรีธรรมราช)</option>
+              <option value="แม่ข่าย Base Station ดงเจริญ">8. ดงเจริญ (พิจิตร)</option>
+            </select>
+          </div>
+
+          <!-- Operator Selector -->
+          <div class="control-item">
+            <label class="control-label" for="bar-operator-select">👤 ผู้ดำเนินการ:</label>
+            <select id="bar-operator-select" class="control-select" onchange="onOperatorSelect(this.value)">
+              <option value="นางสาวดวงดาว ทวีศรีพายัพ">นางสาวดวงดาว ทวีศรีพายัพ</option>
+              <option value="นางสาวสุรีรัตน์ รอดโพธิ์ทอง">นางสาวสุรีรัตน์ รอดโพธิ์ทอง</option>
+              <option value="นายปรัชนนท์ กัลยามณีกร">นายปรัชนนท์ กัลยามณีกร</option>
+              <option value="นายอนุรักษ์ แก้วเชียงทอง">นายอนุรักษ์ แก้วเชียงทอง</option>
+              <option value="นายศักดิภัช สว่างเนตร">นายศักดิภัช สว่างเนตร</option>
+              <option value="นายอุทัย หนาดสำโรง">นายอุทัย หนาดสำโรง</option>
+              <option value="นายอุเทน บุญมี">นายอุเทน บุญมี</option>
+              <option value="นายสมสอาด ถาวร">นายสมสอาด ถาวร</option>
+              <option value="นายวิสิฐศักดิ์ พอกเพิ่มดี">นายวิสิฐศักดิ์ พอกเพิ่มดี</option>
+              <option value="นายชนะ ปักษีเลิศ">นายชนะ ปักษีเลิศ</option>
+              <option value="นายธงชัย วัฒนพล">นายธงชัย วัฒนพล</option>
+              <option value="นายทักษิณ บุญไว">นายทักษิณ บุญไว</option>
+              <option value="นายวัชระ มานะดี">นายวัชระ มานะดี</option>
+              <option value="นายอนุศักดิ์ สมาน">นายอนุศักดิ์ สมาน</option>
+              <option value="นายสมประสงค์ มลฑลจุลเกศ" selected>นายสมประสงค์ มลฑลจุลเกศ</option>
+              <option value="นายคิรากร ดอนมูลไพร">นายคิรากร ดอนมูลไพร</option>
+              <option value="นายนพคุณ บุญเพ็ญ">นายนพคุณ บุญเพ็ญ</option>
+              <option value="นายสมพงษ์ ซิ้มเจริญ">นายสมพงษ์ ซิ้มเจริญ</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Quick Page Jump -->
+        <div class="page-jump-group">
+          <span class="control-label">เลื่อนไปหน้า:</span>
+          <button class="page-jump-btn" onclick="jumpToPage(1)">หน้า 1 ปก</button>
+          <button class="page-jump-btn" onclick="jumpToPage(2)">หน้า 2 ตาราง</button>
+          <button class="page-jump-btn" onclick="jumpToPage(3)">หน้า 3 รูปถ่าย</button>
+        </div>
       </div>
     </div>
-    <div class="toolbar-divider"></div>
-    <div class="toolbar-row-btns">
-      <button class="btn btn-success" onclick="savePdfToDevice()" title="บันทึกข้อมูลและดาวน์โหลดไฟล์ PDF ลงเครื่อง">
-        <svg width="15" height="15" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
-        บันทึก PDF ลงเครื่อง
-      </button>
-      <button class="btn btn-primary" onclick="window.print()" title="สั่งพิมพ์ออกเครื่องพิมพ์">
-        <svg width="15" height="15" fill="currentColor" viewBox="0 0 16 16"><path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/><path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/></svg>
-        พิมพ์
-      </button>
-      <button class="btn btn-secondary" onclick="resetForm()" title="ล้างข้อมูลที่กรอกทั้งหมด">
-        <svg width="15" height="15" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/><path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/></svg>
-        ล้างข้อมูล
-      </button>
-    </div>
-  </div>
+  </header>
 
   <!-- Toast Notification -->
   <div id="toast" class="toast">บันทึกข้อมูลเรียบร้อยแล้ว ✓</div>
@@ -1010,16 +1294,16 @@
     <div class="pdf-modal-card">
       <div class="pdf-spinner"></div>
       <div class="pdf-modal-title">กำลังสร้างไฟล์ PDF ลงเครื่อง...</div>
-      <div id="pdf-loading-step" class="pdf-modal-sub">กรุณารอสักครู่ ระบบกำลังจัดหน้าเอกสาร A4 (หน้า 1/3)</div>
+      <div id="pdf-loading-step" class="pdf-modal-sub">กรุณารอสักครู่ ระบบกำลังจัดหน้าเอกสาร A4 ตามต้นฉบับ</div>
     </div>
   </div>
 
   <!-- PDF Ready / Mobile Save & Share Modal -->
   <div id="pdf-ready-modal" class="pdf-modal-backdrop no-print">
     <div class="pdf-modal-card">
-      <div style="font-size: 38px; line-height: 1; margin-bottom: 8px;">✅</div>
+      <div style="font-size: 40px; line-height: 1; margin-bottom: 8px;">✅</div>
       <div class="pdf-modal-title">สร้างไฟล์ PDF สำเร็จแล้ว!</div>
-      <div id="pdf-ready-filename" class="pdf-modal-sub">รายงานการบำรุงรักษา_Analog_Gateway.pdf</div>
+      <div id="pdf-ready-filename" class="pdf-modal-sub">รายงานการบำรุงรักษา.pdf</div>
       <button id="btn-share-pdf" class="pdf-modal-btn pdf-modal-btn-green" onclick="sharePdfFile()" style="display: none;">
         📲 บันทึกลงแอปไฟล์ / ส่งเข้า LINE
       </button>
@@ -1031,452 +1315,884 @@
       </button>
     </div>
   </div>
-
   <div class="page-container">
+    <!-- #################### REPORT 1: ANALOG GATEWAY #################### -->
+    <div id="group-ag" class="report-section">
+      <!-- ================= AG PAGE 1 ================= -->
+      <div class="page-wrapper">
+        <div class="page-badge-ribbon no-print">หน้า 1 จาก 3 • หน้าปกสรุป (Analog Gateway)</div>
+        <div class="page" id="page-ag-1">
+          <div class="p1-logo">
+            <img src="data:image/png;base64,@NBTC_B64@" alt="กสทช.">
+          </div>
 
-    <!-- ================= PAGE 1 ================= -->
-    <div class="page" id="page-1">
-      <div class="p1-logo">
-        <img src="data:image/png;base64,@NBTC_B64@" alt="กสทช.">
-      </div>
+          <div class="p1-header-text">
+            <div>การจัดซื้ออุปกรณ์พร้อมดำเนินการติดตั้ง</div>
+            <div>โครงการเพิ่มประสิทธิภาพระบบโครงข่ายสื่อสารด้วยอุปกรณ์ทวนสัญญาณผ่านคลื่นความถี่สูง (SHF)</div>
+            <div>เพื่อสนับสนุนการปฏิบัติราชการและแก้ไขปัญหาให้กับประชาชนในพื้นที่ห่างไกล</div>
+            <div>สัญญาเลขที่ 8680228 ลงวันที่ 23 กรกฎาคม 2568</div>
+          </div>
 
-      <div class="p1-header-text">
-        <div>การจัดซื้ออุปกรณ์พร้อมดำเนินการติดตั้ง</div>
-        <div>โครงการเพิ่มประสิทธิภาพระบบโครงข่ายสื่อสารด้วยอุปกรณ์ทวนสัญญาณผ่านคลื่นความถี่สูง (SHF)</div>
-        <div>เพื่อสนับสนุนการปฏิบัติราชการและแก้ไขปัญหาให้กับประชาชนในพื้นที่ห่างไกล</div>
-        <div>สัญญาเลขที่ 8680228 ลงวันที่ 23 กรกฎาคม 2568</div>
-      </div>
+          <div class="p1-title-box">
+            <div>รายงานการบำรุงรักษาเพื่อป้องกันตามรอบระยะเวลา ครั้งที่ <input type="text" id="ag-p1-round" class="dotted-input black-text" style="width: 50px; text-align: center;" value=""></div>
+            <div>ชุดอุปกรณ์ทวนสัญญาณผ่านคลื่นความถี่สูง (SHF) และชุดอุปกรณ์ Gateway สำหรับเชื่อมต่อ Analog</div>
+          </div>
 
-      <div class="p1-title-box">
-        <div>รายงานการบำรุงรักษาเพื่อป้องกันตามรอบระยะเวลา ครั้งที่ <input type="text" id="p1-round" class="dotted-input black-text" style="width: 50px; text-align: center;" value=""></div>
-        <div>ชุดอุปกรณ์ทวนสัญญาณผ่านคลื่นความถี่สูง (SHF) และชุดอุปกรณ์ Gateway สำหรับเชื่อมต่อ Analog</div>
-      </div>
+          <div class="p1-station-box">
+            <div class="p1-station-row">
+              <span class="p1-station-label">ชื่อสถานี :&nbsp;</span>
+              <select id="ag-station-select-p1" class="dropdown-field black-text station-select-p1" onchange="onStationSelect(this.value)">
+                <option value="ที่ว่าการอำเภอห้วยกระเจา">ที่ว่าการอำเภอห้วยกระเจา</option>
+                <option value="ที่ว่าการอำเภอคลองลาน">ที่ว่าการอำเภอคลองลาน</option>
+                <option value="ที่ว่าการอำเภอเขาสวนกวาง">ที่ว่าการอำเภอเขาสวนกวาง</option>
+                <option value="ที่ว่าการอำเภอเขาคิชฌกูฏ">ที่ว่าการอำเภอเขาคิชฌกูฏ</option>
+                <option value="ที่ว่าการอำเภอย่านตาขาว" selected>ที่ว่าการอำเภอย่านตาขาว</option>
+                <option value="ที่ว่าการอำเภอวังน้ำเขียว">ที่ว่าการอำเภอวังน้ำเขียว</option>
+                <option value="ที่ว่าการอำเภอหัวไทร">ที่ว่าการอำเภอหัวไทร</option>
+                <option value="ที่ว่าการอำเภอดงเจริญ">ที่ว่าการอำเภอดงเจริญ</option>
+              </select>
+            </div>
+            <div class="p1-station-row">
+              <span class="p1-station-label">สถานที่ :&nbsp;</span>
+              <span class="black-text normal editable-span" id="ag-station-loc-1" contenteditable="true" oninput="autoSave()">ตำบลย่านตาขาว อำเภอย่านตาขาว จังหวัดตรัง</span>
+            </div>
+            <div class="p1-station-row">
+              <span class="p1-station-label">เขตพื้นที่รับผิดชอบ :&nbsp;</span>
+              <span class="black-text normal editable-span" id="ag-station-zone-1" contenteditable="true" oninput="autoSave()">ศูนย์สื่อสารกรมการปกครองเขต 9 (ส่วนแยกนครศรีธรรมราช)</span>
+            </div>
+            <div class="p1-station-row">
+              <span class="p1-station-label">พิกัด :&nbsp;</span>
+              <span class="black-text normal editable-span" id="ag-station-coord-1" contenteditable="true" oninput="autoSave()">7.385692 , 99.666228</span>
+            </div>
+            <div class="p1-station-row">
+              <span class="p1-station-label">วันที่ดำเนินการ :&nbsp;</span>
+              <input type="text" id="ag-station-date-1" class="dotted-input black-text" style="width: 220px;" value="">
+            </div>
+          </div>
 
-      <div class="p1-station-box">
-        <div class="p1-station-row">
-          <span class="p1-station-label">ชื่อสถานี :&nbsp;</span>
-          <select id="station-select" class="dropdown-field black-text station-select-p1" onchange="onStationSelect(this.value)">
-            <option value="ที่ว่าการอำเภอห้วยกระเจา">ที่ว่าการอำเภอห้วยกระเจา</option>
-            <option value="ที่ว่าการอำเภอคลองลาน">ที่ว่าการอำเภอคลองลาน</option>
-            <option value="ที่ว่าการอำเภอเขาสวนกวาง">ที่ว่าการอำเภอเขาสวนกวาง</option>
-            <option value="ที่ว่าการอำเภอเขาคิชฌกูฏ">ที่ว่าการอำเภอเขาคิชฌกูฏ</option>
-            <option value="ที่ว่าการอำเภอย่านตาขาว" selected>ที่ว่าการอำเภอย่านตาขาว</option>
-            <option value="ที่ว่าการอำเภอวังน้ำเขียว">ที่ว่าการอำเภอวังน้ำเขียว</option>
-            <option value="ที่ว่าการอำเภอหัวไทร">ที่ว่าการอำเภอหัวไทร</option>
-            <option value="ที่ว่าการอำเภอดงเจริญ">ที่ว่าการอำเภอดงเจริญ</option>
-          </select>
-        </div>
-        <div class="p1-station-row">
-          <span class="p1-station-label">สถานที่ :&nbsp;</span>
-          <span class="black-text normal editable-span" id="station-loc-1" contenteditable="true" oninput="autoSave()">ตำบลย่านตาขาว อำเภอย่านตาขาว จังหวัดตรัง</span>
-        </div>
-        <div class="p1-station-row">
-          <span class="p1-station-label">เขตพื้นที่รับผิดชอบ :&nbsp;</span>
-          <span class="black-text normal editable-span" id="station-zone-1" contenteditable="true" oninput="autoSave()">ศูนย์สื่อสารกรมการปกครองเขต 9 (ส่วนแยกนครศรีธรรมราช)</span>
-        </div>
-        <div class="p1-station-row">
-          <span class="p1-station-label">พิกัด :&nbsp;</span>
-          <span class="black-text normal editable-span" id="station-coord-1" contenteditable="true" oninput="autoSave()">7.385692 , 99.666228</span>
-        </div>
-        <div class="p1-station-row">
-          <span class="p1-station-label">วันที่ดำเนินการ :&nbsp;</span>
-          <input type="text" id="station-date-1" class="dotted-input black-text" style="width: 220px;" value="">
-        </div>
-      </div>
-
-      <div class="p1-signatures">
-        <div class="sig-col">
-          <div>ลงชื่อ : <span class="sig-line"></span></div>
-          <div style="margin-top: 4px;">( <select id="operator-select" class="dropdown-field black-text sig-select" onchange="onOperatorSelect(this.value)">
-            <option value="นางสาวดวงดาว ทวีศรีพายัพ">นางสาวดวงดาว ทวีศรีพายัพ</option>
-            <option value="นางสาวสุรีรัตน์ รอดโพธิ์ทอง">นางสาวสุรีรัตน์ รอดโพธิ์ทอง</option>
-            <option value="นายปรัชนนท์ กัลยามณีกร">นายปรัชนนท์ กัลยามณีกร</option>
-            <option value="นายอนุรักษ์ แก้วเชียงทอง">นายอนุรักษ์ แก้วเชียงทอง</option>
-            <option value="นายศักดิภัช สว่างเนตร">นายศักดิภัช สว่างเนตร</option>
-            <option value="นายอุทัย หนาดสำโรง">นายอุทัย หนาดสำโรง</option>
-            <option value="นายอุเทน บุญมี">นายอุเทน บุญมี</option>
-            <option value="นายสมสอาด ถาวร">นายสมสอาด ถาวร</option>
-            <option value="นายวิสิฐศักดิ์ พอกเพิ่มดี">นายวิสิฐศักดิ์ พอกเพิ่มดี</option>
-            <option value="นายชนะ ปักษีเลิศ">นายชนะ ปักษีเลิศ</option>
-            <option value="นายธงชัย วัฒนพล">นายธงชัย วัฒนพล</option>
-            <option value="นายทักษิณ บุญไว">นายทักษิณ บุญไว</option>
-            <option value="นายวัชระ มานะดี">นายวัชระ มานะดี</option>
-            <option value="นายอนุศักดิ์ สมาน">นายอนุศักดิ์ สมาน</option>
-            <option value="นายสมประสงค์ มลฑลจุลเกศ" selected>นายสมประสงค์ มลฑลจุลเกศ</option>
-            <option value="นายคิรากร ดอนมูลไพร">นายคิรากร ดอนมูลไพร</option>
-            <option value="นายนพคุณ บุญเพ็ญ">นายนพคุณ บุญเพ็ญ</option>
-            <option value="นายสมพงษ์ ซิ้มเจริญ">นายสมพงษ์ ซิ้มเจริญ</option>
-          </select> )</div>
-          <div style="margin-top: 4px;">ผู้เข้าดำเนินการ</div>
-          <div>บริษัท ฟอร์ท คอร์ปอเรชั่น จำกัด (มหาชน)</div>
-        </div>
-        <div class="sig-col">
-          <div>ลงชื่อ : <span class="sig-line"></span></div>
-          <div style="margin-top: 4px;">( <span class="editable-span black-text" id="sig-officer-name" contenteditable="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> )</div>
-          <div style="margin-top: 4px;">เจ้าหน้าที่รับผิดชอบในพื้นที่</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ================= PAGE 2 ================= -->
-    <div class="page" id="page-2">
-      <!-- Header (Bold matching PDF) -->
-      <div class="header-split">
-        <div class="logo-left">
-          <img src="data:image/png;base64,@NBTC_B64@" alt="กสทช.">
-        </div>
-        <div class="header-center">
-          <div>การจัดซื้ออุปกรณ์พร้อมดำเนินการติดตั้ง</div>
-          <div>โครงการเพิ่มประสิทธิภาพระบบโครงข่ายสื่อสารด้วยอุปกรณ์ทวนสัญญาณผ่านคลื่นความถี่สูง (SHF)</div>
-          <div>เพื่อสนับสนุนการปฏิบัติราชการและแก้ไขปัญหาให้กับประชาชนในพื้นที่ห่างไกล</div>
-          <div>สัญญาเลขที่ 8680228 ลงวันที่ 23 กรกฎาคม 2568</div>
-          <div style="margin-top: 1px;">รายงานการบำรุงรักษาเพื่อป้องกันตามรอบระยะเวลา ครั้งที่ <input type="text" id="p2-round" class="dotted-input black-text" style="width: 45px; text-align: center;" value=""></div>
-          <div>ชุดอุปกรณ์ทวนสัญญาณผ่านคลื่นความถี่สูง (SHF) และชุดอุปกรณ์ Gateway สำหรับเชื่อมต่อ Analog</div>
-        </div>
-        <div class="logo-right">
-          <img src="data:image/png;base64,@FORTH_B64@" alt="FORTH">
+          <div class="p1-signatures">
+            <div class="sig-col">
+              <div>ลงชื่อ : <span class="sig-line"></span></div>
+              <div style="margin-top: 4px;">( <select id="ag-operator-select-1" class="dropdown-field black-text sig-select" onchange="onOperatorSelect(this.value)">
+                <option value="นางสาวดวงดาว ทวีศรีพายัพ">นางสาวดวงดาว ทวีศรีพายัพ</option>
+                <option value="นางสาวสุรีรัตน์ รอดโพธิ์ทอง">นางสาวสุรีรัตน์ รอดโพธิ์ทอง</option>
+                <option value="นายปรัชนนท์ กัลยามณีกร">นายปรัชนนท์ กัลยามณีกร</option>
+                <option value="นายอนุรักษ์ แก้วเชียงทอง">นายอนุรักษ์ แก้วเชียงทอง</option>
+                <option value="นายศักดิภัช สว่างเนตร">นายศักดิภัช สว่างเนตร</option>
+                <option value="นายอุทัย หนาดสำโรง">นายอุทัย หนาดสำโรง</option>
+                <option value="นายอุเทน บุญมี">นายอุเทน บุญมี</option>
+                <option value="นายสมสอาด ถาวร">นายสมสอาด ถาวร</option>
+                <option value="นายวิสิฐศักดิ์ พอกเพิ่มดี">นายวิสิฐศักดิ์ พอกเพิ่มดี</option>
+                <option value="นายชนะ ปักษีเลิศ">นายชนะ ปักษีเลิศ</option>
+                <option value="นายธงชัย วัฒนพล">นายธงชัย วัฒนพล</option>
+                <option value="นายทักษิณ บุญไว">นายทักษิณ บุญไว</option>
+                <option value="นายวัชระ มานะดี">นายวัชระ มานะดี</option>
+                <option value="นายอนุศักดิ์ สมาน">นายอนุศักดิ์ สมาน</option>
+                <option value="นายสมประสงค์ มลฑลจุลเกศ" selected>นายสมประสงค์ มลฑลจุลเกศ</option>
+                <option value="นายคิรากร ดอนมูลไพร">นายคิรากร ดอนมูลไพร</option>
+                <option value="นายนพคุณ บุญเพ็ญ">นายนพคุณ บุญเพ็ญ</option>
+                <option value="นายสมพงษ์ ซิ้มเจริญ">นายสมพงษ์ ซิ้มเจริญ</option>
+              </select> )</div>
+              <div style="margin-top: 4px;">ผู้เข้าดำเนินการ</div>
+              <div>บริษัท ฟอร์ท คอร์ปอเรชั่น จำกัด (มหาชน)</div>
+            </div>
+            <div class="sig-col">
+              <div>ลงชื่อ : <span class="sig-line"></span></div>
+              <div style="margin-top: 4px;">( <span class="editable-span black-text" id="ag-sig-officer-name" contenteditable="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> )</div>
+              <div style="margin-top: 4px;">เจ้าหน้าที่รับผิดชอบในพื้นที่</div>
+            </div>
+          </div>
         </div>
       </div>
+      <!-- ================= AG PAGE 2 ================= -->
+      <div class="page-wrapper">
+        <div class="page-badge-ribbon no-print">หน้า 2 จาก 3 • ตารางตรวจสอบ (Analog Gateway)</div>
+        <div class="page" id="page-ag-2">
+          <div class="header-split">
+            <div class="logo-left">
+              <img src="data:image/png;base64,@NBTC_B64@" alt="กสทช.">
+            </div>
+            <div class="header-center">
+              <div>การจัดซื้ออุปกรณ์พร้อมดำเนินการติดตั้ง</div>
+              <div>โครงการเพิ่มประสิทธิภาพระบบโครงข่ายสื่อสารด้วยอุปกรณ์ทวนสัญญาณผ่านคลื่นความถี่สูง (SHF)</div>
+              <div>เพื่อสนับสนุนการปฏิบัติราชการและแก้ไขปัญหาให้กับประชาชนในพื้นที่ห่างไกล</div>
+              <div>สัญญาเลขที่ 8680228 ลงวันที่ 23 กรกฎาคม 2568</div>
+              <div style="margin-top: 1px;">รายงานการบำรุงรักษาเพื่อป้องกันตามรอบระยะเวลา ครั้งที่ <input type="text" id="ag-p2-round" class="dotted-input black-text" style="width: 45px; text-align: center;" value=""></div>
+              <div>ชุดอุปกรณ์ทวนสัญญาณผ่านคลื่นความถี่สูง (SHF) และชุดอุปกรณ์ Gateway สำหรับเชื่อมต่อ Analog</div>
+            </div>
+            <div class="logo-right">
+              <img src="data:image/png;base64,@FORTH_B64@" alt="FORTH">
+            </div>
+          </div>
 
-      <div class="divider-line"></div>
+          <div class="divider-line"></div>
 
-      <!-- Station bar (Exact PDF wording, no truncation) -->
-      <div class="sub-bar">
-        <div class="sub-bar-row">
-          <div><span class="bold">ชื่อสถานี :</span> <span class="black-text normal editable-span" id="station-name-2" contenteditable="true" oninput="autoSave()">ที่ว่าการอำเภอย่านตาขาว</span></div>
-          <div><span class="black-text normal editable-span" id="station-zone-2" contenteditable="true" oninput="autoSave()">ศสส.ปค.เขต 9 (ส่วนแยกนครศรีธรรมราช)</span></div>
-        </div>
-        <div>
-          <span class="bold">สถานที่ :</span> <span class="black-text normal editable-span" id="station-loc-2" contenteditable="true" oninput="autoSave()">ตำบลย่านตาขาว อำเภอย่านตาขาว จังหวัดตรัง</span>
-        </div>
-      </div>
+          <div class="sub-bar">
+            <div class="sub-bar-row">
+              <div><span class="bold">ชื่อสถานี :</span> <span class="black-text normal editable-span" id="ag-station-name-2" contenteditable="true" oninput="autoSave()">ที่ว่าการอำเภอย่านตาขาว</span></div>
+              <div><span class="black-text normal editable-span" id="ag-station-zone-2" contenteditable="true" oninput="autoSave()">ศสส.ปค.เขต 9 (ส่วนแยกนครศรีธรรมราช)</span></div>
+            </div>
+            <div>
+              <span class="bold">สถานที่ :</span> <span class="black-text normal editable-span" id="ag-station-loc-2" contenteditable="true" oninput="autoSave()">ตำบลย่านตาขาว อำเภอย่านตาขาว จังหวัดตรัง</span>
+            </div>
+          </div>
 
-      <!-- Checklist Table -->
-      <table class="maintenance-table">
-        <thead>
-          <tr>
-            <th class="col-item">รายการ</th>
-            <th class="col-normal">ปกติ</th>
-            <th class="col-abnormal">ไม่ปกติ</th>
-            <th class="col-note">หมายเหตุ</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Section 1 -->
-          <tr>
-            <td colspan="4" class="sec-title">1. ชุดอุปกรณ์ทวนสัญญาณผ่านคลื่นความถี่สูง (SHF) พร้อมอุปกรณ์ประกอบ</td>
-          </tr>
-          <tr>
-            <td class="sub-item nowrap">- ตรวจสอบสภาพสายอากาศไมโครเวฟ (Microwave Antenna) ให้อยู่ในสภาพสมบูรณ์ พร้อมใช้งาน</td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input" value=""></td>
-          </tr>
-          <tr>
-            <td class="sub-item">- ตรวจสอบสภาพของอุปกรณ์ Power Injector ให้อยู่ในสภาพสมบูรณ์ พร้อมใช้งาน</td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input" value=""></td>
-          </tr>
-          <tr>
-            <td class="sub-item">- สถานะการทำงานของอุปกรณ์ Outdoor Antenna Unit (OAU) และ Outdoor Unit (ODU)<br>&nbsp;&nbsp;ให้อยู่ในสถานะออนไลน์ (Online) และพร้อมใช้งาน</td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input" value=""></td>
-          </tr>
+          <table class="maintenance-table">
+            <thead>
+              <tr>
+                <th class="col-item">รายการ</th>
+                <th class="col-normal">ปกติ</th>
+                <th class="col-abnormal">ไม่ปกติ</th>
+                <th class="col-note">หมายเหตุ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="4" class="sec-title">1. ชุดอุปกรณ์ทวนสัญญาณผ่านคลื่นความถี่สูง (SHF) พร้อมอุปกรณ์ประกอบ</td></tr>
+              <tr>
+                <td class="sub-item nowrap">- ตรวจสอบสภาพสายอากาศไมโครเวฟ (Microwave Antenna) ให้อยู่ในสภาพสมบูรณ์ พร้อมใช้งาน</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item">- ตรวจสอบสภาพของอุปกรณ์ Power Injector ให้อยู่ในสภาพสมบูรณ์ พร้อมใช้งาน</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item">- สถานะการทำงานของอุปกรณ์ Outdoor Antenna Unit (OAU) และ Outdoor Unit (ODU)<br>&nbsp;&nbsp;ให้อยู่ในสถานะออนไลน์ (Online) และพร้อมใช้งาน</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
 
-          <!-- Section 2 -->
-          <tr>
-            <td colspan="4" class="sec-title">2. ชุดอุปกรณ์ Gateway สำหรับเชื่อมต่อ Analog</td>
-          </tr>
-          <tr>
-            <td class="sub-item">- สายอากาศแบบรอบทิศทาง (Omni Antenna) ให้อยู่ในสภาพสมบูรณ์ พร้อมใช้งาน</td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input" value=""></td>
-          </tr>
-          <tr>
-            <td class="sub-item">- ตรวจสอบสภาพของตู้และอุปกรณ์ภายในตู้ให้อยู่ในสภาพสมบูรณ์ พร้อมใช้งาน</td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input" value=""></td>
-          </tr>
-          <tr>
-            <td class="sub-item">- เครื่องวิทยุ HM788 VHF (ซ้าย) S/N : <input type="text" class="table-input" style="width: 140px;" value="" placeholder=""></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input" value=""></td>
-          </tr>
-          <tr>
-            <td class="sub-item">&nbsp;&nbsp;&nbsp;- ความถี่รับ–ส่ง (TRX Frequency) : <input type="text" class="table-input" style="width: 140px;" value="" placeholder=""></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input" value=""></td>
-          </tr>
-          <tr>
-            <td class="sub-item">- เครื่องวิทยุ HM788 VHF (ขวา) S/N : <input type="text" class="table-input" style="width: 140px;" value="" placeholder=""></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input" value=""></td>
-          </tr>
-          <tr>
-            <td class="sub-item">&nbsp;&nbsp;&nbsp;- ความถี่รับ–ส่ง (TRX Frequency) : <input type="text" class="table-input" style="width: 140px;" value="" placeholder=""></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input" value=""></td>
-          </tr>
-          <tr>
-            <td class="sub-item">- เครื่อง MPUC รุ่น DS-6610 S/N : <input type="text" class="table-input" style="width: 140px;" value="" placeholder=""></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input" value=""></td>
-          </tr>
+              <tr><td colspan="4" class="sec-title">2. ชุดอุปกรณ์ Gateway สำหรับเชื่อมต่อ Analog</td></tr>
+              <tr>
+                <td class="sub-item">- สายอากาศแบบรอบทิศทาง (Omni Antenna) ให้อยู่ในสภาพสมบูรณ์ พร้อมใช้งาน</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item">- ตรวจสอบสภาพของตู้และอุปกรณ์ภายในตู้ให้อยู่ในสภาพสมบูรณ์ พร้อมใช้งาน</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item">- เครื่องวิทยุ HM788 VHF (ซ้าย) S/N : <input type="text" class="table-input" style="width: 140px;" value=""></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item">&nbsp;&nbsp;&nbsp;- ความถี่รับ–ส่ง (TRX Frequency) : <input type="text" class="table-input" style="width: 140px;" value=""></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item">- เครื่องวิทยุ HM788 VHF (ขวา) S/N : <input type="text" class="table-input" style="width: 140px;" value=""></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item">&nbsp;&nbsp;&nbsp;- ความถี่รับ–ส่ง (TRX Frequency) : <input type="text" class="table-input" style="width: 140px;" value=""></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item">- เครื่อง MPUC รุ่น DS-6610 S/N : <input type="text" class="table-input" style="width: 140px;" value=""></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
 
-          <!-- Section 3 -->
-          <tr>
-            <td colspan="4" class="sec-title">3. อุปกรณ์กระจายสัญญาณ (L3 Switch) แบบ 24 ช่อง</td>
-          </tr>
-          <tr>
-            <td class="sub-item">- ตรวจสอบสภาพภายนอกของอุปกรณ์ L3 Switch ให้อยู่ในสภาพสมบูรณ์ ไม่พบรอยชำรุด</td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input" value=""></td>
-          </tr>
-          <tr>
-            <td class="sub-item">- L3 Switch S5735-S24T4XE-V2 S/N : <input type="text" class="table-input" style="width: 150px;" value="" placeholder=""></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input" value=""></td>
-          </tr>
-          <tr>
-            <td class="sub-item nowrap">- สถานะ LED หน้าอุปกรณ์ &nbsp;&nbsp;<label class="black-chk-wrap"><input type="checkbox" checked class="black-chk-input"><svg class="black-chk-svg" viewBox="0 0 14 14"><rect x="0.75" y="0.75" width="12.5" height="12.5" fill="#fff" stroke="#000" stroke-width="1.5" rx="0.5"/><path class="chk-mark" d="M2.8 7.2 L5.6 10.2 L11.2 3.4" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Power</span></label>&nbsp;&nbsp;<label class="black-chk-wrap"><input type="checkbox" checked class="black-chk-input"><svg class="black-chk-svg" viewBox="0 0 14 14"><rect x="0.75" y="0.75" width="12.5" height="12.5" fill="#fff" stroke="#000" stroke-width="1.5" rx="0.5"/><path class="chk-mark" d="M2.8 7.2 L5.6 10.2 L11.2 3.4" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Sys.</span></label></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input" value=""></td>
-          </tr>
-          <tr>
-            <td class="sub-item">- สถานะ &nbsp;<label class="black-chk-wrap"><input type="checkbox" checked class="black-chk-input"><svg class="black-chk-svg" viewBox="0 0 14 14"><rect x="0.75" y="0.75" width="12.5" height="12.5" fill="#fff" stroke="#000" stroke-width="1.5" rx="0.5"/><path class="chk-mark" d="M2.8 7.2 L5.6 10.2 L11.2 3.4" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>LAN Port :</span></label> <input type="text" class="table-input" style="width: 105px;" value="" placeholder=""> , &nbsp;<label class="black-chk-wrap"><input type="checkbox" checked class="black-chk-input"><svg class="black-chk-svg" viewBox="0 0 14 14"><rect x="0.75" y="0.75" width="12.5" height="12.5" fill="#fff" stroke="#000" stroke-width="1.5" rx="0.5"/><path class="chk-mark" d="M2.8 7.2 L5.6 10.2 L11.2 3.4" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>LAN Port :</span></label> <input type="text" class="table-input" style="width: 105px;" value="" placeholder=""></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input" value=""></td>
-          </tr>
-          <tr>
-            <td class="sub-item">- สถานะ &nbsp;<label class="black-chk-wrap"><input type="checkbox" checked class="black-chk-input"><svg class="black-chk-svg" viewBox="0 0 14 14"><rect x="0.75" y="0.75" width="12.5" height="12.5" fill="#fff" stroke="#000" stroke-width="1.5" rx="0.5"/><path class="chk-mark" d="M2.8 7.2 L5.6 10.2 L11.2 3.4" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Port 10Ge : 1/0/1 Link จาก L3 Switch ไปยัง RTN320F</span></label></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input" value=""></td>
-          </tr>
-          <tr>
-            <td class="sub-item">- สถานะการเชื่อมต่อ (Link) ระหว่าง L3 Switch กับ OAU (port 10GE1/0/1)</td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input" value=""></td>
-          </tr>
+              <tr><td colspan="4" class="sec-title">3. อุปกรณ์กระจายสัญญาณ (L3 Switch) แบบ 24 ช่อง</td></tr>
+              <tr>
+                <td class="sub-item">- ตรวจสอบสภาพภายนอกของอุปกรณ์ L3 Switch ให้อยู่ในสภาพสมบูรณ์ ไม่พบรอยชำรุด</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item">- L3 Switch S5735-S24T4XE-V2 S/N : <input type="text" class="table-input" style="width: 150px;" value=""></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item nowrap">- สถานะ LED หน้าอุปกรณ์ &nbsp;&nbsp;<label class="black-chk-wrap"><input type="checkbox" checked class="black-chk-input"><svg class="black-chk-svg" viewBox="0 0 14 14"><rect x="0.75" y="0.75" width="12.5" height="12.5" fill="#fff" stroke="#000" stroke-width="1.5" rx="0.5"/><path class="chk-mark" d="M2.8 7.2 L5.6 10.2 L11.2 3.4" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Power</span></label>&nbsp;&nbsp;<label class="black-chk-wrap"><input type="checkbox" checked class="black-chk-input"><svg class="black-chk-svg" viewBox="0 0 14 14"><rect x="0.75" y="0.75" width="12.5" height="12.5" fill="#fff" stroke="#000" stroke-width="1.5" rx="0.5"/><path class="chk-mark" d="M2.8 7.2 L5.6 10.2 L11.2 3.4" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Sys.</span></label></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item">- สถานะ &nbsp;<label class="black-chk-wrap"><input type="checkbox" checked class="black-chk-input"><svg class="black-chk-svg" viewBox="0 0 14 14"><rect x="0.75" y="0.75" width="12.5" height="12.5" fill="#fff" stroke="#000" stroke-width="1.5" rx="0.5"/><path class="chk-mark" d="M2.8 7.2 L5.6 10.2 L11.2 3.4" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>LAN Port :</span></label> <input type="text" class="table-input" style="width: 105px;" value=""> , &nbsp;<label class="black-chk-wrap"><input type="checkbox" checked class="black-chk-input"><svg class="black-chk-svg" viewBox="0 0 14 14"><rect x="0.75" y="0.75" width="12.5" height="12.5" fill="#fff" stroke="#000" stroke-width="1.5" rx="0.5"/><path class="chk-mark" d="M2.8 7.2 L5.6 10.2 L11.2 3.4" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>LAN Port :</span></label> <input type="text" class="table-input" style="width: 105px;" value=""></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item">- สถานะ &nbsp;<label class="black-chk-wrap"><input type="checkbox" checked class="black-chk-input"><svg class="black-chk-svg" viewBox="0 0 14 14"><rect x="0.75" y="0.75" width="12.5" height="12.5" fill="#fff" stroke="#000" stroke-width="1.5" rx="0.5"/><path class="chk-mark" d="M2.8 7.2 L5.6 10.2 L11.2 3.4" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Port 10Ge : 1/0/1 Link จาก L3 Switch ไปยัง RTN320F</span></label></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item">- สถานะการเชื่อมต่อ (Link) ระหว่าง L3 Switch กับ OAU (port 10GE1/0/1)</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
 
-          <!-- Section 4 -->
-          <tr>
-            <td colspan="4" class="sec-title">4. ระบบไฟฟ้าและระบบสายดิน (Electrical Power and Grounding System)</td>
-          </tr>
-          <tr>
-            <td class="sub-item">- ตรวจสอบอุปกรณ์ภายในตู้ Main AC ให้อยู่ในสภาพสมบูรณ์ พร้อมใช้งาน</td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input" value=""></td>
-          </tr>
-          <tr>
-            <td class="sub-item">- ตรวจสอบสายไฟและจุดต่อสายไฟ ไม่พบการชำรุด หลวม แตกหัก หรือฉนวนเสื่อมสภาพ</td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input" value=""></td>
-          </tr>
-          <tr>
-            <td class="sub-item nowrap">- แรงดันไฟฟ้าระหว่างสาย L – N : <input type="text" class="table-input" style="width: 75px;" value="" placeholder=""> (ค่าแรงดันระหว่าง 180 - 240 โวลต์)</td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input" value=""></td>
-          </tr>
-          <tr>
-            <td class="sub-item nowrap">- แรงดันไฟฟ้าระหว่างสาย L – G : <input type="text" class="table-input" style="width: 75px;" value="" placeholder=""> (ค่าแรงดันระหว่าง 180 - 240 โวลต์)</td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input" value=""></td>
-          </tr>
-          <tr>
-            <td class="sub-item nowrap">- แรงดันไฟฟ้าระหว่างสาย N – G : <input type="text" class="table-input" style="width: 75px;" value="" placeholder=""> (ค่าแรงดันระหว่าง 0 - 2 โวลต์)</td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input" value=""></td>
-          </tr>
-          <tr>
-            <td class="sub-item nowrap">- ตรวจสอบระบบสายดิน (Grounding) และจุดต่อสายดินทุกจุด ให้อยู่ในสภาพสมบูรณ์ พร้อมใช้งาน</td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input" value=""></td>
-          </tr>
-          <tr>
-            <td class="sub-item nowrap">- ค่าความต้านทานสายดินระบบไฟฟ้า (AC Ground) <input type="text" class="table-input" style="width: 65px;" value="" placeholder=""> (ค่าไม่เกิน 5 โอห์ม)</td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input" value=""></td>
-          </tr>
-          <tr>
-            <td class="sub-item nowrap">- ค่าความต้านทานสายดินระบบวิทยุ (RF Ground) <input type="text" class="table-input" style="width: 65px;" value="" placeholder=""> (ค่าไม่เกิน 5 โอห์ม)</td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input" value=""></td>
-          </tr>
+              <tr><td colspan="4" class="sec-title">4. ระบบไฟฟ้าและระบบสายดิน (Electrical Power and Grounding System)</td></tr>
+              <tr>
+                <td class="sub-item">- ตรวจสอบอุปกรณ์ภายในตู้ Main AC ให้อยู่ในสภาพสมบูรณ์ พร้อมใช้งาน</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item">- ตรวจสอบสายไฟและจุดต่อสายไฟ ไม่พบการชำรุด หลวม แตกหัก หรือฉนวนเสื่อมสภาพ</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item nowrap">- แรงดันไฟฟ้าระหว่างสาย L – N : <input type="text" class="table-input" style="width: 75px;" value=""> (ค่าแรงดันระหว่าง 180 - 240 โวลต์)</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item nowrap">- แรงดันไฟฟ้าระหว่างสาย L – G : <input type="text" class="table-input" style="width: 75px;" value=""> (ค่าแรงดันระหว่าง 180 - 240 โวลต์)</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item nowrap">- แรงดันไฟฟ้าระหว่างสาย N – G : <input type="text" class="table-input" style="width: 75px;" value=""> (ค่าแรงดันระหว่าง 0 - 2 โวลต์)</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item nowrap">- ตรวจสอบระบบสายดิน (Grounding) และจุดต่อสายดินทุกจุด ให้อยู่ในสภาพสมบูรณ์ พร้อมใช้งาน</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item nowrap">- ค่าความต้านทานสายดินระบบไฟฟ้า (AC Ground) <input type="text" class="table-input" style="width: 65px;" value=""> (ค่าไม่เกิน 5 โอห์ม)</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item nowrap">- ค่าความต้านทานสายดินระบบวิทยุ (RF Ground) <input type="text" class="table-input" style="width: 65px;" value=""> (ค่าไม่เกิน 5 โอห์ม)</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
 
-          <!-- Section 5 -->
-          <tr>
-            <td class="sub-item"><span class="bold">5. เครื่องสำรองไฟฟ้าขนาด 3kVA รุ่น HE-RT-3K S/N :</span> <input type="text" class="table-input" style="width: 160px;" value="" placeholder=""></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input" value=""></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- ================= PAGE 3 (Original Page 4) ================= -->
-    <div class="page" id="page-3">
-      <!-- Header -->
-      <div class="header-split">
-        <div class="logo-left">
-          <img src="data:image/png;base64,@NBTC_B64@" alt="กสทช.">
-        </div>
-        <div class="header-center">
-          <div>การจัดซื้ออุปกรณ์พร้อมดำเนินการติดตั้ง</div>
-          <div>โครงการเพิ่มประสิทธิภาพระบบโครงข่ายสื่อสารด้วยอุปกรณ์ทวนสัญญาณผ่านคลื่นความถี่สูง (SHF)</div>
-          <div>เพื่อสนับสนุนการปฏิบัติราชการและแก้ไขปัญหาให้กับประชาชนในพื้นที่ห่างไกล</div>
-          <div>สัญญาเลขที่ 8680228 ลงวันที่ 23 กรกฎาคม 2568</div>
-          <div style="margin-top: 1px;">รายงานการบำรุงรักษาเพื่อป้องกันตามรอบระยะเวลา ครั้งที่ <input type="text" id="p3-round" class="dotted-input black-text" style="width: 45px; text-align: center;" value=""></div>
-          <div>ชุดอุปกรณ์ทวนสัญญาณผ่านคลื่นความถี่สูง (SHF) และชุดอุปกรณ์ Gateway สำหรับเชื่อมต่อ Analog</div>
-        </div>
-        <div class="logo-right">
-          <img src="data:image/png;base64,@FORTH_B64@" alt="FORTH">
+              <tr>
+                <td class="sub-item"><span class="bold">5. เครื่องสำรองไฟฟ้าขนาด 3kVA รุ่น HE-RT-3K S/N :</span> <input type="text" class="table-input" style="width: 160px;" value=""></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
+      <!-- ================= AG PAGE 3 ================= -->
+      <div class="page-wrapper">
+        <div class="page-badge-ribbon no-print">หน้า 3 จาก 3 • ภาพถ่ายประกอบ (Analog Gateway)</div>
+        <div class="page" id="page-ag-3">
+          <div class="header-split">
+            <div class="logo-left">
+              <img src="data:image/png;base64,@NBTC_B64@" alt="กสทช.">
+            </div>
+            <div class="header-center">
+              <div>การจัดซื้ออุปกรณ์พร้อมดำเนินการติดตั้ง</div>
+              <div>โครงการเพิ่มประสิทธิภาพระบบโครงข่ายสื่อสารด้วยอุปกรณ์ทวนสัญญาณผ่านคลื่นความถี่สูง (SHF)</div>
+              <div>เพื่อสนับสนุนการปฏิบัติราชการและแก้ไขปัญหาให้กับประชาชนในพื้นที่ห่างไกล</div>
+              <div>สัญญาเลขที่ 8680228 ลงวันที่ 23 กรกฎาคม 2568</div>
+              <div style="margin-top: 1px;">รายงานการบำรุงรักษาเพื่อป้องกันตามรอบระยะเวลา ครั้งที่ <input type="text" id="ag-p3-round" class="dotted-input black-text" style="width: 45px; text-align: center;" value=""></div>
+              <div>ชุดอุปกรณ์ทวนสัญญาณผ่านคลื่นความถี่สูง (SHF) และชุดอุปกรณ์ Gateway สำหรับเชื่อมต่อ Analog</div>
+            </div>
+            <div class="logo-right">
+              <img src="data:image/png;base64,@FORTH_B64@" alt="FORTH">
+            </div>
+          </div>
 
-      <div class="divider-line"></div>
+          <div class="divider-line"></div>
 
-      <!-- Station bar (Exact PDF wording) -->
-      <div class="sub-bar">
-        <div class="sub-bar-row">
-          <div><span class="bold">ชื่อสถานี :</span> <span class="black-text normal editable-span" id="station-name-3" contenteditable="true" oninput="autoSave()">ที่ว่าการอำเภอย่านตาขาว</span></div>
-          <div><span class="black-text normal editable-span" id="station-zone-3" contenteditable="true" oninput="autoSave()">ศสส.ปค.เขต 9 (ส่วนแยกนครศรีธรรมราช)</span></div>
-        </div>
-        <div>
-          <span class="bold">สถานที่ :</span> <span class="black-text normal editable-span" id="station-loc-3" contenteditable="true" oninput="autoSave()">ตำบลย่านตาขาว อำเภอย่านตาขาว จังหวัดตรัง</span>
+          <div class="sub-bar">
+            <div class="sub-bar-row">
+              <div><span class="bold">ชื่อสถานี :</span> <span class="black-text normal editable-span" id="ag-station-name-3" contenteditable="true" oninput="autoSave()">ที่ว่าการอำเภอย่านตาขาว</span></div>
+              <div><span class="black-text normal editable-span" id="ag-station-zone-3" contenteditable="true" oninput="autoSave()">ศสส.ปค.เขต 9 (ส่วนแยกนครศรีธรรมราช)</span></div>
+            </div>
+            <div>
+              <span class="bold">สถานที่ :</span> <span class="black-text normal editable-span" id="ag-station-loc-3" contenteditable="true" oninput="autoSave()">ตำบลย่านตาขาว อำเภอย่านตาขาว จังหวัดตรัง</span>
+            </div>
+          </div>
+
+          <table class="photo-table">
+            <tbody>
+              <tr>
+                <td style="width: 50%;">
+                  <div class="photo-box" onclick="triggerUpload('ag', 1)">
+                    <input type="file" id="photo-input-ag-1" accept="image/*" style="display:none" onchange="previewPhoto(event, 'ag', 1)">
+                    <img id="photo-img-ag-1" class="photo-img" alt="ภาพประกอบ 1">
+                    <div class="photo-overlay" id="overlay-ag-1">
+                      <svg width="28" height="28" fill="currentColor" viewBox="0 0 16 16"><path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/><path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/></svg>
+                      <span style="margin-top: 5px;">ถ่ายรูป / เลือกภาพ 1</span>
+                    </div>
+                    <button class="btn-del" id="btn-del-ag-1" onclick="removePhoto(event, 'ag', 1)" title="ลบภาพ">✕</button>
+                  </div>
+                </td>
+                <td style="width: 50%;">
+                  <div class="photo-box" onclick="triggerUpload('ag', 2)">
+                    <input type="file" id="photo-input-ag-2" accept="image/*" style="display:none" onchange="previewPhoto(event, 'ag', 2)">
+                    <img id="photo-img-ag-2" class="photo-img" alt="ภาพประกอบ 2">
+                    <div class="photo-overlay" id="overlay-ag-2">
+                      <svg width="28" height="28" fill="currentColor" viewBox="0 0 16 16"><path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/><path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/></svg>
+                      <span style="margin-top: 5px;">ถ่ายรูป / เลือกภาพ 2</span>
+                    </div>
+                    <button class="btn-del" id="btn-del-ag-2" onclick="removePhoto(event, 'ag', 2)" title="ลบภาพ">✕</button>
+                  </div>
+                </td>
+              </tr>
+              <tr class="caption-row">
+                <td>ภาพประกอบ</td>
+                <td>ภาพประกอบ</td>
+              </tr>
+
+              <tr>
+                <td>
+                  <div class="photo-box" onclick="triggerUpload('ag', 3)">
+                    <input type="file" id="photo-input-ag-3" accept="image/*" style="display:none" onchange="previewPhoto(event, 'ag', 3)">
+                    <img id="photo-img-ag-3" class="photo-img" alt="ภาพประกอบ 3">
+                    <div class="photo-overlay" id="overlay-ag-3">
+                      <svg width="28" height="28" fill="currentColor" viewBox="0 0 16 16"><path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/><path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/></svg>
+                      <span style="margin-top: 5px;">ถ่ายรูป / เลือกภาพ 3</span>
+                    </div>
+                    <button class="btn-del" id="btn-del-ag-3" onclick="removePhoto(event, 'ag', 3)" title="ลบภาพ">✕</button>
+                  </div>
+                </td>
+                <td>
+                  <div class="photo-box" onclick="triggerUpload('ag', 4)">
+                    <input type="file" id="photo-input-ag-4" accept="image/*" style="display:none" onchange="previewPhoto(event, 'ag', 4)">
+                    <img id="photo-img-ag-4" class="photo-img" alt="ภาพประกอบ 4">
+                    <div class="photo-overlay" id="overlay-ag-4">
+                      <svg width="28" height="28" fill="currentColor" viewBox="0 0 16 16"><path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/><path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/></svg>
+                      <span style="margin-top: 5px;">ถ่ายรูป / เลือกภาพ 4</span>
+                    </div>
+                    <button class="btn-del" id="btn-del-ag-4" onclick="removePhoto(event, 'ag', 4)" title="ลบภาพ">✕</button>
+                  </div>
+                </td>
+              </tr>
+              <tr class="caption-row">
+                <td>ภาพประกอบ</td>
+                <td>ภาพประกอบ</td>
+              </tr>
+
+              <tr>
+                <td>
+                  <div class="photo-box" onclick="triggerUpload('ag', 5)">
+                    <input type="file" id="photo-input-ag-5" accept="image/*" style="display:none" onchange="previewPhoto(event, 'ag', 5)">
+                    <img id="photo-img-ag-5" class="photo-img" alt="ภาพประกอบ 5">
+                    <div class="photo-overlay" id="overlay-ag-5">
+                      <svg width="28" height="28" fill="currentColor" viewBox="0 0 16 16"><path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/><path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/></svg>
+                      <span style="margin-top: 5px;">ถ่ายรูป / เลือกภาพ 5</span>
+                    </div>
+                    <button class="btn-del" id="btn-del-ag-5" onclick="removePhoto(event, 'ag', 5)" title="ลบภาพ">✕</button>
+                  </div>
+                </td>
+                <td>
+                  <div class="photo-box" onclick="triggerUpload('ag', 6)">
+                    <input type="file" id="photo-input-ag-6" accept="image/*" style="display:none" onchange="previewPhoto(event, 'ag', 6)">
+                    <img id="photo-img-ag-6" class="photo-img" alt="ภาพประกอบ 6">
+                    <div class="photo-overlay" id="overlay-ag-6">
+                      <svg width="28" height="28" fill="currentColor" viewBox="0 0 16 16"><path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/><path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/></svg>
+                      <span style="margin-top: 5px;">ถ่ายรูป / เลือกภาพ 6</span>
+                    </div>
+                    <button class="btn-del" id="btn-del-ag-6" onclick="removePhoto(event, 'ag', 6)" title="ลบภาพ">✕</button>
+                  </div>
+                </td>
+              </tr>
+              <tr class="caption-row">
+                <td>ภาพประกอบ</td>
+                <td>ภาพประกอบ</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
+    </div><!-- End #group-ag -->
+    <!-- #################### REPORT 2: BASE STATION #################### -->
+    <div id="group-bs" class="report-section" style="display: none;">
+      <!-- ================= BS PAGE 1 ================= -->
+      <div class="page-wrapper">
+        <div class="page-badge-ribbon no-print">หน้า 1 จาก 3 • หน้าปกสรุป (Base Station)</div>
+        <div class="page" id="page-bs-1">
+          <div class="p1-logo">
+            <img src="data:image/png;base64,@NBTC_B64@" alt="กสทช.">
+          </div>
 
-      <!-- Photo Grid Table (6 Photos, Camera/Gallery Support) -->
-      <table class="photo-table">
-        <tbody>
-          <!-- Row 1 -->
-          <tr>
-            <td style="width: 50%;">
-              <div class="photo-box" onclick="triggerUpload(1)">
-                <input type="file" id="photo-input-1" accept="image/*" style="display:none" onchange="previewPhoto(event, 1)">
-                <img id="photo-img-1" class="photo-img" alt="ภาพประกอบ 1">
-                <div class="photo-overlay" id="overlay-1">
-                  <svg width="28" height="28" fill="currentColor" viewBox="0 0 16 16"><path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/><path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/></svg>
-                  <span style="margin-top: 5px;">ถ่ายรูป / เลือกภาพ 1</span>
-                </div>
-                <button class="btn-del" id="btn-del-1" onclick="removePhoto(event, 1)" title="ลบภาพ">✕</button>
-              </div>
-            </td>
-            <td style="width: 50%;">
-              <div class="photo-box" onclick="triggerUpload(2)">
-                <input type="file" id="photo-input-2" accept="image/*" style="display:none" onchange="previewPhoto(event, 2)">
-                <img id="photo-img-2" class="photo-img" alt="ภาพประกอบ 2">
-                <div class="photo-overlay" id="overlay-2">
-                  <svg width="28" height="28" fill="currentColor" viewBox="0 0 16 16"><path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/><path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/></svg>
-                  <span style="margin-top: 5px;">ถ่ายรูป / เลือกภาพ 2</span>
-                </div>
-                <button class="btn-del" id="btn-del-2" onclick="removePhoto(event, 2)" title="ลบภาพ">✕</button>
-              </div>
-            </td>
-          </tr>
-          <tr class="caption-row">
-            <td>ภาพประกอบ</td>
-            <td>ภาพประกอบ</td>
-          </tr>
+          <div class="p1-header-text">
+            <div>การจัดซื้ออุปกรณ์พร้อมดำเนินการติดตั้ง</div>
+            <div>โครงการเพิ่มประสิทธิภาพระบบโครงข่ายสื่อสารด้วยอุปกรณ์ทวนสัญญาณผ่านคลื่นความถี่สูง (SHF)</div>
+            <div>เพื่อสนับสนุนการปฏิบัติราชการและแก้ไขปัญหาให้กับประชาชนในพื้นที่ห่างไกล</div>
+            <div>สัญญาเลขที่ 8680228 ลงวันที่ 23 กรกฎาคม 2568</div>
+          </div>
 
-          <!-- Row 2 -->
-          <tr>
-            <td>
-              <div class="photo-box" onclick="triggerUpload(3)">
-                <input type="file" id="photo-input-3" accept="image/*" style="display:none" onchange="previewPhoto(event, 3)">
-                <img id="photo-img-3" class="photo-img" alt="ภาพประกอบ 3">
-                <div class="photo-overlay" id="overlay-3">
-                  <svg width="28" height="28" fill="currentColor" viewBox="0 0 16 16"><path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/><path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/></svg>
-                  <span style="margin-top: 5px;">ถ่ายรูป / เลือกภาพ 3</span>
-                </div>
-                <button class="btn-del" id="btn-del-3" onclick="removePhoto(event, 3)" title="ลบภาพ">✕</button>
-              </div>
-            </td>
-            <td>
-              <div class="photo-box" onclick="triggerUpload(4)">
-                <input type="file" id="photo-input-4" accept="image/*" style="display:none" onchange="previewPhoto(event, 4)">
-                <img id="photo-img-4" class="photo-img" alt="ภาพประกอบ 4">
-                <div class="photo-overlay" id="overlay-4">
-                  <svg width="28" height="28" fill="currentColor" viewBox="0 0 16 16"><path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/><path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/></svg>
-                  <span style="margin-top: 5px;">ถ่ายรูป / เลือกภาพ 4</span>
-                </div>
-                <button class="btn-del" id="btn-del-4" onclick="removePhoto(event, 4)" title="ลบภาพ">✕</button>
-              </div>
-            </td>
-          </tr>
-          <tr class="caption-row">
-            <td>ภาพประกอบ</td>
-            <td>ภาพประกอบ</td>
-          </tr>
+          <div class="p1-title-box">
+            <div>รายงานการบำรุงรักษาเพื่อป้องกันตามรอบระยะเวลา ครั้งที่ <input type="text" id="bs-p1-round" class="dotted-input black-text" style="width: 50px; text-align: center;" value=""></div>
+            <div>ชุดอุปกรณ์ทวนสัญญาณผ่านคลื่นความถี่สูง (SHF) และสถานีแม่ข่ายแบบ 1 Carrier (Outdoor) พร้อมอุปกรณ์ประกอบ</div>
+          </div>
 
-          <!-- Row 3 -->
-          <tr>
-            <td>
-              <div class="photo-box" onclick="triggerUpload(5)">
-                <input type="file" id="photo-input-5" accept="image/*" style="display:none" onchange="previewPhoto(event, 5)">
-                <img id="photo-img-5" class="photo-img" alt="ภาพประกอบ 5">
-                <div class="photo-overlay" id="overlay-5">
-                  <svg width="28" height="28" fill="currentColor" viewBox="0 0 16 16"><path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/><path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/></svg>
-                  <span style="margin-top: 5px;">ถ่ายรูป / เลือกภาพ 5</span>
-                </div>
-                <button class="btn-del" id="btn-del-5" onclick="removePhoto(event, 5)" title="ลบภาพ">✕</button>
-              </div>
-            </td>
-            <td>
-              <div class="photo-box" onclick="triggerUpload(6)">
-                <input type="file" id="photo-input-6" accept="image/*" style="display:none" onchange="previewPhoto(event, 6)">
-                <img id="photo-img-6" class="photo-img" alt="ภาพประกอบ 6">
-                <div class="photo-overlay" id="overlay-6">
-                  <svg width="28" height="28" fill="currentColor" viewBox="0 0 16 16"><path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/><path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/></svg>
-                  <span style="margin-top: 5px;">ถ่ายรูป / เลือกภาพ 6</span>
-                </div>
-                <button class="btn-del" id="btn-del-6" onclick="removePhoto(event, 6)" title="ลบภาพ">✕</button>
-              </div>
-            </td>
-          </tr>
-          <tr class="caption-row">
-            <td>ภาพประกอบ</td>
-            <td>ภาพประกอบ</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+          <div class="p1-station-box">
+            <div class="p1-station-row">
+              <span class="p1-station-label">ชื่อสถานี :&nbsp;</span>
+              <select id="bs-station-select-p1" class="dropdown-field black-text station-select-p1" onchange="onBaseStationSelect(this.value)">
+                <option value="แม่ข่าย Base Station เลาขวัญ">แม่ข่าย Base Station เลาขวัญ</option>
+                <option value="แม่ข่าย Base Station ปางศิลาทอง">แม่ข่าย Base Station ปางศิลาทอง</option>
+                <option value="แม่ข่าย Base Station อุบลรัตน์">แม่ข่าย Base Station อุบลรัตน์</option>
+                <option value="แม่ข่าย Base Station เขาคิชฌกูฎ">แม่ข่าย Base Station เขาคิชฌกูฎ</option>
+                <option value="แม่ข่าย Base Station ช่อง" selected>แม่ข่าย Base Station ช่อง</option>
+                <option value="แม่ข่าย Base Station ปากช่อง">แม่ข่าย Base Station ปากช่อง</option>
+                <option value="แม่ข่าย Base Station ปากพนัง">แม่ข่าย Base Station ปากพนัง</option>
+                <option value="แม่ข่าย Base Station ดงเจริญ">แม่ข่าย Base Station ดงเจริญ</option>
+              </select>
+            </div>
+            <div class="p1-station-row">
+              <span class="p1-station-label">สถานที่ :&nbsp;</span>
+              <span class="black-text normal editable-span" id="bs-station-loc-1" contenteditable="true" oninput="autoSave()">ตำบลช่อง อำเภอนาโยง จังหวัดตรัง</span>
+            </div>
+            <div class="p1-station-row">
+              <span class="p1-station-label">เขตพื้นที่รับผิดชอบ :&nbsp;</span>
+              <span class="black-text normal editable-span" id="bs-station-zone-1" contenteditable="true" oninput="autoSave()">ศูนย์สื่อสารกรมการปกครองเขต 9 (ส่วนแยกนครศรีธรรมราช)</span>
+            </div>
+            <div class="p1-station-row">
+              <span class="p1-station-label">พิกัด :&nbsp;</span>
+              <span class="black-text normal editable-span" id="bs-station-coord-1" contenteditable="true" oninput="autoSave()">7.524270 , 99.758810</span>
+            </div>
+            <div class="p1-station-row">
+              <span class="p1-station-label">วันที่ดำเนินการ :&nbsp;</span>
+              <input type="text" id="bs-station-date-1" class="dotted-input black-text" style="width: 220px;" value="">
+            </div>
+          </div>
 
-  </div>
+          <div class="p1-signatures">
+            <div class="sig-col">
+              <div>ลงชื่อ : <span class="sig-line"></span></div>
+              <div style="margin-top: 4px;">( <select id="bs-operator-select-1" class="dropdown-field black-text sig-select" onchange="onOperatorSelect(this.value)">
+                <option value="นางสาวดวงดาว ทวีศรีพายัพ">นางสาวดวงดาว ทวีศรีพายัพ</option>
+                <option value="นางสาวสุรีรัตน์ รอดโพธิ์ทอง">นางสาวสุรีรัตน์ รอดโพธิ์ทอง</option>
+                <option value="นายปรัชนนท์ กัลยามณีกร">นายปรัชนนท์ กัลยามณีกร</option>
+                <option value="นายอนุรักษ์ แก้วเชียงทอง">นายอนุรักษ์ แก้วเชียงทอง</option>
+                <option value="นายศักดิภัช สว่างเนตร">นายศักดิภัช สว่างเนตร</option>
+                <option value="นายอุทัย หนาดสำโรง">นายอุทัย หนาดสำโรง</option>
+                <option value="นายอุเทน บุญมี">นายอุเทน บุญมี</option>
+                <option value="นายสมสอาด ถาวร">นายสมสอาด ถาวร</option>
+                <option value="นายวิสิฐศักดิ์ พอกเพิ่มดี">นายวิสิฐศักดิ์ พอกเพิ่มดี</option>
+                <option value="นายชนะ ปักษีเลิศ">นายชนะ ปักษีเลิศ</option>
+                <option value="นายธงชัย วัฒนพล">นายธงชัย วัฒนพล</option>
+                <option value="นายทักษิณ บุญไว">นายทักษิณ บุญไว</option>
+                <option value="นายวัชระ มานะดี">นายวัชระ มานะดี</option>
+                <option value="นายอนุศักดิ์ สมาน">นายอนุศักดิ์ สมาน</option>
+                <option value="นายสมประสงค์ มลฑลจุลเกศ" selected>นายสมประสงค์ มลฑลจุลเกศ</option>
+                <option value="นายคิรากร ดอนมูลไพร">นายคิรากร ดอนมูลไพร</option>
+                <option value="นายนพคุณ บุญเพ็ญ">นายนพคุณ บุญเพ็ญ</option>
+                <option value="นายสมพงษ์ ซิ้มเจริญ">นายสมพงษ์ ซิ้มเจริญ</option>
+              </select> )</div>
+              <div style="margin-top: 4px;">ผู้เข้าดำเนินการ</div>
+              <div>บริษัท ฟอร์ท คอร์ปอเรชั่น จำกัด (มหาชน)</div>
+            </div>
+            <div class="sig-col">
+              <div>ลงชื่อ : <span class="sig-line"></span></div>
+              <div style="margin-top: 4px;">( <span class="editable-span black-text" id="bs-sig-officer-name" contenteditable="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> )</div>
+              <div style="margin-top: 4px;">เจ้าหน้าที่รับผิดชอบในพื้นที่</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ================= BS PAGE 2 ================= -->
+      <div class="page-wrapper">
+        <div class="page-badge-ribbon no-print">หน้า 2 จาก 3 • ตารางตรวจสอบ (Base Station)</div>
+        <div class="page" id="page-bs-2">
+          <div class="header-split">
+            <div class="logo-left">
+              <img src="data:image/png;base64,@NBTC_B64@" alt="กสทช.">
+            </div>
+            <div class="header-center">
+              <div>การจัดซื้ออุปกรณ์พร้อมดำเนินการติดตั้ง</div>
+              <div>โครงการเพิ่มประสิทธิภาพระบบโครงข่ายสื่อสารด้วยอุปกรณ์ทวนสัญญาณผ่านคลื่นความถี่สูง (SHF)</div>
+              <div>เพื่อสนับสนุนการปฏิบัติราชการและแก้ไขปัญหาให้กับประชาชนในพื้นที่ห่างไกล</div>
+              <div>สัญญาเลขที่ 8680228 ลงวันที่ 23 กรกฎาคม 2568</div>
+              <div style="margin-top: 1px;">รายงานการบำรุงรักษาเพื่อป้องกันตามรอบระยะเวลา ครั้งที่ <input type="text" id="bs-p2-round" class="dotted-input black-text" style="width: 45px; text-align: center;" value=""></div>
+              <div>ชุดอุปกรณ์ทวนสัญญาณผ่านคลื่นความถี่สูง (SHF) และสถานีแม่ข่ายแบบ 1 Carrier (Outdoor) พร้อมอุปกรณ์ประกอบ</div>
+            </div>
+            <div class="logo-right">
+              <img src="data:image/png;base64,@FORTH_B64@" alt="FORTH">
+            </div>
+          </div>
 
+          <div class="divider-line"></div>
+
+          <div class="sub-bar">
+            <div class="sub-bar-row">
+              <div><span class="bold">ชื่อสถานี :</span> <span class="black-text normal editable-span" id="bs-station-name-2" contenteditable="true" oninput="autoSave()">แม่ข่าย Base Station ช่อง</span></div>
+              <div><span class="black-text normal editable-span" id="bs-station-zone-2" contenteditable="true" oninput="autoSave()">ศสส.ปค.เขต 9 (ส่วนแยกนครศรีธรรมราช)</span></div>
+            </div>
+            <div>
+              <span class="bold">สถานที่ :</span> <span class="black-text normal editable-span" id="bs-station-loc-2" contenteditable="true" oninput="autoSave()">ตำบลช่อง อำเภอนาโยง จังหวัดตรัง</span>
+            </div>
+          </div>
+
+          <table class="maintenance-table">
+            <thead>
+              <tr>
+                <th class="col-item">รายการ</th>
+                <th class="col-normal">ปกติ</th>
+                <th class="col-abnormal">ไม่ปกติ</th>
+                <th class="col-note">หมายเหตุ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="4" class="sec-title">1. ชุดอุปกรณ์ทวนสัญญาณผ่านคลื่นความถี่สูง (SHF) พร้อมอุปกรณ์ประกอบ</td></tr>
+              <tr>
+                <td class="sub-item nowrap">- ตรวจสอบสภาพสายอากาศไมโครเวฟ (Microwave Antenna) ให้อยู่ในสภาพสมบูรณ์ พร้อมใช้งาน</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item">- ตรวจสอบสภาพของอุปกรณ์ Power Injector ให้อยู่ในสภาพสมบูรณ์ พร้อมใช้งาน</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item">- สถานะการทำงานของอุปกรณ์ Outdoor Antenna Unit (OAU) และ Outdoor Unit (ODU)<br>&nbsp;&nbsp;ให้อยู่ในสถานะออนไลน์ (Online) และพร้อมใช้งาน</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+
+              <tr><td colspan="4" class="sec-title">2. สถานีแม่ข่ายแบบ 1 Carrier (Outdoor) พร้อมอุปกรณ์ประกอบ</td></tr>
+              <tr>
+                <td class="sub-item">- ตรวจสอบสภาพภายนอกของชุด Base Station DIB-R5 ให้อยู่ในสภาพสมบูรณ์ พร้อมใช้งาน</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item">- สายอากาศแบบรอบทิศทาง (Omni Antenna) และสายอากาศ GPS ให้อยู่ในสภาพพร้อมใช้งาน</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item">- ตรวจสอบสภาพของตู้และอุปกรณ์ภายในตู้ ให้อยู่ในสภาพสมบูรณ์ พร้อมใช้งาน</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item">- Controller M830B S/N : <input type="text" class="table-input" style="width: 170px;" value=""></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item">- Rectifier R48-1000e3 Module 1 S/N : <input type="text" class="table-input" style="width: 170px;" value=""></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item">- Rectifier R48-1000e3 Module 2 S/N : <input type="text" class="table-input" style="width: 170px;" value=""></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item">- Battery V-LFP48-100 48V100Ah S/N : <input type="text" class="table-input" style="width: 170px;" value=""></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item">- ระดับประจุแบตเตอรี่ (State of Charge : SOC) : <input type="text" class="table-input" style="width: 50px; text-align: center;" value=""> %</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item nowrap">- สถานะไฟแสดงผล : &nbsp;&nbsp;<label class="black-chk-wrap"><input type="checkbox" checked class="black-chk-input"><svg class="black-chk-svg" viewBox="0 0 14 14"><rect x="0.75" y="0.75" width="12.5" height="12.5" fill="#fff" stroke="#000" stroke-width="1.5" rx="0.5"/><path class="chk-mark" d="M2.8 7.2 L5.6 10.2 L11.2 3.4" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>RUN</span></label>&nbsp;&nbsp;<label class="black-chk-wrap"><input type="checkbox" class="black-chk-input"><svg class="black-chk-svg" viewBox="0 0 14 14"><rect x="0.75" y="0.75" width="12.5" height="12.5" fill="#fff" stroke="#000" stroke-width="1.5" rx="0.5"/><path class="chk-mark" d="M2.8 7.2 L5.6 10.2 L11.2 3.4" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>ALM</span></label></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item nowrap">- ค่าแรงดันแบตเตอรี่ : <input type="text" class="table-input" style="width: 60px; text-align: center;" value=""> โวลต์ (ค่าแรงดันระหว่าง 48 – 54 โวลต์)</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+
+              <tr><td colspan="4" class="sec-title">3. อุปกรณ์กระจายสัญญาณ (L3 Switch) แบบ 24 ช่อง</td></tr>
+              <tr>
+                <td class="sub-item">- ตรวจสอบสภาพภายนอกของอุปกรณ์ L3 Switch ให้อยู่ในสภาพสมบูรณ์ ไม่พบรอยชำรุด</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item">- L3 Switch S5735-S24T4XE-V2 S/N : <input type="text" class="table-input" style="width: 150px;" value=""></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item nowrap">- สถานะ LED หน้าอุปกรณ์ &nbsp;&nbsp;<label class="black-chk-wrap"><input type="checkbox" checked class="black-chk-input"><svg class="black-chk-svg" viewBox="0 0 14 14"><rect x="0.75" y="0.75" width="12.5" height="12.5" fill="#fff" stroke="#000" stroke-width="1.5" rx="0.5"/><path class="chk-mark" d="M2.8 7.2 L5.6 10.2 L11.2 3.4" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Power</span></label>&nbsp;&nbsp;<label class="black-chk-wrap"><input type="checkbox" checked class="black-chk-input"><svg class="black-chk-svg" viewBox="0 0 14 14"><rect x="0.75" y="0.75" width="12.5" height="12.5" fill="#fff" stroke="#000" stroke-width="1.5" rx="0.5"/><path class="chk-mark" d="M2.8 7.2 L5.6 10.2 L11.2 3.4" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Sys.</span></label></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item">- สถานะ &nbsp;<label class="black-chk-wrap"><input type="checkbox" checked class="black-chk-input"><svg class="black-chk-svg" viewBox="0 0 14 14"><rect x="0.75" y="0.75" width="12.5" height="12.5" fill="#fff" stroke="#000" stroke-width="1.5" rx="0.5"/><path class="chk-mark" d="M2.8 7.2 L5.6 10.2 L11.2 3.4" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>LAN Port :</span></label> <input type="text" class="table-input" style="width: 85px;" value=""> Active</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item">- สถานะ &nbsp;<label class="black-chk-wrap"><input type="checkbox" checked class="black-chk-input"><svg class="black-chk-svg" viewBox="0 0 14 14"><rect x="0.75" y="0.75" width="12.5" height="12.5" fill="#fff" stroke="#000" stroke-width="1.5" rx="0.5"/><path class="chk-mark" d="M2.8 7.2 L5.6 10.2 L11.2 3.4" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Port 10Ge :</span></label> <input type="text" class="table-input" style="width: 50px; text-align: center;" value=""> Link จาก L3 Switch ไปยัง RTN320F</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item">- สถานะ &nbsp;<label class="black-chk-wrap"><input type="checkbox" checked class="black-chk-input"><svg class="black-chk-svg" viewBox="0 0 14 14"><rect x="0.75" y="0.75" width="12.5" height="12.5" fill="#fff" stroke="#000" stroke-width="1.5" rx="0.5"/><path class="chk-mark" d="M2.8 7.2 L5.6 10.2 L11.2 3.4" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Port 10Ge :</span></label> <input type="text" class="table-input" style="width: 50px; text-align: center;" value=""> Link จาก L3 Switch ไปยัง DIB-R5 (Outdoor)</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item">- สถานะการเชื่อมต่อ (Link) ระหว่าง L3 Switch กับ Base Station (10GE1/0/2)</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+
+              <tr><td colspan="4" class="sec-title">4. ระบบไฟฟ้าและระบบสายดิน (Electrical Power and Grounding System)</td></tr>
+              <tr>
+                <td class="sub-item">- ตรวจสอบอุปกรณ์ภายในตู้ Main AC ให้อยู่ในสภาพสมบูรณ์ พร้อมใช้งาน</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item">- ตรวจสอบสายไฟและจุดต่อสายไฟ ไม่พบการชำรุด หลวม แตกหัก หรือฉนวนเสื่อมสภาพ</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item nowrap">- แรงดันไฟฟ้าระหว่างสาย L – N : <input type="text" class="table-input" style="width: 75px;" value=""> โวลต์ (ค่าแรงดันระหว่าง 180 - 240 โวลต์)</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item nowrap">- แรงดันไฟฟ้าระหว่างสาย L – G : <input type="text" class="table-input" style="width: 75px;" value=""> โวลต์ (ค่าแรงดันระหว่าง 180 - 240 โวลต์)</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item nowrap">- แรงดันไฟฟ้าระหว่างสาย N – G : <input type="text" class="table-input" style="width: 75px;" value=""> โวลต์ (ค่าแรงดันระหว่าง 0 - 2 โวลต์)</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item nowrap">- ตรวจสอบระบบสายดิน (Grounding) และจุดต่อสายดินทุกจุด ให้อยู่ในสภาพสมบูรณ์ พร้อมใช้งาน</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item nowrap">- ค่าความต้านทานสายดินระบบไฟฟ้า (AC Ground) <input type="text" class="table-input" style="width: 65px;" value=""> โอห์ม (ค่าไม่เกิน 5 โอห์ม)</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+              <tr>
+                <td class="sub-item nowrap">- ค่าความต้านทานสายดินระบบวิทยุ (RF Ground) <input type="text" class="table-input" style="width: 65px;" value=""> โอห์ม (ค่าไม่เกิน 5 โอห์ม)</td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+
+              <tr>
+                <td class="sub-item"><span class="bold">5. เครื่องสำรองไฟฟ้าขนาด 3kVA รุ่น HE-RT-3K S/N :</span> <input type="text" class="table-input" style="width: 160px;" value=""></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td class="cell-check" onclick="toggleCheck(this)"></td>
+                <td><input type="text" class="note-input" value=""></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- ================= BS PAGE 3 ================= -->
+      <div class="page-wrapper">
+        <div class="page-badge-ribbon no-print">หน้า 3 จาก 3 • ภาพถ่ายประกอบ (Base Station)</div>
+        <div class="page" id="page-bs-3">
+          <div class="header-split">
+            <div class="logo-left">
+              <img src="data:image/png;base64,@NBTC_B64@" alt="กสทช.">
+            </div>
+            <div class="header-center">
+              <div>การจัดซื้ออุปกรณ์พร้อมดำเนินการติดตั้ง</div>
+              <div>โครงการเพิ่มประสิทธิภาพระบบโครงข่ายสื่อสารด้วยอุปกรณ์ทวนสัญญาณผ่านคลื่นความถี่สูง (SHF)</div>
+              <div>เพื่อสนับสนุนการปฏิบัติราชการและแก้ไขปัญหาให้กับประชาชนในพื้นที่ห่างไกล</div>
+              <div>สัญญาเลขที่ 8680228 ลงวันที่ 23 กรกฎาคม 2568</div>
+              <div style="margin-top: 1px;">รายงานการบำรุงรักษาเพื่อป้องกันตามรอบระยะเวลา ครั้งที่ <input type="text" id="bs-p3-round" class="dotted-input black-text" style="width: 45px; text-align: center;" value=""></div>
+              <div>ชุดอุปกรณ์ทวนสัญญาณผ่านคลื่นความถี่สูง (SHF) และสถานีแม่ข่ายแบบ 1 Carrier (Outdoor) พร้อมอุปกรณ์ประกอบ</div>
+            </div>
+            <div class="logo-right">
+              <img src="data:image/png;base64,@FORTH_B64@" alt="FORTH">
+            </div>
+          </div>
+
+          <div class="divider-line"></div>
+
+          <div class="sub-bar">
+            <div class="sub-bar-row">
+              <div><span class="bold">ชื่อสถานี :</span> <span class="black-text normal editable-span" id="bs-station-name-3" contenteditable="true" oninput="autoSave()">แม่ข่าย Base Station ช่อง</span></div>
+              <div><span class="black-text normal editable-span" id="bs-station-zone-3" contenteditable="true" oninput="autoSave()">ศสส.ปค.เขต 9 (ส่วนแยกนครศรีธรรมราช)</span></div>
+            </div>
+            <div>
+              <span class="bold">สถานที่ :</span> <span class="black-text normal editable-span" id="bs-station-loc-3" contenteditable="true" oninput="autoSave()">ตำบลช่อง อำเภอนาโยง จังหวัดตรัง</span>
+            </div>
+          </div>
+
+          <table class="photo-table">
+            <tbody>
+              <tr>
+                <td style="width: 50%;">
+                  <div class="photo-box" onclick="triggerUpload('bs', 1)">
+                    <input type="file" id="photo-input-bs-1" accept="image/*" style="display:none" onchange="previewPhoto(event, 'bs', 1)">
+                    <img id="photo-img-bs-1" class="photo-img" alt="ภาพประกอบ 1">
+                    <div class="photo-overlay" id="overlay-bs-1">
+                      <svg width="28" height="28" fill="currentColor" viewBox="0 0 16 16"><path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/><path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/></svg>
+                      <span style="margin-top: 5px;">ถ่ายรูป / เลือกภาพ 1</span>
+                    </div>
+                    <button class="btn-del" id="btn-del-bs-1" onclick="removePhoto(event, 'bs', 1)" title="ลบภาพ">✕</button>
+                  </div>
+                </td>
+                <td style="width: 50%;">
+                  <div class="photo-box" onclick="triggerUpload('bs', 2)">
+                    <input type="file" id="photo-input-bs-2" accept="image/*" style="display:none" onchange="previewPhoto(event, 'bs', 2)">
+                    <img id="photo-img-bs-2" class="photo-img" alt="ภาพประกอบ 2">
+                    <div class="photo-overlay" id="overlay-bs-2">
+                      <svg width="28" height="28" fill="currentColor" viewBox="0 0 16 16"><path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/><path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/></svg>
+                      <span style="margin-top: 5px;">ถ่ายรูป / เลือกภาพ 2</span>
+                    </div>
+                    <button class="btn-del" id="btn-del-bs-2" onclick="removePhoto(event, 'bs', 2)" title="ลบภาพ">✕</button>
+                  </div>
+                </td>
+              </tr>
+              <tr class="caption-row">
+                <td>ภาพประกอบ</td>
+                <td>ภาพประกอบ</td>
+              </tr>
+
+              <tr>
+                <td>
+                  <div class="photo-box" onclick="triggerUpload('bs', 3)">
+                    <input type="file" id="photo-input-bs-3" accept="image/*" style="display:none" onchange="previewPhoto(event, 'bs', 3)">
+                    <img id="photo-img-bs-3" class="photo-img" alt="ภาพประกอบ 3">
+                    <div class="photo-overlay" id="overlay-bs-3">
+                      <svg width="28" height="28" fill="currentColor" viewBox="0 0 16 16"><path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/><path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/></svg>
+                      <span style="margin-top: 5px;">ถ่ายรูป / เลือกภาพ 3</span>
+                    </div>
+                    <button class="btn-del" id="btn-del-bs-3" onclick="removePhoto(event, 'bs', 3)" title="ลบภาพ">✕</button>
+                  </div>
+                </td>
+                <td>
+                  <div class="photo-box" onclick="triggerUpload('bs', 4)">
+                    <input type="file" id="photo-input-bs-4" accept="image/*" style="display:none" onchange="previewPhoto(event, 'bs', 4)">
+                    <img id="photo-img-bs-4" class="photo-img" alt="ภาพประกอบ 4">
+                    <div class="photo-overlay" id="overlay-bs-4">
+                      <svg width="28" height="28" fill="currentColor" viewBox="0 0 16 16"><path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/><path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/></svg>
+                      <span style="margin-top: 5px;">ถ่ายรูป / เลือกภาพ 4</span>
+                    </div>
+                    <button class="btn-del" id="btn-del-bs-4" onclick="removePhoto(event, 'bs', 4)" title="ลบภาพ">✕</button>
+                  </div>
+                </td>
+              </tr>
+              <tr class="caption-row">
+                <td>ภาพประกอบ</td>
+                <td>ภาพประกอบ</td>
+              </tr>
+
+              <tr>
+                <td>
+                  <div class="photo-box" onclick="triggerUpload('bs', 5)">
+                    <input type="file" id="photo-input-bs-5" accept="image/*" style="display:none" onchange="previewPhoto(event, 'bs', 5)">
+                    <img id="photo-img-bs-5" class="photo-img" alt="ภาพประกอบ 5">
+                    <div class="photo-overlay" id="overlay-bs-5">
+                      <svg width="28" height="28" fill="currentColor" viewBox="0 0 16 16"><path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/><path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/></svg>
+                      <span style="margin-top: 5px;">ถ่ายรูป / เลือกภาพ 5</span>
+                    </div>
+                    <button class="btn-del" id="btn-del-bs-5" onclick="removePhoto(event, 'bs', 5)" title="ลบภาพ">✕</button>
+                  </div>
+                </td>
+                <td>
+                  <div class="photo-box" onclick="triggerUpload('bs', 6)">
+                    <input type="file" id="photo-input-bs-6" accept="image/*" style="display:none" onchange="previewPhoto(event, 'bs', 6)">
+                    <img id="photo-img-bs-6" class="photo-img" alt="ภาพประกอบ 6">
+                    <div class="photo-overlay" id="overlay-bs-6">
+                      <svg width="28" height="28" fill="currentColor" viewBox="0 0 16 16"><path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/><path d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"/></svg>
+                      <span style="margin-top: 5px;">ถ่ายรูป / เลือกภาพ 6</span>
+                    </div>
+                    <button class="btn-del" id="btn-del-bs-6" onclick="removePhoto(event, 'bs', 6)" title="ลบภาพ">✕</button>
+                  </div>
+                </td>
+              </tr>
+              <tr class="caption-row">
+                <td>ภาพประกอบ</td>
+                <td>ภาพประกอบ</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div><!-- End #group-bs -->
+  </div><!-- End .page-container -->
   <script>
-    // LocalStorage Key
-    const STORAGE_KEY = 'analog_gateway_pm_data_v4';
+    // LocalStorage Keys
+    const isBsFile = (window.location.href.indexOf('Base_Station') !== -1 || window.location.href.indexOf('base_station') !== -1);
+    const STORAGE_KEY = isBsFile ? 'pm_report_bs_v2' : 'pm_report_ag_v2';
 
-    // Stations Database from รายงานการบำรุงรักษา_Analog_Gateway.xlsx
+    // Current Mode: 'ag', 'bs', 'all'
+    let currentMode = isBsFile ? 'bs' : 'ag';
+
+    // 1. Stations Database from รายงานการบำรุงรักษา_Analog_Gateway.xlsx
     const STATIONS_DATA = [
       {
         id: 1,
         name: "ที่ว่าการอำเภอห้วยกระเจา",
+        shortName: "ห้วยกระเจา (กาญจนบุรี)",
         amphoe: "ห้วยกระเจา",
         province: "กาญจนบุรี",
         location: "ตำบลห้วยกระเจา อำเภอห้วยกระเจา จังหวัดกาญจนบุรี",
@@ -1487,6 +2203,7 @@
       {
         id: 2,
         name: "ที่ว่าการอำเภอคลองลาน",
+        shortName: "คลองลาน (กำแพงเพชร)",
         amphoe: "คลองลาน",
         province: "กำแพงเพชร",
         location: "ตำบลคลองลานพัฒนา อำเภอคลองลาน จังหวัดกำแพงเพชร",
@@ -1497,6 +2214,7 @@
       {
         id: 3,
         name: "ที่ว่าการอำเภอเขาสวนกวาง",
+        shortName: "เขาสวนกวาง (ขอนแก่น)",
         amphoe: "เขาสวนกวาง",
         province: "ขอนแก่น",
         location: "ตำบลเขาสวนกวาง อำเภอเขาสวนกวาง จังหวัดขอนแก่น",
@@ -1507,6 +2225,7 @@
       {
         id: 4,
         name: "ที่ว่าการอำเภอเขาคิชฌกูฏ",
+        shortName: "เขาคิชฌกูฏ (จันทบุรี)",
         amphoe: "เขาคิชฌกูฏ",
         province: "จันทบุรี",
         location: "ตำบลพลวง อำเภอเขาคิชฌกูฏ จังหวัดจันทบุรี",
@@ -1517,6 +2236,7 @@
       {
         id: 5,
         name: "ที่ว่าการอำเภอย่านตาขาว",
+        shortName: "ย่านตาขาว (ตรัง)",
         amphoe: "ย่านตาขาว",
         province: "ตรัง",
         location: "ตำบลย่านตาขาว อำเภอย่านตาขาว จังหวัดตรัง",
@@ -1527,6 +2247,7 @@
       {
         id: 6,
         name: "ที่ว่าการอำเภอวังน้ำเขียว",
+        shortName: "วังน้ำเขียว (นครราชสีมา)",
         amphoe: "วังน้ำเขียว",
         province: "นครราชสีมา",
         location: "ตำบลวังน้ำเขียว อำเภอวังน้ำเขียว จังหวัดนครราชสีมา",
@@ -1537,6 +2258,7 @@
       {
         id: 7,
         name: "ที่ว่าการอำเภอหัวไทร",
+        shortName: "หัวไทร (นครศรีธรรมราช)",
         amphoe: "หัวไทร",
         province: "นครศรีธรรมราช",
         location: "ตำบลหัวไทร อำเภอหัวไทร จังหวัดนครศรีธรรมราช",
@@ -1547,6 +2269,7 @@
       {
         id: 8,
         name: "ที่ว่าการอำเภอดงเจริญ",
+        shortName: "ดงเจริญ (พิจิตร)",
         amphoe: "ดงเจริญ",
         province: "พิจิตร",
         location: "ตำบลวังงิ้วใต้ อำเภอดงเจริญ จังหวัดพิจิตร",
@@ -1556,71 +2279,249 @@
       }
     ];
 
-    // Operators List from รายชื่อทีมงาน.xlsx
-    const OPERATORS_LIST = [
-      "นางสาวดวงดาว ทวีศรีพายัพ",
-      "นางสาวสุรีรัตน์ รอดโพธิ์ทอง",
-      "นายปรัชนนท์ กัลยามณีกร",
-      "นายอนุรักษ์ แก้วเชียงทอง",
-      "นายศักดิภัช สว่างเนตร",
-      "นายอุทัย หนาดสำโรง",
-      "นายอุเทน บุญมี",
-      "นายสมสอาด ถาวร",
-      "นายวิสิฐศักดิ์ พอกเพิ่มดี",
-      "นายชนะ ปักษีเลิศ",
-      "นายธงชัย วัฒนพล",
-      "นายทักษิณ บุญไว",
-      "นายวัชระ มานะดี",
-      "นายอนุศักดิ์ สมาน",
-      "นายสมประสงค์ มลฑลจุลเกศ",
-      "นายคิรากร ดอนมูลไพร",
-      "นายนพคุณ บุญเพ็ญ",
-      "นายสมพงษ์ ซิ้มเจริญ"
+    // 2. Base Stations Database from 2.บัญชีรายชื่อสถานีแม่ข่าย 8 สถานที่.xlsx
+    const BASE_STATIONS_DATA = [
+      {
+        id: 1,
+        name: "แม่ข่าย Base Station เลาขวัญ",
+        shortName: "เลาขวัญ (กาญจนบุรี)",
+        amphoe: "เลาขวัญ",
+        province: "กาญจนบุรี",
+        location: "ตำบลเลาขวัญ อำเภอเลาขวัญ จังหวัดกาญจนบุรี",
+        zoneFull: "ศูนย์สื่อสารกรมการปกครองเขต 11 (เพชรบุรี)",
+        zoneShort: "ศสส.ปค.เขต 11 (เพชรบุรี)",
+        coords: "14.514783 , 99.709059"
+      },
+      {
+        id: 2,
+        name: "แม่ข่าย Base Station ปางศิลาทอง",
+        shortName: "ปางศิลาทอง (กำแพงเพชร)",
+        amphoe: "ปางศิลาทอง",
+        province: "กำแพงเพชร",
+        location: "ตำบลโพธิ์ทอง อำเภอปางศิลาทอง จังหวัดกำแพงเพชร",
+        zoneFull: "ศูนย์สื่อสารกรมการปกครองเขต 3 (ส่วนแยกตาก)",
+        zoneShort: "ศสส.ปค.เขต 3 (ส่วนแยกตาก)",
+        coords: "15.993741 , 99.364571"
+      },
+      {
+        id: 3,
+        name: "แม่ข่าย Base Station อุบลรัตน์",
+        shortName: "อุบลรัตน์ (ขอนแก่น)",
+        amphoe: "อุบลรัตน์",
+        province: "ขอนแก่น",
+        location: "ตำบลเขื่อนอุบลรัตน์ อำเภออุบลรัตน์ จังหวัดขอนแก่น",
+        zoneFull: "ศูนย์สื่อสารกรมการปกครองเขต 6 (ขอนแก่น)",
+        zoneShort: "ศสส.ปค.เขต 6 (ขอนแก่น)",
+        coords: "16.919524 , 102.727523"
+      },
+      {
+        id: 4,
+        name: "แม่ข่าย Base Station เขาคิชฌกูฎ",
+        shortName: "เขาคิชฌกูฎ (จันทบุรี)",
+        amphoe: "เขาคิชฌกูฎ",
+        province: "จันทบุรี",
+        location: "ตำบลพลวง อำเภอเขาคิชฌกูฎ จังหวัดจันทบุรี",
+        zoneFull: "ศูนย์สื่อสารกรมการปกครองเขต 5 (จันทบุรี)",
+        zoneShort: "ศสส.ปค.เขต 5 (จันทบุรี)",
+        coords: "12.935094 , 102.058574"
+      },
+      {
+        id: 5,
+        name: "แม่ข่าย Base Station ช่อง",
+        shortName: "ช่อง (นาโยง, ตรัง)",
+        amphoe: "นาโยง",
+        province: "ตรัง",
+        location: "ตำบลช่อง อำเภอนาโยง จังหวัดตรัง",
+        zoneFull: "ศูนย์สื่อสารกรมการปกครองเขต 9 (ส่วนแยกนครศรีธรรมราช)",
+        zoneShort: "ศสส.ปค.เขต 9 (ส่วนแยกนครศรีธรรมราช)",
+        coords: "7.524270 , 99.758810"
+      },
+      {
+        id: 6,
+        name: "แม่ข่าย Base Station ปากช่อง",
+        shortName: "ปากช่อง (นครราชสีมา)",
+        amphoe: "ปากช่อง",
+        province: "นครราชสีมา",
+        location: "ตำบลปากช่อง อำเภอปากช่อง จังหวัดนครราชสีมา",
+        zoneFull: "ศูนย์สื่อสารกรมการปกครองเขต 16 (บุรีรัมย์)",
+        zoneShort: "ศสส.ปค.เขต 16 (บุรีรัมย์)",
+        coords: "14.480402 , 101.726573"
+      },
+      {
+        id: 7,
+        name: "แม่ข่าย Base Station ปากพนัง",
+        shortName: "ปากพนัง (นครศรีธรรมราช)",
+        amphoe: "ปากพนัง",
+        province: "นครศรีธรรมราช",
+        location: "ตำบลปากพนัง อำเภอปากพนัง จังหวัดนครศรีธรรมราช",
+        zoneFull: "ศูนย์สื่อสารกรมการปกครองเขต 9 (ส่วนแยกนครศรีธรรมราช)",
+        zoneShort: "ศสส.ปค.เขต 9 (ส่วนแยกนครศรีธรรมราช)",
+        coords: "8.221462 , 100.246725"
+      },
+      {
+        id: 8,
+        name: "แม่ข่าย Base Station ดงเจริญ",
+        shortName: "ดงเจริญ (พิจิตร)",
+        amphoe: "ดงเจริญ",
+        province: "พิจิตร",
+        location: "ตำบลวังงิ้วใต้ อำเภอดงเจริญ จังหวัดพิจิตร",
+        zoneFull: "ศูนย์สื่อสารกรมการปกครองเขต 3 (พิษณุโลก)",
+        zoneShort: "ศสส.ปค.เขต 3 (พิษณุโลก)",
+        coords: "16.016102 , 100.732560"
+      }
     ];
 
+    // Quick Page Jump
+    function jumpToPage(num) {
+      let targetId = '';
+      if (currentMode === 'bs') {
+        targetId = 'page-bs-' + num;
+      } else {
+        targetId = 'page-ag-' + num;
+      }
+      const el = document.getElementById(targetId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    // Switch between 'ag', 'bs', 'all'
+    function switchReportMode(mode) {
+      currentMode = mode;
+      document.body.className = 'mode-' + mode;
+
+      document.getElementById('tab-btn-ag').classList.toggle('active', mode === 'ag');
+      document.getElementById('tab-btn-bs').classList.toggle('active', mode === 'bs');
+      document.getElementById('tab-btn-all').classList.toggle('active', mode === 'all');
+
+      const grpAg = document.getElementById('group-ag');
+      const grpBs = document.getElementById('group-bs');
+      const barAgSt = document.getElementById('bar-group-ag-station');
+      const barBsSt = document.getElementById('bar-group-bs-station');
+
+      if (mode === 'ag') {
+        grpAg.style.display = 'flex';
+        grpBs.style.display = 'none';
+        barAgSt.style.display = 'inline-flex';
+        barBsSt.style.display = 'none';
+      } else if (mode === 'bs') {
+        grpAg.style.display = 'none';
+        grpBs.style.display = 'flex';
+        barAgSt.style.display = 'none';
+        barBsSt.style.display = 'inline-flex';
+      } else {
+        grpAg.style.display = 'flex';
+        grpBs.style.display = 'flex';
+        barAgSt.style.display = 'inline-flex';
+        barBsSt.style.display = 'inline-flex';
+      }
+      autoSave();
+    }
+
+    // Select Analog Gateway Station
     function onStationSelect(name) {
       const st = STATIONS_DATA.find(s => s.name === name);
       if (!st) return;
 
-      const s1 = document.getElementById('station-select');
+      const s1 = document.getElementById('ag-station-select-p1');
       if (s1 && s1.value !== name) s1.value = name;
-      const bSt = document.getElementById('bar-station-select');
+      const bSt = document.getElementById('bar-station-select-ag');
       if (bSt && bSt.value !== name) bSt.value = name;
 
-      const loc1 = document.getElementById('station-loc-1');
+      const loc1 = document.getElementById('ag-station-loc-1');
       if (loc1) loc1.innerText = st.location;
-      const zone1 = document.getElementById('station-zone-1');
+      const zone1 = document.getElementById('ag-station-zone-1');
       if (zone1) zone1.innerText = st.zoneFull;
-      const coord1 = document.getElementById('station-coord-1');
+      const coord1 = document.getElementById('ag-station-coord-1');
       if (coord1) coord1.innerText = st.coords;
 
-      const name2 = document.getElementById('station-name-2');
+      const name2 = document.getElementById('ag-station-name-2');
       if (name2) name2.innerText = st.name;
-      const zone2 = document.getElementById('station-zone-2');
+      const zone2 = document.getElementById('ag-station-zone-2');
       if (zone2) zone2.innerText = st.zoneShort;
-      const loc2 = document.getElementById('station-loc-2');
+      const loc2 = document.getElementById('ag-station-loc-2');
       if (loc2) loc2.innerText = st.location;
 
-      const name3 = document.getElementById('station-name-3');
+      const name3 = document.getElementById('ag-station-name-3');
       if (name3) name3.innerText = st.name;
-      const zone3 = document.getElementById('station-zone-3');
+      const zone3 = document.getElementById('ag-station-zone-3');
       if (zone3) zone3.innerText = st.zoneShort;
-      const loc3 = document.getElementById('station-loc-3');
+      const loc3 = document.getElementById('ag-station-loc-3');
       if (loc3) loc3.innerText = st.location;
 
       autoSave();
     }
 
+    // Select Base Station
+    function onBaseStationSelect(name) {
+      const st = BASE_STATIONS_DATA.find(s => s.name === name);
+      if (!st) return;
+
+      const s1 = document.getElementById('bs-station-select-p1');
+      if (s1 && s1.value !== name) s1.value = name;
+      const bSt = document.getElementById('bar-station-select-bs');
+      if (bSt && bSt.value !== name) bSt.value = name;
+
+      const loc1 = document.getElementById('bs-station-loc-1');
+      if (loc1) loc1.innerText = st.location;
+      const zone1 = document.getElementById('bs-station-zone-1');
+      if (zone1) zone1.innerText = st.zoneFull;
+      const coord1 = document.getElementById('bs-station-coord-1');
+      if (coord1) coord1.innerText = st.coords;
+
+      const name2 = document.getElementById('bs-station-name-2');
+      if (name2) name2.innerText = st.name;
+      const zone2 = document.getElementById('bs-station-zone-2');
+      if (zone2) zone2.innerText = st.zoneShort;
+      const loc2 = document.getElementById('bs-station-loc-2');
+      if (loc2) loc2.innerText = st.location;
+
+      const name3 = document.getElementById('bs-station-name-3');
+      if (name3) name3.innerText = st.name;
+      const zone3 = document.getElementById('bs-station-zone-3');
+      if (zone3) zone3.innerText = st.zoneShort;
+      const loc3 = document.getElementById('bs-station-loc-3');
+      if (loc3) loc3.innerText = st.location;
+
+      autoSave();
+    }
+
+    // Select Operator
     function onOperatorSelect(name) {
-      const op1 = document.getElementById('operator-select');
-      if (op1 && op1.value !== name) op1.value = name;
+      const opAg = document.getElementById('ag-operator-select-1');
+      if (opAg && opAg.value !== name) opAg.value = name;
+      const opBs = document.getElementById('bs-operator-select-1');
+      if (opBs && opBs.value !== name) opBs.value = name;
       const bOp = document.getElementById('bar-operator-select');
       if (bOp && bOp.value !== name) bOp.value = name;
 
       autoSave();
     }
 
-    // Cell Check Toggle with Haptic Feedback (for mobile)
+    // Quick Action: Check All Normal in Active Report
+    function checkAllNormal() {
+      let activeGroup = null;
+      if (currentMode === 'bs') {
+        activeGroup = document.getElementById('group-bs');
+      } else {
+        activeGroup = document.getElementById('group-ag');
+      }
+      if (!activeGroup) return;
+
+      const rows = activeGroup.querySelectorAll('.maintenance-table tbody tr');
+      let count = 0;
+      rows.forEach(r => {
+        if (r.cells.length >= 3 && r.cells[1].classList.contains('cell-check')) {
+          r.cells[1].innerText = '✓';
+          r.cells[2].innerText = '';
+          count++;
+        }
+      });
+      autoSave();
+      showToast('ติ๊กปกติให้ครบทุกข้อ (' + count + ' รายการ) เรียบร้อยแล้ว ⭐');
+    }
+
+    // Cell Check Toggle with Haptic Feedback
     function toggleCheck(td) {
       const row = td.parentElement;
       const normalCell = row.cells[1];
@@ -1649,18 +2550,17 @@
     }
 
     // Photo Upload Handling
-    function triggerUpload(index) {
-      document.getElementById('photo-input-' + index).click();
+    function triggerUpload(group, index) {
+      document.getElementById('photo-input-' + group + '-' + index).click();
     }
 
-    function previewPhoto(event, index) {
+    function previewPhoto(event, group, index) {
       const file = event.target.files[0];
       if (!file) return;
       const reader = new FileReader();
       reader.onload = function(e) {
         const tempImg = new Image();
         tempImg.onload = function() {
-          // Downscale large mobile camera photos to max 1200px so 6 photos fit in localStorage & export fast
           const maxDim = 1200;
           let w = tempImg.width;
           let h = tempImg.height;
@@ -1682,11 +2582,11 @@
           ctx.drawImage(tempImg, 0, 0, w, h);
           const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
 
-          const img = document.getElementById('photo-img-' + index);
+          const img = document.getElementById('photo-img-' + group + '-' + index);
           img.src = dataUrl;
           img.style.display = 'block';
-          document.getElementById('overlay-' + index).style.display = 'none';
-          document.getElementById('btn-del-' + index).style.display = 'flex';
+          document.getElementById('overlay-' + group + '-' + index).style.display = 'none';
+          document.getElementById('btn-del-' + group + '-' + index).style.display = 'flex';
           autoSave();
         };
         tempImg.src = e.target.result;
@@ -1694,12 +2594,12 @@
       reader.readAsDataURL(file);
     }
 
-    function removePhoto(event, index) {
+    function removePhoto(event, group, index) {
       if (event) event.stopPropagation();
-      const input = document.getElementById('photo-input-' + index);
-      const img = document.getElementById('photo-img-' + index);
-      const overlay = document.getElementById('overlay-' + index);
-      const btn = document.getElementById('btn-del-' + index);
+      const input = document.getElementById('photo-input-' + group + '-' + index);
+      const img = document.getElementById('photo-img-' + group + '-' + index);
+      const overlay = document.getElementById('overlay-' + group + '-' + index);
+      const btn = document.getElementById('btn-del-' + group + '-' + index);
 
       if (input) input.value = '';
       if (img) { img.src = ''; img.style.display = 'none'; }
@@ -1720,8 +2620,10 @@
     function autoSave() {
       try {
         const data = {
-          selectedStation: document.getElementById('station-select') ? document.getElementById('station-select').value : '',
-          selectedOperator: document.getElementById('operator-select') ? document.getElementById('operator-select').value : '',
+          currentMode: currentMode,
+          selectedStationAg: document.getElementById('ag-station-select-p1') ? document.getElementById('ag-station-select-p1').value : '',
+          selectedStationBs: document.getElementById('bs-station-select-p1') ? document.getElementById('bs-station-select-p1').value : '',
+          selectedOperator: document.getElementById('bar-operator-select') ? document.getElementById('bar-operator-select').value : '',
           inputs: {},
           spans: {},
           checkboxes: [],
@@ -1740,25 +2642,22 @@
         document.querySelectorAll('.cell-check').forEach((td, idx) => {
           data.checks.push(td.innerText.trim());
         });
-        for (let i = 1; i <= 6; i++) {
-          const img = document.getElementById('photo-img-' + i);
-          if (img && img.src && img.src.startsWith('data:image')) {
-            data.photos['photo_' + i] = img.src;
+        ['ag', 'bs'].forEach(g => {
+          for (let i = 1; i <= 6; i++) {
+            const img = document.getElementById('photo-img-' + g + '-' + i);
+            if (img && img.src && img.src.startsWith('data:image')) {
+              data.photos['photo_' + g + '_' + i] = img.src;
+            }
           }
-        }
+        });
         localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
       } catch (e) {}
     }
 
-    function manualSave() {
-      savePdfToDevice();
-    }
-
-    // Prepare DOM for crisp A4 PDF rendering without mobile clipping
+    // Prepare DOM for crisp A4 PDF rendering
     function prepareDomForPdf() {
       document.body.classList.add('pdf-export-mode');
 
-      // Convert <select> inside pages to temporary crisp text spans
       document.querySelectorAll('.page select.dropdown-field').forEach(sel => {
         const span = document.createElement('span');
         span.className = 'pdf-temp-span';
@@ -1779,7 +2678,6 @@
         sel.parentNode.insertBefore(span, sel.nextSibling);
       });
 
-      // Convert <input type="text"> inside pages to temporary crisp text spans
       document.querySelectorAll('.page input[type="text"]').forEach(inp => {
         const span = document.createElement('span');
         span.className = 'pdf-temp-span';
@@ -1799,6 +2697,7 @@
         } else if (inp.classList.contains('table-input')) {
           span.style.minWidth = inp.style.width || '65px';
           span.style.padding = '0 4px';
+          if (inp.style.textAlign) span.style.textAlign = inp.style.textAlign;
         } else if (inp.classList.contains('note-input')) {
           span.style.width = '100%';
           span.style.fontSize = '12px';
@@ -1807,7 +2706,6 @@
         inp.parentNode.insertBefore(span, inp.nextSibling);
       });
 
-      // Ensure SVG checkmarks have explicit attributes for html2canvas
       document.querySelectorAll('.black-chk-wrap').forEach(wrap => {
         const cb = wrap.querySelector('.black-chk-input');
         const svg = wrap.querySelector('.black-chk-svg');
@@ -1823,7 +2721,7 @@
     }
 
     function restoreDomAfterPdf() {
-      ['page-1', 'page-2', 'page-3'].forEach(id => {
+      ['page-ag-1', 'page-ag-2', 'page-ag-3', 'page-bs-1', 'page-bs-2', 'page-bs-3'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.style.display = '';
       });
@@ -1838,10 +2736,13 @@
         mark.style.display = '';
       });
       document.body.classList.remove('pdf-export-mode');
+
+      // Re-apply current mode visibility
+      switchReportMode(currentMode);
     }
 
     window._lastPdfBlob = null;
-    window._lastPdfFilename = 'รายงานการบำรุงรักษา_Analog_Gateway.pdf';
+    window._lastPdfFilename = 'รายงานการบำรุงรักษา.pdf';
     window._lastPdfInstance = null;
 
     async function savePdfToDevice() {
@@ -1867,11 +2768,39 @@
         }
         await new Promise(r => setTimeout(r, 120));
 
-        const pages = [
-          document.getElementById('page-1'),
-          document.getElementById('page-2'),
-          document.getElementById('page-3')
-        ];
+        let pages = [];
+        let filenamePrefix = 'รายงานการบำรุงรักษา';
+        let stName = '';
+
+        if (currentMode === 'ag') {
+          pages = [
+            document.getElementById('page-ag-1'),
+            document.getElementById('page-ag-2'),
+            document.getElementById('page-ag-3')
+          ];
+          const stSel = document.getElementById('ag-station-select-p1');
+          stName = (stSel && stSel.value ? stSel.value : 'Analog_Gateway').replace(/[\\/:*?"<>|\s]+/g, '_');
+          filenamePrefix = 'รายงานการบำรุงรักษา_Analog_Gateway_' + stName;
+        } else if (currentMode === 'bs') {
+          pages = [
+            document.getElementById('page-bs-1'),
+            document.getElementById('page-bs-2'),
+            document.getElementById('page-bs-3')
+          ];
+          const stSel = document.getElementById('bs-station-select-p1');
+          stName = (stSel && stSel.value ? stSel.value : 'Base_Station').replace(/[\\/:*?"<>|\s]+/g, '_');
+          filenamePrefix = 'รายงานการบำรุงรักษา_Base_Station_' + stName;
+        } else {
+          pages = [
+            document.getElementById('page-ag-1'),
+            document.getElementById('page-ag-2'),
+            document.getElementById('page-ag-3'),
+            document.getElementById('page-bs-1'),
+            document.getElementById('page-bs-2'),
+            document.getElementById('page-bs-3')
+          ];
+          filenamePrefix = 'รายงานการบำรุงรักษา_ครบชุด_AnalogGateway_BaseStation';
+        }
 
         const jsPDFClass = (window.jspdf && window.jspdf.jsPDF) ? window.jspdf.jsPDF : window.jsPDF;
         const pdf = new jsPDFClass({
@@ -1881,8 +2810,11 @@
           compress: true
         });
 
+        // Temporarily ensure both groups are visible in DOM so html2canvas can clone pages
+        document.getElementById('group-ag').style.display = 'flex';
+        document.getElementById('group-bs').style.display = 'flex';
+
         for (let i = 0; i < pages.length; i++) {
-          // Isolate active page at (0,0) so mobile browsers never offset or clip Page 2 / Page 3
           pages.forEach((p, idx) => {
             if (p) p.style.display = (idx === i) ? 'flex' : 'none';
           });
@@ -1891,7 +2823,7 @@
           document.body.scrollTop = 0;
 
           if (stepEl) {
-            stepEl.innerText = 'กรุณารอสักครู่ ระบบกำลังสร้างเอกสาร A4 (หน้า ' + (i + 1) + ' / 3)';
+            stepEl.innerText = 'กรุณารอสักครู่ ระบบกำลังสร้างเอกสาร A4 (หน้า ' + (i + 1) + ' / ' + pages.length + ')';
           }
           await new Promise(r => setTimeout(r, 80));
 
@@ -1921,17 +2853,14 @@
         window.scrollTo(prevScrollX, prevScrollY);
         if (loadingModal) loadingModal.classList.remove('active');
 
-        const stSelect = document.getElementById('station-select');
-        const stName = (stSelect && stSelect.value ? stSelect.value : 'Analog_Gateway').replace(/[\\/:*?"<>|\s]+/g, '_');
-        const roundInp = document.getElementById('p1-round');
+        const roundInp = (currentMode === 'bs') ? document.getElementById('bs-p1-round') : document.getElementById('ag-p1-round');
         const roundStr = (roundInp && roundInp.value.trim()) ? '_ครั้งที่' + roundInp.value.trim() : '';
-        const filename = 'รายงานการบำรุงรักษา_' + stName + roundStr + '.pdf';
+        const filename = filenamePrefix + roundStr + '.pdf';
 
         window._lastPdfInstance = pdf;
         window._lastPdfBlob = pdf.output('blob');
         window._lastPdfFilename = filename;
 
-        // Check if mobile Web Share API with files is supported (iOS / Android)
         const shareBtn = document.getElementById('btn-share-pdf');
         if (shareBtn) {
           let canShareFile = false;
@@ -1947,10 +2876,8 @@
         const fnEl = document.getElementById('pdf-ready-filename');
         if (fnEl) fnEl.innerText = filename;
 
-        // Automatically trigger direct file download
         triggerDirectDownload();
 
-        // Show modal so mobile/in-app browser users also have 1-tap save/share
         const readyModal = document.getElementById('pdf-ready-modal');
         if (readyModal) readyModal.classList.add('active');
       } catch (err) {
@@ -2014,8 +2941,14 @@
         if (!raw) return;
         const data = JSON.parse(raw);
 
-        if (data.selectedStation) {
-          onStationSelect(data.selectedStation);
+        if (data.currentMode) {
+          switchReportMode(data.currentMode);
+        }
+        if (data.selectedStationAg) {
+          onStationSelect(data.selectedStationAg);
+        }
+        if (data.selectedStationBs) {
+          onBaseStationSelect(data.selectedStationBs);
         }
         if (data.selectedOperator) {
           onOperatorSelect(data.selectedOperator);
@@ -2048,37 +2981,53 @@
         }
 
         if (data.photos) {
-          for (let i = 1; i <= 6; i++) {
-            const src = data.photos['photo_' + i];
-            if (src) {
-              const img = document.getElementById('photo-img-' + i);
-              img.src = src;
-              img.style.display = 'block';
-              document.getElementById('overlay-' + i).style.display = 'none';
-              document.getElementById('btn-del-' + i).style.display = 'flex';
+          ['ag', 'bs'].forEach(g => {
+            for (let i = 1; i <= 6; i++) {
+              const src = data.photos['photo_' + g + '_' + i];
+              if (src) {
+                const img = document.getElementById('photo-img-' + g + '-' + i);
+                if (img) {
+                  img.src = src;
+                  img.style.display = 'block';
+                  document.getElementById('overlay-' + g + '-' + i).style.display = 'none';
+                  document.getElementById('btn-del-' + g + '-' + i).style.display = 'flex';
+                }
+              }
             }
-          }
+          });
         }
       } catch (e) {}
     }
 
-    // Sync Round (ครั้งที่) Across Pages
+    // Sync Round (ครั้งที่)
     function syncRounds() {
-      const r1 = document.getElementById('p1-round');
-      const r2 = document.getElementById('p2-round');
-      const r3 = document.getElementById('p3-round');
-      const sync = (v) => {
-        if (r1) r1.value = v;
-        if (r2) r2.value = v;
-        if (r3) r3.value = v;
+      const syncAg = (v) => {
+        ['ag-p1-round', 'ag-p2-round', 'ag-p3-round'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.value = v;
+        });
         autoSave();
       };
-      if (r1) r1.addEventListener('input', () => sync(r1.value));
-      if (r2) r2.addEventListener('input', () => sync(r2.value));
-      if (r3) r3.addEventListener('input', () => sync(r3.value));
+      const syncBs = (v) => {
+        ['bs-p1-round', 'bs-p2-round', 'bs-p3-round'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.value = v;
+        });
+        autoSave();
+      };
+
+      ['ag-p1-round', 'ag-p2-round', 'ag-p3-round'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('input', () => syncAg(el.value));
+      });
+      ['bs-p1-round', 'bs-p2-round', 'bs-p3-round'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('input', () => syncBs(el.value));
+      });
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+      switchReportMode(currentMode);
       restoreData();
       syncRounds();
       document.querySelectorAll('input[type="text"]').forEach(inp => {
@@ -2099,10 +3048,13 @@
         document.querySelectorAll('.note-input').forEach(inp => inp.value = '');
         document.querySelectorAll('.dotted-input').forEach(inp => inp.value = '');
         document.querySelectorAll('.cell-check').forEach(c => c.innerText = '');
-        for (let i = 1; i <= 6; i++) {
-          removePhoto(null, i);
-        }
+        ['ag', 'bs'].forEach(g => {
+          for (let i = 1; i <= 6; i++) {
+            removePhoto(null, g, i);
+          }
+        });
         onStationSelect('ที่ว่าการอำเภอย่านตาขาว');
+        onBaseStationSelect('แม่ข่าย Base Station ช่อง');
         onOperatorSelect('นายสมประสงค์ มลฑลจุลเกศ');
         localStorage.removeItem(STORAGE_KEY);
         showToast('ล้างข้อมูลเรียบร้อยแล้ว ✓');
