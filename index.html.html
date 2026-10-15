@@ -37,7 +37,7 @@
     }
 
     /* Screen Background: Clean PDF Viewer (#525659) strictly matching the original document look */
-    body {
+    html, body {
       margin: 0;
       padding: 0;
       background-color: #525659;
@@ -45,6 +45,10 @@
       color: #000000;
       line-height: 1.25;
       font-size: 15px;
+      -webkit-text-size-adjust: 100% !important;
+      -moz-text-size-adjust: 100% !important;
+      -ms-text-size-adjust: 100% !important;
+      text-size-adjust: 100% !important;
     }
 
     /* Utilities */
@@ -291,7 +295,9 @@
 
     .p1-station-label {
       font-weight: bold;
-      width: 130px;
+      width: 140px;
+      min-width: 140px;
+      white-space: nowrap !important;
       flex-shrink: 0;
     }
 
@@ -313,15 +319,17 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 250px;
+      width: 290px;
+      max-width: 48%;
+      white-space: nowrap !important;
     }
 
     .sig-line {
       display: inline-block;
-      width: 210px;
+      width: 200px;
       border-bottom: 1px solid #000;
       vertical-align: baseline;
-      margin-left: 4px;
+      margin-left: 6px;
     }
 
     /* PAGE 2 & PAGE 3 Headers */
@@ -690,6 +698,7 @@
     }
 
     /* DIRECT PDF EXPORT MODE (IDENTICAL TO ORIGINAL A4) */
+    html.pdf-export-mode,
     body.pdf-export-mode {
       background: #ffffff !important;
       font-size: 15px !important;
@@ -697,6 +706,27 @@
       padding: 0 !important;
       width: 794px !important;
       min-width: 794px !important;
+      max-width: 794px !important;
+      -webkit-text-size-adjust: 100% !important;
+      -moz-text-size-adjust: 100% !important;
+      -ms-text-size-adjust: 100% !important;
+      text-size-adjust: 100% !important;
+    }
+
+    body.pdf-export-mode .sig-col {
+      width: 290px !important;
+      max-width: 48% !important;
+      white-space: nowrap !important;
+    }
+
+    body.pdf-export-mode .p1-station-label {
+      width: 140px !important;
+      min-width: 140px !important;
+      white-space: nowrap !important;
+    }
+
+    body.pdf-export-mode .sig-line {
+      width: 200px !important;
     }
 
     body.pdf-export-mode .no-print,
@@ -729,27 +759,10 @@
       background: #ffffff !important;
     }
 
-    body.pdf-export-mode input[type="text"],
-    body.pdf-export-mode .table-input {
-      border-bottom: none !important;
-      background: transparent !important;
-      color: #000000 !important;
-      box-shadow: none !important;
-    }
-
-    body.pdf-export-mode .dotted-input {
-      border-bottom: 1px dotted #000000 !important;
-    }
-
-    body.pdf-export-mode .dropdown-field {
-      border: none !important;
-      background: transparent !important;
-      appearance: none !important;
-      -webkit-appearance: none !important;
-      -moz-appearance: none !important;
-      color: #000000 !important;
-      padding: 0 !important;
-      box-shadow: none !important;
+    body.pdf-export-mode select,
+    body.pdf-export-mode select.dropdown-field,
+    body.pdf-export-mode input[type="text"] {
+      display: none !important;
     }
 
     /* PRINT SETUP (IDENTICAL TO ORIGINAL A4) */
@@ -884,19 +897,19 @@
           </span>
         </div>
         <div class="p1-station-row">
-          <span class="p1-station-label">สถานที่ :</span>
+          <span class="p1-station-label nowrap" style="white-space: nowrap;">สถานที่ :</span>
           <span class="p1-station-val" id="station-loc-1">ตำบลย่านตาขาว อำเภอย่านตาขาว จังหวัดตรัง</span>
         </div>
         <div class="p1-station-row">
-          <span class="p1-station-label">เขตพื้นที่รับผิดชอบ :</span>
+          <span class="p1-station-label nowrap" style="white-space: nowrap;">เขตพื้นที่รับผิดชอบ :</span>
           <span class="p1-station-val" id="station-zone-1">ศูนย์สื่อสารกรมการปกครองเขต 9 (ส่วนแยกนครศรีธรรมราช)</span>
         </div>
         <div class="p1-station-row">
-          <span class="p1-station-label">พิกัด :</span>
+          <span class="p1-station-label nowrap" style="white-space: nowrap;">พิกัด :</span>
           <span class="p1-station-val" id="station-coord-1">7.385692 , 99.666228</span>
         </div>
         <div class="p1-station-row" style="margin-top: 6px;">
-          <span class="p1-station-label">วันทีดำเนินการ :</span>
+          <span class="p1-station-label nowrap" style="white-space: nowrap;">วันที่ดำเนินการ :</span>
           <span class="p1-station-val">
             <input type="text" class="dotted-input" style="width: 280px;" placeholder="....................................................................">
           </span>
@@ -904,27 +917,27 @@
       </div>
 
       <div class="p1-signatures">
-        <div class="sig-col">
-          <div style="display: flex; align-items: baseline; width: 100%; justify-content: center;">
-            <span>ลงชื่อ :</span>
+        <div class="sig-col" style="white-space: nowrap;">
+          <div style="display: flex; align-items: baseline; width: 100%; justify-content: center; white-space: nowrap;">
+            <span class="nowrap" style="white-space: nowrap;">ลงชื่อ :</span>
             <span class="sig-line"></span>
           </div>
-          <div style="margin-top: 22px; width: 100%; text-align: center;">
-            ( <select id="operator-select-1" class="dropdown-field sig-select" onchange="onOperatorSelect(this.value)"></select> )
+          <div style="margin-top: 22px; width: 100%; text-align: center; white-space: nowrap;">
+            ( <select id="operator-select-1" class="dropdown-field sig-select nowrap" onchange="onOperatorSelect(this.value)"></select> )
           </div>
-          <div style="margin-top: 4px;">ผู้เข้าดำเนินการ</div>
-          <div style="margin-top: 4px;">บริษัท ฟอร์ท คอร์ปอเรชั่น จำกัด (มหาชน)</div>
+          <div class="nowrap" style="margin-top: 4px; white-space: nowrap;">ผู้เข้าดำเนินการ</div>
+          <div class="nowrap" style="margin-top: 4px; white-space: nowrap;">บริษัท ฟอร์ท คอร์ปอเรชั่น จำกัด (มหาชน)</div>
         </div>
 
-        <div class="sig-col">
-          <div style="display: flex; align-items: baseline; width: 100%; justify-content: center;">
-            <span>ลงชื่อ :</span>
+        <div class="sig-col" style="white-space: nowrap;">
+          <div style="display: flex; align-items: baseline; width: 100%; justify-content: center; white-space: nowrap;">
+            <span class="nowrap" style="white-space: nowrap;">ลงชื่อ :</span>
             <span class="sig-line"></span>
           </div>
-          <div style="margin-top: 22px; width: 100%; text-align: center;">
-            ( <span class="editable-span" contenteditable="true" style="min-width: 175px; text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> )
+          <div style="margin-top: 22px; width: 100%; text-align: center; white-space: nowrap;">
+            ( <span class="editable-span nowrap" contenteditable="true" style="min-width: 175px; text-align: center; white-space: nowrap;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> )
           </div>
-          <div style="margin-top: 4px;">เจ้าหน้าที่รับผิดชอบในพื้นที่</div>
+          <div class="nowrap" style="margin-top: 4px; white-space: nowrap;">เจ้าหน้าที่รับผิดชอบในพื้นที่</div>
         </div>
       </div>
     </div><!-- End Page 1 -->
@@ -1603,24 +1616,42 @@
 
     // Prepare DOM for PDF Export
     function prepareDomForPdf() {
+      // First clean up any existing temporary spans to prevent duplicate text
+      document.querySelectorAll('.pdf-temp-span').forEach(sp => sp.remove());
+
+      document.documentElement.classList.add('pdf-export-mode');
       document.body.classList.add('pdf-export-mode');
+
+      const mv = document.querySelector('meta[name=\'viewport\']');
+      if (mv) {
+        window._savedMetaViewport = mv.getAttribute('content');
+        mv.setAttribute('content', 'width=794, initial-scale=1.0, maximum-scale=5.0');
+      }
 
       document.querySelectorAll('.page select.dropdown-field').forEach(sel => {
         const valText = sel.options[sel.selectedIndex]?.text || sel.value;
         const span = document.createElement('span');
-        span.className = 'pdf-temp-span bold black-text';
+        span.className = 'pdf-temp-span bold black-text nowrap';
+        span.style.whiteSpace = 'nowrap';
         span.innerText = valText;
-        sel.style.display = 'none';
+        sel.style.setProperty('display', 'none', 'important');
         sel.parentNode.insertBefore(span, sel);
       });
 
       document.querySelectorAll('.page input[type="text"]').forEach(inp => {
         const span = document.createElement('span');
-        span.className = 'pdf-temp-span black-text';
+        span.className = 'pdf-temp-span black-text nowrap';
         span.style.fontFamily = "'TH Sarabun New', sans-serif";
         span.style.fontSize = window.getComputedStyle(inp).fontSize;
+        span.style.whiteSpace = 'nowrap';
+        if (inp.classList.contains('dotted-input')) {
+          span.style.borderBottom = '1px dotted #000000';
+          span.style.display = 'inline-block';
+          span.style.minWidth = inp.style.width || '80px';
+          span.style.textAlign = inp.style.textAlign || 'center';
+        }
         span.innerText = inp.value || '';
-        inp.style.display = 'none';
+        inp.style.setProperty('display', 'none', 'important');
         inp.parentNode.insertBefore(span, inp);
       });
 
@@ -1639,11 +1670,16 @@
     }
 
     function restoreDomAfterPdf() {
+      const mv = document.querySelector('meta[name=\'viewport\']');
+      if (mv && window._savedMetaViewport) {
+        mv.setAttribute('content', window._savedMetaViewport);
+      }
       document.querySelectorAll('.pdf-temp-span').forEach(sp => sp.remove());
-      document.querySelectorAll('.page select.dropdown-field').forEach(sel => sel.style.display = '');
-      document.querySelectorAll('.page input[type="text"]').forEach(inp => inp.style.display = '');
+      document.querySelectorAll('.page select.dropdown-field').forEach(sel => sel.style.removeProperty('display'));
+      document.querySelectorAll('.page input[type="text"]').forEach(inp => inp.style.removeProperty('display'));
       document.querySelectorAll('.black-chk-wrap .chk-mark').forEach(mark => mark.style.display = '');
       document.body.classList.remove('pdf-export-mode');
+      document.documentElement.classList.remove('pdf-export-mode');
     }
 
     window._lastPdfBlob = null;
@@ -1690,9 +1726,9 @@
         const filename = (REPORT_TYPE === 'bs' ? 'รายงานการบำรุงรักษา_Base_Station_' : 'รายงานการบำรุงรักษา_Analog_Gateway_') + stName + '.pdf';
         window._lastPdfFilename = filename;
 
-        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 800;
-        const renderScale = isMobile ? 1.5 : 2.0;
-        const imgQuality = isMobile ? 0.88 : 0.93;
+        // Use consistent scale 2.0 so font size, resolution, and line breaks are 100% IDENTICAL to computer!
+        const renderScale = 2.0;
+        const imgQuality = 0.92;
 
         const jsPDFClass = (window.jspdf && window.jspdf.jsPDF) ? window.jspdf.jsPDF : window.jsPDF;
         const pdf = new jsPDFClass({
