@@ -1721,6 +1721,8 @@
         document.activeElement.blur();
       }
 
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 768);
+
       const loadingModal = document.getElementById('pdf-loading-modal');
       const stepEl = document.getElementById('pdf-loading-step');
       if (loadingModal) loadingModal.classList.add('active');
@@ -1857,7 +1859,9 @@
           triggerDirectDownload();
         }
       } catch (e) {
-        triggerDirectDownload();
+        if (e && e.name !== 'AbortError') {
+          triggerDirectDownload();
+        }
       }
     }
 
