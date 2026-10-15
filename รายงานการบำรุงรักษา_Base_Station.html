@@ -130,13 +130,34 @@
       background: #334155;
     }
 
-    .btn-switch {
-      background: #1e293b;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      color: #e2e8f0;
+    /* Report Navigation Dropdown in Toolbar */
+    .report-nav-dropdown {
+      display: inline-flex;
+      align-items: center;
     }
-    .btn-switch:hover {
+
+    .nav-select {
+      background: #1e293b;
+      color: #f8fafc;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 20px;
+      padding: 5px 12px;
+      font-family: 'TH Sarabun New', sans-serif;
+      font-size: 15.5px;
+      font-weight: bold;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .nav-select:hover, .nav-select:focus {
       background: #0f172a;
+      border-color: #38bdf8;
+      color: #38bdf8;
+    }
+
+    .nav-select option {
+      background: #1e293b;
       color: #ffffff;
     }
 
@@ -204,7 +225,7 @@
       color: #000000 !important;
       font-family: 'TH Sarabun New', 'THSarabunNew', Tahoma, sans-serif;
       font-size: inherit;
-      font-weight: normal;
+      font-weight: normal !important;
       border: 1px dotted #555555;
       background-color: transparent;
       padding: 0 3px;
@@ -221,6 +242,7 @@
 
     .sig-select {
       font-size: 15px;
+      font-weight: normal !important;
       text-align: center;
       text-align-last: center;
       min-width: 175px;
@@ -228,6 +250,7 @@
 
     .station-select-p1 {
       font-size: 15.5px;
+      font-weight: normal !important;
       min-width: 195px;
     }
 
@@ -340,7 +363,7 @@
       margin-left: 6px;
     }
 
-    /* PAGE 2 & PAGE 3 Headers */
+    /* Headers for Subsequent Pages */
     .header-split {
       display: flex;
       justify-content: space-between;
@@ -401,7 +424,7 @@
       align-items: baseline;
     }
 
-    /* TABLE (PAGE 2) */
+    /* Maintenance Checklist Tables */
     .maintenance-table {
       width: 100%;
       border-collapse: collapse;
@@ -465,7 +488,7 @@
       font-weight: normal !important;
     }
 
-    /* PHOTO GRID (PAGE 3) */
+    /* Photo Grid */
     .photo-table {
       width: 100%;
       height: calc(100% - 135px);
@@ -511,7 +534,7 @@
       justify-content: center;
       opacity: 0;
       transition: opacity 0.2s;
-      color: #334155;
+      color: #344155;
       font-size: 14px;
       font-weight: normal;
       pointer-events: none;
@@ -576,6 +599,303 @@
     .toast.show {
       transform: translateX(-50%) translateY(0);
       opacity: 1;
+    }
+
+    /* Searchable Station Selector */
+    .station-search-container {
+      position: relative;
+      flex: 1;
+      max-width: 530px;
+      min-width: 260px;
+    }
+
+    .station-search-box {
+      display: flex;
+      align-items: center;
+      background: #ffffff;
+      border: 1.5px solid #2563eb;
+      border-radius: 6px;
+      padding: 2px 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      transition: all 0.2s ease;
+    }
+
+    .station-search-box:focus-within {
+      border-color: #1d4ed8;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    }
+
+    .station-search-icon {
+      font-size: 15px;
+      margin-right: 6px;
+      color: #2563eb;
+      user-select: none;
+    }
+
+    .station-search-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-family: 'TH Sarabun New', sans-serif;
+      font-size: 16.5px;
+      font-weight: normal !important;
+      color: #000000 !important;
+      padding: 2px 0;
+      background: transparent;
+      width: 100%;
+    }
+
+    .btn-search-clear, .btn-search-toggle {
+      background: none;
+      border: none;
+      font-size: 13px;
+      color: #64748b;
+      cursor: pointer;
+      padding: 3px 5px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-search-clear:hover, .btn-search-toggle:hover {
+      background: #f1f5f9;
+      color: #1e293b;
+    }
+
+    .btn-open-search-modal {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1d4ed8;
+      font-family: 'TH Sarabun New', sans-serif;
+      font-size: 15px;
+      font-weight: bold;
+      padding: 3px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .btn-open-search-modal:hover {
+      background: #dbeafe;
+      border-color: #93c5fd;
+    }
+
+    .station-results-dropdown {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      max-height: 320px;
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.25), 0 8px 10px -6px rgba(0,0,0,0.1);
+      z-index: 1050;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .station-dropdown-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 12px;
+      background: #f8fafc;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 13px;
+      color: #475569;
+    }
+
+    .station-results-count {
+      font-weight: bold;
+      color: #2563eb;
+    }
+
+    .station-search-tip {
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    .btn-close-dropdown {
+      background: none;
+      border: none;
+      font-size: 13px;
+      color: #64748b;
+      cursor: pointer;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .btn-close-dropdown:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    .station-results-list, .station-modal-list {
+      overflow-y: auto;
+      max-height: 270px;
+      padding: 4px;
+    }
+
+    .station-item {
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      border-bottom: 1px solid #f1f5f9;
+      transition: background-color 0.15s ease;
+    }
+
+    .station-item:hover {
+      background-color: #eff6ff;
+    }
+
+    .station-item.selected {
+      background-color: #dbeafe;
+      border-left: 3.5px solid #2563eb;
+    }
+
+    .station-item-name {
+      font-family: 'TH Sarabun New', sans-serif;
+      font-size: 16px;
+      font-weight: bold;
+      color: #0f172a;
+      line-height: 1.3;
+    }
+
+    .station-item-desc {
+      font-family: 'TH Sarabun New', sans-serif;
+      font-size: 13.5px;
+      color: #64748b;
+      line-height: 1.25;
+      margin-top: 2px;
+    }
+
+    /* Station Search Modal */
+    .station-search-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2100;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+
+    .station-search-modal.active {
+      display: flex;
+    }
+
+    .station-modal-content {
+      background: #ffffff;
+      width: 100%;
+      max-width: 600px;
+      max-height: 85vh;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+      overflow: hidden;
+    }
+
+    .station-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 18px;
+      background: #f8fafc;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .station-modal-close {
+      background: #e2e8f0;
+      border: none;
+      font-size: 16px;
+      color: #475569;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .station-modal-close:hover {
+      background: #cbd5e1;
+      color: #0f172a;
+    }
+
+    .station-modal-search-wrap {
+      display: flex;
+      align-items: center;
+      padding: 8px 14px;
+      margin: 12px 16px 6px 16px;
+      border: 2px solid #2563eb;
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .modal-station-search-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-family: 'TH Sarabun New', sans-serif;
+      font-size: 18px;
+      color: #000;
+      font-weight: bold;
+    }
+
+    .station-chips-row {
+      display: flex;
+      gap: 6px;
+      padding: 6px 16px 8px 16px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .station-chip {
+      font-family: 'TH Sarabun New', sans-serif;
+      font-size: 14px;
+      font-weight: bold;
+      padding: 2px 10px;
+      border-radius: 16px;
+      background: #f1f5f9;
+      color: #475569;
+      border: 1px solid #cbd5e1;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .station-chip:hover {
+      background: #e2e8f0;
+    }
+
+    .station-chip.active {
+      background: #2563eb;
+      color: #ffffff;
+      border-color: #2563eb;
+    }
+
+    .station-modal-status {
+      padding: 4px 18px;
+      font-size: 13px;
+      color: #64748b;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .station-modal-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 6px 12px;
+      max-height: 50vh;
     }
 
     /* PDF Loading & Ready Modals */
@@ -658,34 +978,39 @@
     .pdf-modal-btn-blue { background: #0284c7; }
     .pdf-modal-btn-gray { background: #e2e8f0; color: #1e293b; margin-bottom: 0; }
 
-    /* Mobile Viewport Optimizations */
-    @media screen and (max-width: 768px) {
+    /* MOBILE / SMALL SCREEN RESPONSIVENESS */
+    @media screen and (max-width: 860px) {
       .toolbar {
-        top: 8px;
-        right: 8px;
-        left: 8px;
-        padding: 6px 10px;
-        border-radius: 16px;
+        top: 10px;
+        right: 10px;
+        left: 10px;
         justify-content: center;
+        padding: 6px 10px;
         flex-wrap: wrap;
+        border-radius: 16px;
         gap: 6px;
       }
 
       .btn {
-        padding: 5px 10px;
+        padding: 4px 10px;
         font-size: 14px;
       }
 
-      body:not(.pdf-export-mode) .page-container {
-        padding: 55px 4px 40px 4px;
+      .nav-select {
+        padding: 4px 8px;
+        font-size: 14px;
+      }
+
+      .page-container {
+        padding: 95px 6px 30px 6px;
       }
 
       body:not(.pdf-export-mode) .page {
-        width: 100%;
-        max-width: 100%;
-        height: auto;
-        min-height: auto;
-        padding: 15px 10px;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: unset !important;
+        padding: 14px 10px !important;
         margin-bottom: 16px;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
@@ -716,6 +1041,10 @@
       width: 794px !important;
       min-width: 794px !important;
       max-width: 794px !important;
+      -webkit-font-smoothing: antialiased !important;
+      -moz-osx-font-smoothing: grayscale !important;
+      text-rendering: geometricPrecision !important;
+      image-rendering: -webkit-optimize-contrast !important;
       -webkit-text-size-adjust: 100% !important;
       -moz-text-size-adjust: 100% !important;
       -ms-text-size-adjust: 100% !important;
@@ -725,6 +1054,9 @@
 
     html.pdf-export-mode *,
     body.pdf-export-mode * {
+      -webkit-font-smoothing: antialiased !important;
+      -moz-osx-font-smoothing: grayscale !important;
+      text-rendering: geometricPrecision !important;
       -webkit-text-size-adjust: 100% !important;
       -moz-text-size-adjust: 100% !important;
       -ms-text-size-adjust: 100% !important;
@@ -792,7 +1124,11 @@
 
     body.pdf-export-mode select,
     body.pdf-export-mode select.dropdown-field,
-    body.pdf-export-mode input[type="text"] {
+    body.pdf-export-mode input[type="text"],
+    body.pdf-export-mode .station-search-container,
+    body.pdf-export-mode .btn-open-search-modal,
+    body.pdf-export-mode .station-results-dropdown,
+    body.pdf-export-mode .station-search-modal {
       display: none !important;
     }
 
@@ -808,10 +1144,32 @@
       .no-print,
       .toolbar,
       .toast,
-      .pdf-modal-backdrop,
       .photo-overlay,
-      .btn-del {
+      .btn-del,
+      .btn-open-search-modal,
+      .station-results-dropdown,
+      .station-search-modal {
         display: none !important;
+      }
+
+      .station-search-box {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        background: transparent !important;
+      }
+
+      .station-search-icon,
+      .btn-search-clear,
+      .btn-search-toggle {
+        display: none !important;
+      }
+
+      .station-search-input {
+        font-size: 15.5px !important;
+        font-weight: normal !important;
+        color: #000000 !important;
+        padding: 0 !important;
       }
 
       .page-container {
@@ -824,17 +1182,12 @@
         padding: 10mm 15mm 10mm 15mm !important;
         box-shadow: none !important;
         border-radius: 0 !important;
+        page-break-after: always;
+        break-after: page;
         width: 210mm !important;
         height: 297mm !important;
-        page-break-after: always !important;
-        page-break-inside: avoid !important;
-        break-after: page !important;
-        break-inside: avoid !important;
-      }
-
-      .page:last-child {
-        page-break-after: auto !important;
-        break-after: auto !important;
+        overflow: hidden !important;
+        background: #ffffff !important;
       }
 
       input[type="text"],
@@ -858,6 +1211,7 @@
         color: #000000 !important;
         padding: 0 !important;
         box-shadow: none !important;
+        font-weight: normal !important;
       }
 
       .black-chk-svg rect {
@@ -889,9 +1243,16 @@
     <button class="btn btn-reset" onclick="resetForm()" title="ล้างข้อมูลที่กรอกทั้งหมด">
       🔄 ล้างข้อมูล
     </button>
-    <a href="รายงานการบำรุงรักษา_Analog_Gateway.html" class="btn btn-switch" title="สลับไปยังอีกรายงาน">
-      🏢 ไปรายงาน Analog Gateway
-    </a>
+    <div class="report-nav-dropdown">
+      <select class="nav-select" onchange="if(this.value) window.location.href=this.value;" title="เลือกรายงานการบำรุงรักษา">
+        <option value="รายงานการบำรุงรักษา_Analog_Gateway.html">🏢 Analog Gateway</option>
+        <option value="รายงานการบำรุงรักษา_Base_Station.html" selected>📡 Base Station</option>
+        <option value="สถานีวิทยุลุกข่าย.html">📻 สถานีวิทยุลูกข่าย</option>
+        <option value="เสาสื่อสาร.html">🗼 เสาสื่อสาร</option>
+        <option value="เสารับ-ส่งสัญญาน.html">📶 เสารับ-ส่งสัญญาน</option>
+        <option value="ศูนย์ควบคุม.html">🖥️ ศูนย์ควบคุม</option>
+      </select>
+    </div>
   </div>
   <div class="page-container">
     <!-- ================= PAGE 1 (BS COVER) ================= -->
@@ -1066,116 +1427,51 @@
             <td><input type="text" class="note-input"></td>
           </tr>
           <tr>
-            <td class="sub-item">- Controller M830B S/N : <input type="text" class="table-input" style="width: 250px;"></td>
+            <td class="sub-item">- ตรวจสอบพัดลมระบายความร้อนของตู้ ให้อยู่ในสภาพพร้อมใช้งาน</td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td><input type="text" class="note-input"></td>
           </tr>
           <tr>
-            <td class="sub-item">- Rectifier R48-1000e3 Module 1 S/N : <input type="text" class="table-input" style="width: 250px;"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input"></td>
-          </tr>
-          <tr>
-            <td class="sub-item">- Rectifier R48-1000e3 Module 2 S/N : <input type="text" class="table-input" style="width: 250px;"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input"></td>
-          </tr>
-          <tr>
-            <td class="sub-item">- Battery V-LFP48-100 48V100Ah S/N : <input type="text" class="table-input" style="width: 250px;"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input"></td>
-          </tr>
-          <tr>
-            <td class="sub-item">- ระดับประจุแบตเตอรี่ (State of Charge : SOC) : <input type="text" class="table-input" style="width: 70px;"> %</td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input"></td>
-          </tr>
-          <tr>
-            <td class="sub-item">
-              - สถานะไฟแสดงผล :
-              <label class="black-chk-wrap" style="margin-left: 15px;"><input type="checkbox" class="black-chk-input" checked><svg class="black-chk-svg" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" rx="1" fill="none" stroke="#000" stroke-width="1.8"/><polyline class="chk-mark" points="3,8 6.5,12 13,3.5" fill="none" stroke="#000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg> RUN</label>
-              <label class="black-chk-wrap" style="margin-left: 20px;"><input type="checkbox" class="black-chk-input"><svg class="black-chk-svg" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" rx="1" fill="none" stroke="#000" stroke-width="1.8"/><polyline class="chk-mark" points="3,8 6.5,12 13,3.5" fill="none" stroke="#000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg> ALM</label>
-            </td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input"></td>
-          </tr>
-          <tr>
-            <td class="sub-item">- ค่าแรงดันแบตเตอรี่ : <input type="text" class="table-input" style="width: 80px;"> โวลต์ (ค่าแรงดันระหว่าง 48 - 54 โวลต์)</td>
+            <td class="sub-item">- ตรวจสอบระบบล็อคของตู้ ให้อยู่ในสภาพสมบูรณ์ พร้อมใช้งาน</td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td><input type="text" class="note-input"></td>
           </tr>
 
-          <!-- 3. L3 Switch -->
+          <!-- 3. แบตเตอรี่และระบบสำรองไฟฟ้า -->
           <tr>
-            <td class="sec-title">3. อุปกรณ์กระจายสัญญาณ (L3 Switch) แบบ 24 ช่อง</td>
+            <td class="sec-title">3. แบตเตอรี่และระบบสำรองไฟฟ้า</td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td><input type="text" class="note-input"></td>
           </tr>
           <tr>
-            <td class="sub-item">- ตรวจสอบสภาพภายนอกของอุปกรณ์ L3 Switch ให้อยู่ในสภาพสมบูรณ์ ไม่พบรอยชำรุด</td>
+            <td class="sub-item">- แบตเตอรี่ ไม่พบบวม รั่วซึม แตกร้าว หรือความเสียหาย</td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td><input type="text" class="note-input"></td>
           </tr>
           <tr>
-            <td class="sub-item">- L3 Switch S5735-S24T4XE-V2 S/N : <input type="text" class="table-input" style="width: 250px;"></td>
+            <td class="sub-item">- สายต่อแบตเตอรี่และจุดต่อสาย ให้ยึดแน่น ไม่หลวม และไม่พบการชำรุด</td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td><input type="text" class="note-input"></td>
           </tr>
           <tr>
-            <td class="sub-item">
-              - สถานะ LED หน้าอุปกรณ์
-              <label class="black-chk-wrap" style="margin-left: 15px;"><input type="checkbox" class="black-chk-input" checked><svg class="black-chk-svg" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" rx="1" fill="none" stroke="#000" stroke-width="1.8"/><polyline class="chk-mark" points="3,8 6.5,12 13,3.5" fill="none" stroke="#000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Power</label>
-              <label class="black-chk-wrap" style="margin-left: 20px;"><input type="checkbox" class="black-chk-input" checked><svg class="black-chk-svg" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" rx="1" fill="none" stroke="#000" stroke-width="1.8"/><polyline class="chk-mark" points="3,8 6.5,12 13,3.5" fill="none" stroke="#000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Sys.</label>
-            </td>
+            <td class="sub-item">- ทดสอบการทำงานของระบบสำรองไฟ โดยสามารถจ่ายไฟให้อุปกรณ์ได้ตามปกติ</td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td><input type="text" class="note-input"></td>
           </tr>
           <tr>
-            <td class="sub-item">
-              - สถานะ
-              <label class="black-chk-wrap" style="margin-left: 20px;"><input type="checkbox" class="black-chk-input" checked><svg class="black-chk-svg" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" rx="1" fill="none" stroke="#000" stroke-width="1.8"/><polyline class="chk-mark" points="3,8 6.5,12 13,3.5" fill="none" stroke="#000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg> LAN Port : <input type="text" class="table-input" style="width: 60px;"> Active</label>
-            </td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input"></td>
-          </tr>
-          <tr>
-            <td class="sub-item">
-              - สถานะ
-              <label class="black-chk-wrap" style="margin-left: 20px;"><input type="checkbox" class="black-chk-input" checked><svg class="black-chk-svg" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" rx="1" fill="none" stroke="#000" stroke-width="1.8"/><polyline class="chk-mark" points="3,8 6.5,12 13,3.5" fill="none" stroke="#000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Port 10Ge : Link จาก L3 Switch ไปยัง RTN320F</label>
-            </td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input"></td>
-          </tr>
-          <tr>
-            <td class="sub-item">
-              - สถานะ
-              <label class="black-chk-wrap" style="margin-left: 20px;"><input type="checkbox" class="black-chk-input" checked><svg class="black-chk-svg" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" rx="1" fill="none" stroke="#000" stroke-width="1.8"/><polyline class="chk-mark" points="3,8 6.5,12 13,3.5" fill="none" stroke="#000" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Port 10Ge : Link จาก L3 Switch ไปยัง DIB-R5 (Outdoor)</label>
-            </td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input"></td>
-          </tr>
-          <tr>
-            <td class="sub-item">- สถานะการเชื่อมต่อ (Link) ระหว่าง L3 Switch กับ Base Station (10GE1/0/2)</td>
+            <td class="sub-item">- ค่าแรงดันแบตเตอรี่สำรอง : <input type="text" class="table-input" style="width: 60px; text-align: center;"> โวลต์ (ค่าแรงดันระหว่าง 49.2 - 55.2 โวลต์)</td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td><input type="text" class="note-input"></td>
           </tr>
 
-          <!-- 4. ระบบไฟฟ้าและสายดิน -->
+          <!-- 4. ระบบไฟฟ้าและระบบสายดิน -->
           <tr>
             <td class="sec-title">4. ระบบไฟฟ้าและระบบสายดิน (Electrical Power and Grounding System)</td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
@@ -1183,7 +1479,7 @@
             <td><input type="text" class="note-input"></td>
           </tr>
           <tr>
-            <td class="sub-item">- ตรวจสอบอุปกรณ์ภายในตู้ Main AC ให้อยู่ในสภาพสมบูรณ์ พร้อมใช้งาน</td>
+            <td class="sub-item">- ตรวจสอบอุปกรณ์ภายในตู้ Breaker AC ให้อยู่ในสภาพสมบูรณ์ พร้อมใช้งาน</td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td><input type="text" class="note-input"></td>
@@ -1195,19 +1491,19 @@
             <td><input type="text" class="note-input"></td>
           </tr>
           <tr>
-            <td class="sub-item">- แรงดันไฟฟ้าระหว่างสาย L - N : <input type="text" class="table-input" style="width: 80px;"> โวลต์ <span class="nowrap">(ค่าแรงดันระหว่าง 180 - 240 โวลต์)</span></td>
+            <td class="sub-item">- แรงดันระหว่างสาย L – N : <input type="text" class="table-input" style="width: 60px; text-align: center;"> โวลต์ (ค่าแรงดันระหว่าง 180 - 240 โวลต์)</td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td><input type="text" class="note-input"></td>
           </tr>
           <tr>
-            <td class="sub-item">- แรงดันไฟฟ้าระหว่างสาย L - G : <input type="text" class="table-input" style="width: 80px;"> โวลต์ <span class="nowrap">(ค่าแรงดันระหว่าง 180 - 240 โวลต์)</span></td>
+            <td class="sub-item">- แรงดันระหว่างสาย L – G : <input type="text" class="table-input" style="width: 60px; text-align: center;"> โวลต์ (ค่าแรงดันระหว่าง 180 - 240 โวลต์)</td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td><input type="text" class="note-input"></td>
           </tr>
           <tr>
-            <td class="sub-item">- แรงดันไฟฟ้าระหว่างสาย N - G : <input type="text" class="table-input" style="width: 80px;"> โวลต์ <span class="nowrap">(ค่าแรงดันระหว่าง 0 - 2 โวลต์)</span></td>
+            <td class="sub-item">- แรงดันระหว่างสาย N – G : <input type="text" class="table-input" style="width: 60px; text-align: center;"> โวลต์ (ค่าแรงดันระหว่าง 0 - 2 โวลต์)</td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td><input type="text" class="note-input"></td>
@@ -1219,21 +1515,33 @@
             <td><input type="text" class="note-input"></td>
           </tr>
           <tr>
-            <td class="sub-item">- ค่าความต้านทานสายดินระบบไฟฟ้า (AC Ground) : <input type="text" class="table-input" style="width: 70px;"> โอห์ม <span class="nowrap">(ค่าไม่เกิน 5 โอห์ม)</span></td>
+            <td class="sub-item">- ค่าความต้านทานสายดินระบบไฟฟ้า (AC Ground) : <input type="text" class="table-input" style="width: 60px; text-align: center;"> <span class="nowrap">(ค่าไม่เกิน 5 โอห์ม)</span></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td><input type="text" class="note-input"></td>
           </tr>
           <tr>
-            <td class="sub-item">- ค่าความต้านทานสายดินระบบวิทยุ (RF Ground) : <input type="text" class="table-input" style="width: 70px;"> โอห์ม <span class="nowrap">(ค่าไม่เกิน 5 โอห์ม)</span></td>
+            <td class="sub-item">- ค่าความต้านทานสายดินระบบวิทยุ (RF Ground) : <input type="text" class="table-input" style="width: 60px; text-align: center;"> <span class="nowrap">(ค่าไม่เกิน 5 โอห์ม)</span></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td><input type="text" class="note-input"></td>
           </tr>
 
-          <!-- 5. เครื่องสำรองไฟฟ้า -->
+          <!-- 5. เสาโทรคมนาคมชนิด Guyed Mast -->
           <tr>
-            <td class="sec-title">5. เครื่องสำรองไฟฟ้าขนาด 3kVA รุ่น HE-RT-3K S/N : <input type="text" class="table-input" style="width: 220px;"></td>
+            <td class="sec-title">5. เสาโทรคมนาคมชนิด Guyed Mast ความสูง 30 เมตร พร้อมอุปกรณ์ประกอบ</td>
+            <td class="cell-check" onclick="toggleCheck(this)"></td>
+            <td class="cell-check" onclick="toggleCheck(this)"></td>
+            <td><input type="text" class="note-input"></td>
+          </tr>
+          <tr>
+            <td class="sub-item">- ตรวจสอบสภาพเสาโทรคมนาคม กายวาย (Guy Wire) และฐานราก ให้อยู่ในสภาพสมบูรณ์ มั่นคง แข็งแรง</td>
+            <td class="cell-check" onclick="toggleCheck(this)"></td>
+            <td class="cell-check" onclick="toggleCheck(this)"></td>
+            <td><input type="text" class="note-input"></td>
+          </tr>
+          <tr>
+            <td class="sub-item">- ตรวจสอบชุดหัวล่อฟ้าและระบบป้องกันฟ้าผ่าบนเสา ให้อยู่ในสภาพสมบูรณ์ พร้อมใช้งาน</td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td><input type="text" class="note-input"></td>
@@ -1373,8 +1681,7 @@
   </div>
   <script>
     const REPORT_TYPE = 'bs';
-    const STORAGE_KEY = 'pm_report_bs_classic_v1';
-    // 18 Team Members from รายชื่อทีมงาน.xlsx
+    const STORAGE_KEY = 'pm_report_bs_v3';
     const TEAM_MEMBERS = [
       "นางสาวดวงดาว ทวีศรีพายัพ",
       "นางสาวสุรีรัตน์ รอดโพธิ์ทอง",
@@ -1479,9 +1786,215 @@
         const opt = document.createElement('option');
         opt.value = name;
         opt.innerText = name;
-        if (name === 'นายสมประสงค์ มลฑลจุลเกศ') opt.selected = true;
+        if (REPORT_TYPE === 'cc') {
+          if (name === 'นายอนุรักษ์ แก้วเชียงทอง') opt.selected = true;
+        } else {
+          if (name === 'นายสมประสงค์ มลฑลจุลเกศ') opt.selected = true;
+        }
         op1.appendChild(opt);
       });
+    }
+
+    let currentSelectedStation = 'วิทยุลูกข่ายชนิดประจำที่ หมู่ 4 หนองจั่น';
+    let currentProvinceFilter = '';
+
+    function openStationSearch(showAll) {
+      const dd = document.getElementById('station-results-dropdown');
+      if (!dd) return;
+      dd.style.display = 'flex';
+      const clearBtn = document.getElementById('station-search-clear');
+      if (clearBtn) clearBtn.style.display = 'inline-block';
+      const searchInput = document.getElementById('station-search-input');
+      const kw = showAll ? '' : (searchInput ? searchInput.value : '');
+      const filtered = filterStations(kw, '');
+      renderStationList(filtered, 'station-results-list', false);
+    }
+
+    function closeStationSearch() {
+      const dd = document.getElementById('station-results-dropdown');
+      if (dd) dd.style.display = 'none';
+    }
+
+    function toggleStationSearch(e) {
+      if (e) e.stopPropagation();
+      const dd = document.getElementById('station-results-dropdown');
+      if (!dd) return;
+      if (dd.style.display === 'flex') {
+        closeStationSearch();
+      } else {
+        openStationSearch(true);
+      }
+    }
+
+    function onStationSearchInput(val) {
+      const clearBtn = document.getElementById('station-search-clear');
+      if (clearBtn) clearBtn.style.display = val ? 'inline-block' : 'none';
+      const dd = document.getElementById('station-results-dropdown');
+      if (dd) dd.style.display = 'flex';
+      const filtered = filterStations(val, '');
+      renderStationList(filtered, 'station-results-list', false);
+    }
+
+    function clearStationSearch() {
+      const input = document.getElementById('station-search-input');
+      if (input) {
+        input.value = '';
+        input.focus();
+      }
+      const clearBtn = document.getElementById('station-search-clear');
+      if (clearBtn) clearBtn.style.display = 'none';
+      openStationSearch(true);
+    }
+
+    function openStationModal() {
+      const modal = document.getElementById('station-search-modal');
+      if (!modal) return;
+      modal.classList.add('active');
+      const input = document.getElementById('modal-station-search-input');
+      if (input) {
+        input.value = '';
+        setTimeout(() => input.focus(), 100);
+      }
+      currentProvinceFilter = '';
+      document.querySelectorAll('.station-chip').forEach(c => c.classList.remove('active'));
+      const allChip = document.querySelector('.station-chip');
+      if (allChip) allChip.classList.add('active');
+      const filtered = filterStations('', '');
+      renderStationList(filtered, 'modal-station-results-list', true);
+    }
+
+    function closeStationModal() {
+      const modal = document.getElementById('station-search-modal');
+      if (modal) modal.classList.remove('active');
+    }
+
+    function onModalSearchInput(val) {
+      const clearBtn = document.getElementById('modal-search-clear');
+      if (clearBtn) clearBtn.style.display = val ? 'inline-block' : 'none';
+      const filtered = filterStations(val, currentProvinceFilter);
+      renderStationList(filtered, 'modal-station-results-list', true);
+    }
+
+    function clearModalSearch() {
+      const input = document.getElementById('modal-station-search-input');
+      if (input) {
+        input.value = '';
+        input.focus();
+      }
+      const clearBtn = document.getElementById('modal-search-clear');
+      if (clearBtn) clearBtn.style.display = 'none';
+      const filtered = filterStations('', currentProvinceFilter);
+      renderStationList(filtered, 'modal-station-results-list', true);
+    }
+
+    function filterByProvince(province, chipEl) {
+      currentProvinceFilter = province;
+      document.querySelectorAll('.station-chip').forEach(c => c.classList.remove('active'));
+      if (chipEl) chipEl.classList.add('active');
+      const input = document.getElementById('modal-station-search-input');
+      const kw = input ? input.value : '';
+      const filtered = filterStations(kw, currentProvinceFilter);
+      renderStationList(filtered, 'modal-station-results-list', true);
+    }
+
+    function filterStations(query, province) {
+      const q = (query || '').trim().toLowerCase();
+      const prov = (province || '').trim().toLowerCase();
+
+      return STATIONS_DATA.filter(st => {
+        const fullText = (st.name + ' ' + (st.location || '') + ' ' + (st.shortName || '') + ' ' + (st.zoneFull || '') + ' ' + (st.zoneShort || '')).toLowerCase();
+        const matchesQuery = !q || fullText.includes(q);
+        const matchesProv = !prov || fullText.includes(prov);
+        return matchesQuery && matchesProv;
+      });
+    }
+
+    function renderStationList(items, containerId, isModal) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      container.innerHTML = '';
+
+      const countEl = document.getElementById(isModal ? 'modal-results-count' : 'station-results-count');
+      if (countEl) countEl.innerText = 'พบ ' + items.length + ' สถานี';
+
+      if (!items || items.length === 0) {
+        container.innerHTML = '<div style="padding: 16px; text-align: center; color: #94a3b8; font-size: 14px;">ไม่พบสถานีที่ตรงกับคำค้นหา</div>';
+        return;
+      }
+
+      items.forEach(st => {
+        const item = document.createElement('div');
+        item.className = 'station-item' + (st.name === currentSelectedStation ? ' selected' : '');
+        item.onclick = () => {
+          selectStation(st.name);
+          if (isModal) closeStationModal();
+          else closeStationSearch();
+        };
+
+        const nameEl = document.createElement('div');
+        nameEl.className = 'station-item-name';
+        nameEl.innerText = st.name;
+
+        const descEl = document.createElement('div');
+        descEl.className = 'station-item-desc';
+        descEl.innerText = (st.location || '') + (st.zoneShort ? ' • ' + st.zoneShort : '');
+
+        item.appendChild(nameEl);
+        item.appendChild(descEl);
+        container.appendChild(item);
+      });
+    }
+
+    function selectStation(name) {
+      currentSelectedStation = name;
+      const searchInput = document.getElementById('station-search-input');
+      if (searchInput) searchInput.value = name;
+      onStationSelect(name);
+      showToast('เลือกสถานี: ' + name + ' เรียบร้อยแล้ว ✓');
+    }
+
+    // Populate Stations Dropdown
+    function initStations() {
+      const s1 = document.getElementById('station-select-p1');
+      if (s1) {
+        s1.innerHTML = '';
+        STATIONS_DATA.forEach(st => {
+          const opt = document.createElement('option');
+          opt.value = st.name;
+          if (REPORT_TYPE === 'ms') {
+            opt.innerText = st.name;
+            if (st.name === 'วิทยุลูกข่ายชนิดประจำที่ หมู่ 4 หนองจั่น') opt.selected = true;
+          } else if (REPORT_TYPE === 'pole9') {
+            opt.innerText = st.name;
+            if (st.name === 'วิทยุลูกข่ายชนิดประจำที่ หมู่ 4 ใสขนุน') opt.selected = true;
+          } else if (REPORT_TYPE === 'pole60') {
+            opt.innerText = st.shortName || st.name;
+            if (st.name === 'ที่ว่าการอำเภอย่านตาขาว') opt.selected = true;
+          } else if (REPORT_TYPE === 'bs') {
+            opt.innerText = st.shortName || st.name;
+            if (st.name === 'BS ช่อง') opt.selected = true;
+          } else if (REPORT_TYPE === 'cc') {
+            opt.innerText = st.name;
+            if (st.name === 'กองการสื่อสาร กรมการปกครอง (วังสวนสุนันทา)') opt.selected = true;
+          } else {
+            opt.innerText = st.name;
+            if (st.name === 'ที่ว่าการอำเภอย่านตาขาว') opt.selected = true;
+          }
+          s1.appendChild(opt);
+        });
+      }
+
+      if (REPORT_TYPE === 'ms' || REPORT_TYPE === 'pole9') {
+        const defaultStation = (REPORT_TYPE === 'pole9') ? 'วิทยุลูกข่ายชนิดประจำที่ หมู่ 4 ใสขนุน' : 
+                               'วิทยุลูกข่ายชนิดประจำที่ หมู่ 4 หนองจั่น';
+        const searchInput = document.getElementById('station-search-input');
+        if (searchInput && !searchInput.value) {
+          searchInput.value = defaultStation;
+        }
+        currentSelectedStation = defaultStation;
+        renderStationList(STATIONS_DATA, 'station-results-list', false);
+        renderStationList(STATIONS_DATA, 'modal-station-results-list', true);
+      }
     }
 
     // Select Station
@@ -1489,29 +2002,56 @@
       const st = STATIONS_DATA.find(s => s.name === name);
       if (!st) return;
 
+      currentSelectedStation = name;
+      const searchInput = document.getElementById('station-search-input');
+      if (searchInput && searchInput.value !== name) searchInput.value = name;
+
       const s1 = document.getElementById('station-select-p1');
       if (s1 && s1.value !== name) s1.value = name;
 
       const loc1 = document.getElementById('station-loc-1');
-      if (loc1) loc1.innerText = st.location;
+      if (loc1) loc1.innerText = (REPORT_TYPE === 'cc') ? 'วังสวนสุนันทา ถนนนครราชสีมา แขวงดุสิต เขตดุสิต กรุงเทพมหานคร' : st.location;
       const zone1 = document.getElementById('station-zone-1');
       if (zone1) zone1.innerText = st.zoneFull;
       const coord1 = document.getElementById('station-coord-1');
-      if (coord1) coord1.innerText = st.coords;
+      if (coord1) {
+        const coordInput = document.getElementById('coord-input');
+        if (coordInput) coordInput.value = st.coords || '';
+        else coord1.innerText = st.coords || '';
+      }
 
+      // Dynamic height update
+      const height = st.poleHeight || st.height || (REPORT_TYPE === 'pole60' ? '60' : '9');
+      const h1 = document.getElementById('pole-height-p1');
+      if (h1) h1.innerText = height;
+      const h2 = document.getElementById('pole-height-p2');
+      if (h2) h2.innerText = height;
+      const h3 = document.getElementById('pole-height-p3');
+      if (h3) h3.innerText = height;
+
+      // Page 2
       const name2 = document.getElementById('station-name-2');
       if (name2) name2.innerText = st.name;
       const zone2 = document.getElementById('station-zone-2');
       if (zone2) zone2.innerText = st.zoneShort;
       const loc2 = document.getElementById('station-loc-2');
-      if (loc2) loc2.innerText = st.location;
+      if (loc2) loc2.innerText = (REPORT_TYPE === 'cc') ? 'กองการสื่อสาร กรมการปกครอง (วังสวนสุนันทา) ถนนนครราชสีมา แขวงดุสิต เขตดุสิต กรุงเทพมหานคร 10300' : st.location;
 
+      // Page 3
       const name3 = document.getElementById('station-name-3');
       if (name3) name3.innerText = st.name;
       const zone3 = document.getElementById('station-zone-3');
       if (zone3) zone3.innerText = st.zoneShort;
       const loc3 = document.getElementById('station-loc-3');
-      if (loc3) loc3.innerText = st.location;
+      if (loc3) loc3.innerText = (REPORT_TYPE === 'cc') ? 'กองการสื่อสาร กรมการปกครอง (วังสวนสุนันทา) ถนนนครราชสีมา แขวงดุสิต เขตดุสิต กรุงเทพมหานคร 10300' : st.location;
+
+      // Page 4 (if present)
+      const name4 = document.getElementById('station-name-4');
+      if (name4) name4.innerText = st.name;
+      const zone4 = document.getElementById('station-zone-4');
+      if (zone4) zone4.innerText = st.zoneShort;
+      const loc4 = document.getElementById('station-loc-4');
+      if (loc4) loc4.innerText = st.location;
 
       autoSave();
     }
@@ -1678,7 +2218,6 @@
 
     // Prepare DOM for PDF Export
     function prepareDomForPdf() {
-      // First clean up any existing temporary spans to prevent duplicate text
       document.querySelectorAll('.pdf-temp-span').forEach(sp => sp.remove());
 
       document.documentElement.classList.add('pdf-export-mode');
@@ -1697,9 +2236,13 @@
       });
 
       document.querySelectorAll('.page select.dropdown-field').forEach(sel => {
-        const valText = sel.options[sel.selectedIndex]?.text || sel.value;
+        let valText = sel.value;
+        if (!valText && sel.options[sel.selectedIndex]) valText = sel.options[sel.selectedIndex].text;
         const span = document.createElement('span');
-        span.className = 'pdf-temp-span bold black-text nowrap';
+        span.className = 'pdf-temp-span black-text nowrap';
+        span.style.fontFamily = "'TH Sarabun New', sans-serif";
+        span.style.fontSize = window.getComputedStyle(sel).fontSize || '15.5px';
+        span.style.fontWeight = 'normal';
         span.style.whiteSpace = 'nowrap';
         span.innerText = valText;
         sel.style.setProperty('display', 'none', 'important');
@@ -1723,6 +2266,23 @@
         inp.parentNode.insertBefore(span, inp);
       });
 
+      // Handle searchable station container for PDF
+      const searchContainer = document.getElementById('station-search-container');
+      if (searchContainer) {
+        const valText = document.getElementById('station-search-input')?.value || (document.getElementById('station-select-p1')?.value || '');
+        const span = document.createElement('span');
+        span.className = 'pdf-temp-span black-text nowrap';
+        span.style.fontFamily = "'TH Sarabun New', sans-serif";
+        span.style.fontSize = '15.5px';
+        span.style.fontWeight = 'normal';
+        span.style.whiteSpace = 'nowrap';
+        span.innerText = valText;
+        searchContainer.style.setProperty('display', 'none', 'important');
+        searchContainer.parentNode.insertBefore(span, searchContainer);
+      }
+      const btnModal = document.querySelector('.btn-open-search-modal');
+      if (btnModal) btnModal.style.setProperty('display', 'none', 'important');
+
       document.querySelectorAll('.black-chk-wrap').forEach(wrap => {
         const cb = wrap.querySelector('.black-chk-input');
         const mark = wrap.querySelector('.chk-mark');
@@ -1738,6 +2298,11 @@
     }
 
     function restoreDomAfterPdf() {
+      const searchContainer = document.getElementById('station-search-container');
+      if (searchContainer) searchContainer.style.removeProperty('display');
+      const btnModal = document.querySelector('.btn-open-search-modal');
+      if (btnModal) btnModal.style.removeProperty('display');
+
       const mv = document.querySelector('meta[name=\'viewport\']');
       if (mv && window._savedMetaViewport) {
         mv.setAttribute('content', window._savedMetaViewport);
@@ -1777,7 +2342,6 @@
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
 
-      // Yield thread to let the modal appear on screen
       await new Promise(r => setTimeout(r, 60));
 
       try {
@@ -1790,20 +2354,22 @@
         }
         await new Promise(r => setTimeout(r, 80));
 
-        const pages = [
-          document.getElementById('page-1'),
-          document.getElementById('page-2'),
-          document.getElementById('page-3')
-        ];
+        const pages = Array.from(document.querySelectorAll('.page')).filter(p => p !== null);
 
         const stSel = document.getElementById('station-select-p1');
         const stName = (stSel && stSel.value ? stSel.value : 'สถานี').replace(/[\\/:*?"<>|\s]+/g, '_');
-        const filename = (REPORT_TYPE === 'bs' ? 'รายงานการบำรุงรักษา_Base_Station_' : 'รายงานการบำรุงรักษา_Analog_Gateway_') + stName + '.pdf';
+        
+        let prefix = 'รายงานการบำรุงรักษา_Analog_Gateway_';
+        if (REPORT_TYPE === 'bs') prefix = 'รายงานการบำรุงรักษา_Base_Station_';
+        else if (REPORT_TYPE === 'ms') prefix = 'รายงานการบำรุงรักษา_สถานีวิทยุลูกข่าย_';
+        else if (REPORT_TYPE === 'pole60') prefix = 'รายงานการบำรุงรักษา_เสาสื่อสาร_';
+        else if (REPORT_TYPE === 'pole9') prefix = 'รายงานการบำรุงรักษา_เสารับ-ส่งสัญญาน_';
+        else if (REPORT_TYPE === 'cc') prefix = 'รายงานการบำรุงรักษา_ศูนย์ควบคุม_';
+        const filename = prefix + stName + '.pdf';
         window._lastPdfFilename = filename;
 
-        // Use consistent scale 2.0 so font size, resolution, and line breaks are 100% IDENTICAL to computer!
-        const renderScale = 2.0;
-        const imgQuality = 0.92;
+        const renderScale = isMobile ? 2.8 : 3.0;
+        const imgQuality = 0.98;
 
         const jsPDFClass = (window.jspdf && window.jspdf.jsPDF) ? window.jspdf.jsPDF : window.jsPDF;
         const pdf = new jsPDFClass({
@@ -1817,7 +2383,6 @@
           if (stepEl) {
             stepEl.innerText = 'กำลังประมวลผลหน้า ' + (i + 1) + ' จาก ' + pages.length + '...';
           }
-          // CRITICAL: Yield thread so browser repaints stepEl progress on mobile!
           await new Promise(r => setTimeout(r, 80));
 
           const pageEl = pages[i];
@@ -1834,7 +2399,16 @@
             x: 0,
             y: 0,
             scrollX: 0,
-            scrollY: 0
+            scrollY: 0,
+            imageTimeout: 0,
+            onclone: (clonedDoc) => {
+              const pages = clonedDoc.querySelectorAll('.page');
+              pages.forEach(p => {
+                p.style.webkitFontSmoothing = 'antialiased';
+                p.style.mozOsxFontSmoothing = 'grayscale';
+                p.style.textRendering = 'geometricPrecision';
+              });
+            }
           });
 
           const imgData = canvas.toDataURL('image/jpeg', imgQuality);
@@ -1855,7 +2429,6 @@
         if (loadingModal) loadingModal.classList.remove('active');
         showToast('บันทึกไฟล์ PDF ขนาด A4 เรียบร้อยแล้ว ✓');
 
-        // On mobile, show modal for safety
         if (isMobile) {
           setTimeout(() => {
             const readyModal = document.getElementById('pdf-ready-modal');
@@ -1930,9 +2503,14 @@
           onOperatorSelect(data.selectedOperator);
         }
 
+        const LEGACY_DUMMIES = [
+          '26112A0541', '-77', '1267', '12.75', '229.6', '230.7', '0.983', '2.5', '3.82', '26104A0183'
+        ];
+
         if (data.textInputs) {
           Object.keys(data.textInputs).forEach(key => {
             const val = data.textInputs[key];
+            if (val && LEGACY_DUMMIES.indexOf(val.trim()) !== -1) return; // NEVER restore dummy values!
             if (key.startsWith('id_')) {
               const el = document.getElementById(key.substring(3));
               if (el) el.value = val;
@@ -1984,24 +2562,59 @@
 
     // Sync Rounds (ครั้งที่) Across Pages
     function syncRounds() {
+      const roundIds = ['p1-round', 'p2-round', 'p3-round', 'p4-round'];
       const syncFn = (v) => {
-        ['p1-round', 'p2-round', 'p3-round'].forEach(id => {
+        roundIds.forEach(id => {
           const el = document.getElementById(id);
           if (el) el.value = v;
         });
         autoSave();
       };
 
-      ['p1-round', 'p2-round', 'p3-round'].forEach(id => {
+      roundIds.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.addEventListener('input', () => syncFn(el.value));
       });
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+      // Clear legacy storage keys if present
+      try {
+        localStorage.removeItem('pm_report_ms_classic_v1');
+        localStorage.removeItem('pm_report_ms_classic_v2');
+      } catch (e) {}
+
       initOperators();
+      initStations();
       restoreData();
       syncRounds();
+
+      // Wipe any legacy dummy values from all inputs
+      const LEGACY_DUMMIES = ['26112A0541', '-77', '1267', '12.75', '229.6', '230.7', '0.983', '2.5', '3.82', '26104A0183'];
+      document.querySelectorAll('input[type="text"]').forEach(inp => {
+        if (inp.value && LEGACY_DUMMIES.indexOf(inp.value.trim()) !== -1) {
+          inp.value = '';
+        }
+      });
+      
+      // If no station restored from localStorage, trigger onStationSelect with default
+      const s1 = document.getElementById('station-select-p1');
+      if (s1 && s1.value) {
+        onStationSelect(s1.value);
+      } else if (REPORT_TYPE === 'bs') {
+        onStationSelect('BS ช่อง');
+      } else if (REPORT_TYPE === 'ms') {
+        onStationSelect('วิทยุลูกข่ายชนิดประจำที่ หมู่ 4 หนองจั่น');
+      } else if (REPORT_TYPE === 'pole60') {
+        onStationSelect('ที่ว่าการอำเภอย่านตาขาว');
+      } else if (REPORT_TYPE === 'pole9') {
+        onStationSelect('วิทยุลูกข่ายชนิดประจำที่ หมู่ 4 ใสขนุน');
+      } else if (REPORT_TYPE === 'cc') {
+        onStationSelect('กองการสื่อสาร กรมการปกครอง (วังสวนสุนันทา)');
+      } else {
+        onStationSelect('ที่ว่าการอำเภอย่านตาขาว');
+      }
+
       document.querySelectorAll('input[type="text"]').forEach(inp => {
         inp.addEventListener('input', autoSave);
       });
@@ -2010,6 +2623,21 @@
       });
       document.querySelectorAll('.black-chk-input').forEach(cb => {
         cb.addEventListener('change', autoSave);
+      });
+
+      // Close station search dropdown on outside click
+      document.addEventListener('click', (e) => {
+        const container = document.getElementById('station-search-container');
+        if (container && !container.contains(e.target)) {
+          closeStationSearch();
+        }
+      });
+      // Close on Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeStationSearch();
+          closeStationModal();
+        }
       });
     });
 
@@ -2025,10 +2653,22 @@
         }
         if (REPORT_TYPE === 'bs') {
           onStationSelect('BS ช่อง');
+        } else if (REPORT_TYPE === 'ms') {
+          onStationSelect('วิทยุลูกข่ายชนิดประจำที่ หมู่ 4 หนองจั่น');
+        } else if (REPORT_TYPE === 'pole60') {
+          onStationSelect('ที่ว่าการอำเภอย่านตาขาว');
+        } else if (REPORT_TYPE === 'pole9') {
+          onStationSelect('วิทยุลูกข่ายชนิดประจำที่ หมู่ 4 ใสขนุน');
+        } else if (REPORT_TYPE === 'cc') {
+          onStationSelect('กองการสื่อสาร กรมการปกครอง (วังสวนสุนันทา)');
         } else {
           onStationSelect('ที่ว่าการอำเภอย่านตาขาว');
         }
-        onOperatorSelect('นายสมประสงค์ มลฑลจุลเกศ');
+        if (REPORT_TYPE === 'cc') {
+          onOperatorSelect('นายอนุรักษ์ แก้วเชียงทอง');
+        } else {
+          onOperatorSelect('นายสมประสงค์ มลฑลจุลเกศ');
+        }
         localStorage.removeItem(STORAGE_KEY);
         showToast('ล้างข้อมูลเรียบร้อยแล้ว ✓');
       }
