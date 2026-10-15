@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
   <meta charset="UTF-8">
@@ -1238,14 +1238,14 @@
           <div class="control-item" id="bar-group-bs-station" style="display: none;">
             <label class="control-label" for="bar-station-select-bs">📡 สถานีแม่ข่าย BS (8 สถานที่):</label>
             <select id="bar-station-select-bs" class="control-select" onchange="onBaseStationSelect(this.value)">
-              <option value="แม่ข่าย Base Station เลาขวัญ">1. เลาขวัญ (กาญจนบุรี)</option>
-              <option value="แม่ข่าย Base Station ปางศิลาทอง">2. ปางศิลาทอง (กำแพงเพชร)</option>
-              <option value="แม่ข่าย Base Station อุบลรัตน์">3. อุบลรัตน์ (ขอนแก่น)</option>
-              <option value="แม่ข่าย Base Station เขาคิชฌกูฎ">4. เขาคิชฌกูฎ (จันทบุรี)</option>
-              <option value="แม่ข่าย Base Station ช่อง" selected>5. ช่อง (นาโยง, ตรัง)</option>
-              <option value="แม่ข่าย Base Station ปากช่อง">6. ปากช่อง (นครราชสีมา)</option>
-              <option value="แม่ข่าย Base Station ปากพนัง">7. ปากพนัง (นครศรีธรรมราช)</option>
-              <option value="แม่ข่าย Base Station ดงเจริญ">8. ดงเจริญ (พิจิตร)</option>
+              <option value="BS หนองนกแก้ว">1. BS หนองนกแก้ว (เลาขวัญ, กาญจนบุรี)</option>
+              <option value="BS ปางใหม่พัฒนา">2. BS ปางใหม่พัฒนา (ปางศิลาทอง, กำแพงเพชร)</option>
+              <option value="BS ศรีสุขสำราญ">3. BS ศรีสุขสำราญ (อุบลรัตน์, ขอนแก่น)</option>
+              <option value="BS คลองพลู">4. BS คลองพลู (เขาคิชฌกูฎ, จันทบุรี)</option>
+              <option value="BS ช่อง" selected>5. BS ช่อง (นาโยง, ตรัง)</option>
+              <option value="BS คลองป่าหมู">6. BS คลองป่าหมู (ปากช่อง, นครราชสีมา)</option>
+              <option value="BS วัดบางอุดม">7. BS วัดบางอุดม (ปากพนัง, นครศรีธรรมราช)</option>
+              <option value="BS วังงิ้ว">8. BS วังงิ้ว (ดงเจริญ, พิจิตร)</option>
             </select>
           </div>
 
@@ -1399,6 +1399,7 @@
             <div class="sig-col">
               <div>ลงชื่อ : <span class="sig-line"></span></div>
               <div style="margin-top: 4px;">( <span class="editable-span black-text" id="ag-sig-officer-name" contenteditable="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> )</div>
+              <div style="margin-top: 4px; visibility: hidden;">&nbsp;</div>
               <div style="margin-top: 4px;">เจ้าหน้าที่รับผิดชอบในพื้นที่</div>
             </div>
           </div>
@@ -1761,14 +1762,14 @@
             <div class="p1-station-row">
               <span class="p1-station-label">ชื่อสถานี :&nbsp;</span>
               <select id="bs-station-select-p1" class="dropdown-field black-text station-select-p1" onchange="onBaseStationSelect(this.value)">
-                <option value="แม่ข่าย Base Station เลาขวัญ">แม่ข่าย Base Station เลาขวัญ</option>
-                <option value="แม่ข่าย Base Station ปางศิลาทอง">แม่ข่าย Base Station ปางศิลาทอง</option>
-                <option value="แม่ข่าย Base Station อุบลรัตน์">แม่ข่าย Base Station อุบลรัตน์</option>
-                <option value="แม่ข่าย Base Station เขาคิชฌกูฎ">แม่ข่าย Base Station เขาคิชฌกูฎ</option>
-                <option value="แม่ข่าย Base Station ช่อง" selected>แม่ข่าย Base Station ช่อง</option>
-                <option value="แม่ข่าย Base Station ปากช่อง">แม่ข่าย Base Station ปากช่อง</option>
-                <option value="แม่ข่าย Base Station ปากพนัง">แม่ข่าย Base Station ปากพนัง</option>
-                <option value="แม่ข่าย Base Station ดงเจริญ">แม่ข่าย Base Station ดงเจริญ</option>
+                <option value="BS หนองนกแก้ว">BS หนองนกแก้ว</option>
+                <option value="BS ปางใหม่พัฒนา">BS ปางใหม่พัฒนา</option>
+                <option value="BS ศรีสุขสำราญ">BS ศรีสุขสำราญ</option>
+                <option value="BS คลองพลู">BS คลองพลู</option>
+                <option value="BS ช่อง" selected>BS ช่อง</option>
+                <option value="BS คลองป่าหมู">BS คลองป่าหมู</option>
+                <option value="BS วัดบางอุดม">BS วัดบางอุดม</option>
+                <option value="BS วังงิ้ว">BS วังงิ้ว</option>
               </select>
             </div>
             <div class="p1-station-row">
@@ -1818,6 +1819,7 @@
             <div class="sig-col">
               <div>ลงชื่อ : <span class="sig-line"></span></div>
               <div style="margin-top: 4px;">( <span class="editable-span black-text" id="bs-sig-officer-name" contenteditable="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> )</div>
+              <div style="margin-top: 4px; visibility: hidden;">&nbsp;</div>
               <div style="margin-top: 4px;">เจ้าหน้าที่รับผิดชอบในพื้นที่</div>
             </div>
           </div>
@@ -1848,7 +1850,7 @@
 
           <div class="sub-bar">
             <div class="sub-bar-row">
-              <div><span class="bold">ชื่อสถานี :</span> <span class="black-text normal editable-span" id="bs-station-name-2" contenteditable="true" oninput="autoSave()">แม่ข่าย Base Station ช่อง</span></div>
+              <div><span class="bold">ชื่อสถานี :</span> <span class="black-text normal editable-span" id="bs-station-name-2" contenteditable="true" oninput="autoSave()">BS ช่อง</span></div>
               <div><span class="black-text normal editable-span" id="bs-station-zone-2" contenteditable="true" oninput="autoSave()">ศสส.ปค.เขต 9 (ส่วนแยกนครศรีธรรมราช)</span></div>
             </div>
             <div>
@@ -2077,7 +2079,7 @@
 
           <div class="sub-bar">
             <div class="sub-bar-row">
-              <div><span class="bold">ชื่อสถานี :</span> <span class="black-text normal editable-span" id="bs-station-name-3" contenteditable="true" oninput="autoSave()">แม่ข่าย Base Station ช่อง</span></div>
+              <div><span class="bold">ชื่อสถานี :</span> <span class="black-text normal editable-span" id="bs-station-name-3" contenteditable="true" oninput="autoSave()">BS ช่อง</span></div>
               <div><span class="black-text normal editable-span" id="bs-station-zone-3" contenteditable="true" oninput="autoSave()">ศสส.ปค.เขต 9 (ส่วนแยกนครศรีธรรมราช)</span></div>
             </div>
             <div>
@@ -2283,52 +2285,52 @@
     const BASE_STATIONS_DATA = [
       {
         id: 1,
-        name: "แม่ข่าย Base Station เลาขวัญ",
-        shortName: "เลาขวัญ (กาญจนบุรี)",
+        name: "BS หนองนกแก้ว",
+        shortName: "BS หนองนกแก้ว (เลาขวัญ, กาญจนบุรี)",
         amphoe: "เลาขวัญ",
         province: "กาญจนบุรี",
-        location: "ตำบลเลาขวัญ อำเภอเลาขวัญ จังหวัดกาญจนบุรี",
+        location: "ตำบลหนองนกแก้ว อำเภอเลาขวัญ จังหวัดกาญจนบุรี",
         zoneFull: "ศูนย์สื่อสารกรมการปกครองเขต 11 (เพชรบุรี)",
         zoneShort: "ศสส.ปค.เขต 11 (เพชรบุรี)",
         coords: "14.514783 , 99.709059"
       },
       {
         id: 2,
-        name: "แม่ข่าย Base Station ปางศิลาทอง",
-        shortName: "ปางศิลาทอง (กำแพงเพชร)",
+        name: "BS ปางใหม่พัฒนา",
+        shortName: "BS ปางใหม่พัฒนา (ปางศิลาทอง, กำแพงเพชร)",
         amphoe: "ปางศิลาทอง",
         province: "กำแพงเพชร",
-        location: "ตำบลโพธิ์ทอง อำเภอปางศิลาทอง จังหวัดกำแพงเพชร",
+        location: "ตำบลปางตาไว อำเภอปางศิลาทอง จังหวัดกำแพงเพชร",
         zoneFull: "ศูนย์สื่อสารกรมการปกครองเขต 3 (ส่วนแยกตาก)",
         zoneShort: "ศสส.ปค.เขต 3 (ส่วนแยกตาก)",
         coords: "15.993741 , 99.364571"
       },
       {
         id: 3,
-        name: "แม่ข่าย Base Station อุบลรัตน์",
-        shortName: "อุบลรัตน์ (ขอนแก่น)",
+        name: "BS ศรีสุขสำราญ",
+        shortName: "BS ศรีสุขสำราญ (อุบลรัตน์, ขอนแก่น)",
         amphoe: "อุบลรัตน์",
         province: "ขอนแก่น",
-        location: "ตำบลเขื่อนอุบลรัตน์ อำเภออุบลรัตน์ จังหวัดขอนแก่น",
+        location: "ตำบลศรีสุขสำราญ อำเภออุบลรัตน์ จังหวัดขอนแก่น",
         zoneFull: "ศูนย์สื่อสารกรมการปกครองเขต 6 (ขอนแก่น)",
         zoneShort: "ศสส.ปค.เขต 6 (ขอนแก่น)",
         coords: "16.919524 , 102.727523"
       },
       {
         id: 4,
-        name: "แม่ข่าย Base Station เขาคิชฌกูฎ",
-        shortName: "เขาคิชฌกูฎ (จันทบุรี)",
+        name: "BS คลองพลู",
+        shortName: "BS คลองพลู (เขาคิชฌกูฎ, จันทบุรี)",
         amphoe: "เขาคิชฌกูฎ",
         province: "จันทบุรี",
-        location: "ตำบลพลวง อำเภอเขาคิชฌกูฎ จังหวัดจันทบุรี",
+        location: "ตำบลคลองพลู อำเภอเขาคิชฌกูฏ จังหวัดจันทบุรี",
         zoneFull: "ศูนย์สื่อสารกรมการปกครองเขต 5 (จันทบุรี)",
         zoneShort: "ศสส.ปค.เขต 5 (จันทบุรี)",
         coords: "12.935094 , 102.058574"
       },
       {
         id: 5,
-        name: "แม่ข่าย Base Station ช่อง",
-        shortName: "ช่อง (นาโยง, ตรัง)",
+        name: "BS ช่อง",
+        shortName: "BS ช่อง (นาโยง, ตรัง)",
         amphoe: "นาโยง",
         province: "ตรัง",
         location: "ตำบลช่อง อำเภอนาโยง จังหวัดตรัง",
@@ -2338,33 +2340,33 @@
       },
       {
         id: 6,
-        name: "แม่ข่าย Base Station ปากช่อง",
-        shortName: "ปากช่อง (นครราชสีมา)",
+        name: "BS คลองป่าหมู",
+        shortName: "BS คลองป่าหมู (ปากช่อง, นครราชสีมา)",
         amphoe: "ปากช่อง",
         province: "นครราชสีมา",
-        location: "ตำบลปากช่อง อำเภอปากช่อง จังหวัดนครราชสีมา",
+        location: "ตำบลวังกะทะ อำเภอปากช่อง จังหวัดนครราชสีมา",
         zoneFull: "ศูนย์สื่อสารกรมการปกครองเขต 16 (บุรีรัมย์)",
         zoneShort: "ศสส.ปค.เขต 16 (บุรีรัมย์)",
         coords: "14.480402 , 101.726573"
       },
       {
         id: 7,
-        name: "แม่ข่าย Base Station ปากพนัง",
-        shortName: "ปากพนัง (นครศรีธรรมราช)",
+        name: "BS วัดบางอุดม",
+        shortName: "BS วัดบางอุดม (ปากพนัง, นครศรีธรรมราช)",
         amphoe: "ปากพนัง",
         province: "นครศรีธรรมราช",
-        location: "ตำบลปากพนัง อำเภอปากพนัง จังหวัดนครศรีธรรมราช",
+        location: "ตำบลขนาบนาก อำเภอปากพนัง จังหวัดนครศรีธรรมราช",
         zoneFull: "ศูนย์สื่อสารกรมการปกครองเขต 9 (ส่วนแยกนครศรีธรรมราช)",
         zoneShort: "ศสส.ปค.เขต 9 (ส่วนแยกนครศรีธรรมราช)",
-        coords: "8.221462 , 100.246725"
+        coords: "8.205790 , 100.253740"
       },
       {
         id: 8,
-        name: "แม่ข่าย Base Station ดงเจริญ",
-        shortName: "ดงเจริญ (พิจิตร)",
+        name: "BS วังงิ้ว",
+        shortName: "BS วังงิ้ว (ดงเจริญ, พิจิตร)",
         amphoe: "ดงเจริญ",
         province: "พิจิตร",
-        location: "ตำบลวังงิ้วใต้ อำเภอดงเจริญ จังหวัดพิจิตร",
+        location: "ตำบลวังงิ้ว อำเภอดงเจริญ จังหวัดพิจิตร",
         zoneFull: "ศูนย์สื่อสารกรมการปกครองเขต 3 (พิษณุโลก)",
         zoneShort: "ศสส.ปค.เขต 3 (พิษณุโลก)",
         coords: "16.016102 , 100.732560"
@@ -3054,7 +3056,7 @@
           }
         });
         onStationSelect('ที่ว่าการอำเภอย่านตาขาว');
-        onBaseStationSelect('แม่ข่าย Base Station ช่อง');
+        onBaseStationSelect('BS ช่อง');
         onOperatorSelect('นายสมประสงค์ มลฑลจุลเกศ');
         localStorage.removeItem(STORAGE_KEY);
         showToast('ล้างข้อมูลเรียบร้อยแล้ว ✓');
