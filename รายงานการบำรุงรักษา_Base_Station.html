@@ -1233,10 +1233,6 @@
       <svg width="15" height="15" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
       บันทึก PDF ลงเครื่อง
     </button>
-    <button class="btn btn-print" onclick="window.print()" title="สั่งพิมพ์ออกเครื่องพิมพ์">
-      <svg width="15" height="15" fill="currentColor" viewBox="0 0 16 16"><path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/><path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/></svg>
-      พิมพ์
-    </button>
     <button class="btn btn-check" onclick="checkAllNormal()" title="ติ๊ก 'ปกติ' ทุกข้อในตารางอัตโนมัติ">
       ⭐ ติ๊กปกติทั้งหมด
     </button>
@@ -1277,14 +1273,14 @@
           <span class="p1-station-label">ชื่อสถานี :</span>
           <span class="p1-station-val">
             <select id="station-select-p1" class="dropdown-field station-select-p1" onchange="onStationSelect(this.value)">
-              <option value="BS หนองนกแก้ว">BS หนองนกแก้ว</option>
-              <option value="BS ปางใหม่พัฒนา">BS ปางใหม่พัฒนา</option>
-              <option value="BS ศรีสุขสำราญ">BS ศรีสุขสำราญ</option>
-              <option value="BS คลองพลู">BS คลองพลู</option>
-              <option value="BS ช่อง" selected>BS ช่อง</option>
-              <option value="BS คลองป่าหมู">BS คลองป่าหมู</option>
-              <option value="BS วัดบางอุดม">BS วัดบางอุดม</option>
-              <option value="BS วังงิ้ว">BS วังงิ้ว</option>
+              <option value="แม่ข่าย Base Station หนองนกแก้ว">แม่ข่าย Base Station หนองนกแก้ว</option>
+              <option value="แม่ข่าย Base Station ปางใหม่พัฒนา">แม่ข่าย Base Station ปางใหม่พัฒนา</option>
+              <option value="แม่ข่าย Base Station ศรีสุขสำราญ">แม่ข่าย Base Station ศรีสุขสำราญ</option>
+              <option value="แม่ข่าย Base Station คลองพลู">แม่ข่าย Base Station คลองพลู</option>
+              <option value="แม่ข่าย Base Station ช่อง" selected>แม่ข่าย Base Station ช่อง</option>
+              <option value="แม่ข่าย Base Station คลองป่าหมู">แม่ข่าย Base Station คลองป่าหมู</option>
+              <option value="แม่ข่าย Base Station วัดบางอุดม">แม่ข่าย Base Station วัดบางอุดม</option>
+              <option value="แม่ข่าย Base Station วังงิ้ว">แม่ข่าย Base Station วังงิ้ว</option>
             </select>
           </span>
         </div>
@@ -1357,7 +1353,7 @@
 
       <div class="sub-bar">
         <div class="sub-bar-row">
-          <div><span class="bold">ชื่อสถานี :</span> <span id="station-name-2" class="normal">BS ช่อง</span></div>
+          <div><span class="bold">ชื่อสถานี :</span> <span id="station-name-2" class="normal">แม่ข่าย Base Station ช่อง</span></div>
           <div><span id="station-zone-2" class="bold">ศสส.ปค.เขต 9 (ส่วนแยกนครศรีธรรมราช)</span></div>
         </div>
         <div class="sub-bar-row">
@@ -1572,7 +1568,7 @@
 
       <div class="sub-bar">
         <div class="sub-bar-row">
-          <div><span class="bold">ชื่อสถานี :</span> <span id="station-name-3" class="normal">BS ช่อง</span></div>
+          <div><span class="bold">ชื่อสถานี :</span> <span id="station-name-3" class="normal">แม่ข่าย Base Station ช่อง</span></div>
           <div><span id="station-zone-3" class="bold">ศสส.ปค.เขต 9 (ส่วนแยกนครศรีธรรมราช)</span></div>
         </div>
         <div class="sub-bar-row">
@@ -1681,7 +1677,7 @@
   </div>
   <script>
     const REPORT_TYPE = 'bs';
-    const STORAGE_KEY = 'pm_report_bs_v3';
+    const STORAGE_KEY = 'pm_report_bs_v4';
     const TEAM_MEMBERS = [
       "นางสาวดวงดาว ทวีศรีพายัพ",
       "นางสาวสุรีรัตน์ รอดโพธิ์ทอง",
@@ -1706,8 +1702,8 @@
     const STATIONS_DATA = [
       {
         id: 1,
-        name: "BS หนองนกแก้ว",
-        shortName: "BS หนองนกแก้ว (เลาขวัญ, กาญจนบุรี)",
+        name: "แม่ข่าย Base Station หนองนกแก้ว",
+        shortName: "แม่ข่าย Base Station หนองนกแก้ว",
         location: "ตำบลหนองนกแก้ว อำเภอเลาขวัญ จังหวัดกาญจนบุรี",
         zoneFull: "ศูนย์สื่อสารกรมการปกครองเขต 11 (เพชรบุรี)",
         zoneShort: "ศสส.ปค.เขต 11 (เพชรบุรี)",
@@ -1715,8 +1711,8 @@
       },
       {
         id: 2,
-        name: "BS ปางใหม่พัฒนา",
-        shortName: "BS ปางใหม่พัฒนา (ปางศิลาทอง, กำแพงเพชร)",
+        name: "แม่ข่าย Base Station ปางใหม่พัฒนา",
+        shortName: "แม่ข่าย Base Station ปางใหม่พัฒนา",
         location: "ตำบลปางตาไว อำเภอปางศิลาทอง จังหวัดกำแพงเพชร",
         zoneFull: "ศูนย์สื่อสารกรมการปกครองเขต 3 (ส่วนแยกตาก)",
         zoneShort: "ศสส.ปค.เขต 3 (ส่วนแยกตาก)",
@@ -1724,8 +1720,8 @@
       },
       {
         id: 3,
-        name: "BS ศรีสุขสำราญ",
-        shortName: "BS ศรีสุขสำราญ (อุบลรัตน์, ขอนแก่น)",
+        name: "แม่ข่าย Base Station ศรีสุขสำราญ",
+        shortName: "แม่ข่าย Base Station ศรีสุขสำราญ",
         location: "ตำบลศรีสุขสำราญ อำเภออุบลรัตน์ จังหวัดขอนแก่น",
         zoneFull: "ศูนย์สื่อสารกรมการปกครองเขต 6 (ขอนแก่น)",
         zoneShort: "ศสส.ปค.เขต 6 (ขอนแก่น)",
@@ -1733,8 +1729,8 @@
       },
       {
         id: 4,
-        name: "BS คลองพลู",
-        shortName: "BS คลองพลู (เขาคิชฌกูฎ, จันทบุรี)",
+        name: "แม่ข่าย Base Station คลองพลู",
+        shortName: "แม่ข่าย Base Station คลองพลู",
         location: "ตำบลคลองพลู อำเภอเขาคิชฌกูฏ จังหวัดจันทบุรี",
         zoneFull: "ศูนย์สื่อสารกรมการปกครองเขต 5 (จันทบุรี)",
         zoneShort: "ศสส.ปค.เขต 5 (จันทบุรี)",
@@ -1742,8 +1738,8 @@
       },
       {
         id: 5,
-        name: "BS ช่อง",
-        shortName: "BS ช่อง (นาโยง, ตรัง)",
+        name: "แม่ข่าย Base Station ช่อง",
+        shortName: "แม่ข่าย Base Station ช่อง",
         location: "ตำบลช่อง อำเภอนาโยง จังหวัดตรัง",
         zoneFull: "ศูนย์สื่อสารกรมการปกครองเขต 9 (ส่วนแยกนครศรีธรรมราช)",
         zoneShort: "ศสส.ปค.เขต 9 (ส่วนแยกนครศรีธรรมราช)",
@@ -1751,8 +1747,8 @@
       },
       {
         id: 6,
-        name: "BS คลองป่าหมู",
-        shortName: "BS คลองป่าหมู (ปากช่อง, นครราชสีมา)",
+        name: "แม่ข่าย Base Station คลองป่าหมู",
+        shortName: "แม่ข่าย Base Station คลองป่าหมู",
         location: "ตำบลวังกะทะ อำเภอปากช่อง จังหวัดนครราชสีมา",
         zoneFull: "ศูนย์สื่อสารกรมการปกครองเขต 16 (บุรีรัมย์)",
         zoneShort: "ศสส.ปค.เขต 16 (บุรีรัมย์)",
@@ -1760,8 +1756,8 @@
       },
       {
         id: 7,
-        name: "BS วัดบางอุดม",
-        shortName: "BS วัดบางอุดม (ปากพนัง, นครศรีธรรมราช)",
+        name: "แม่ข่าย Base Station วัดบางอุดม",
+        shortName: "แม่ข่าย Base Station วัดบางอุดม",
         location: "ตำบลขนาบนาก อำเภอปากพนัง จังหวัดนครศรีธรรมราช",
         zoneFull: "ศูนย์สื่อสารกรมการปกครองเขต 9 (ส่วนแยกนครศรีธรรมราช)",
         zoneShort: "ศสส.ปค.เขต 9 (ส่วนแยกนครศรีธรรมราช)",
@@ -1769,8 +1765,8 @@
       },
       {
         id: 8,
-        name: "BS วังงิ้ว",
-        shortName: "BS วังงิ้ว (ดงเจริญ, พิจิตร)",
+        name: "แม่ข่าย Base Station วังงิ้ว",
+        shortName: "แม่ข่าย Base Station วังงิ้ว",
         location: "ตำบลวังงิ้ว อำเภอดงเจริญ จังหวัดพิจิตร",
         zoneFull: "ศูนย์สื่อสารกรมการปกครองเขต 3 (พิษณุโลก)",
         zoneShort: "ศสส.ปค.เขต 3 (พิษณุโลก)",
@@ -1971,8 +1967,8 @@
             opt.innerText = st.shortName || st.name;
             if (st.name === 'ที่ว่าการอำเภอย่านตาขาว') opt.selected = true;
           } else if (REPORT_TYPE === 'bs') {
-            opt.innerText = st.shortName || st.name;
-            if (st.name === 'BS ช่อง') opt.selected = true;
+            opt.innerText = st.name;
+            if (st.name === 'แม่ข่าย Base Station ช่อง') opt.selected = true;
           } else if (REPORT_TYPE === 'cc') {
             opt.innerText = st.name;
             if (st.name === 'กองการสื่อสาร กรมการปกครอง (วังสวนสุนันทา)') opt.selected = true;
@@ -2497,6 +2493,9 @@
         const data = JSON.parse(raw);
 
         if (data.selectedStation) {
+          if (data.selectedStation.startsWith('BS ')) {
+            data.selectedStation = data.selectedStation.replace('BS ', 'แม่ข่าย Base Station ');
+          }
           onStationSelect(data.selectedStation);
         }
         if (data.selectedOperator) {
@@ -2602,7 +2601,7 @@
       if (s1 && s1.value) {
         onStationSelect(s1.value);
       } else if (REPORT_TYPE === 'bs') {
-        onStationSelect('BS ช่อง');
+        onStationSelect('แม่ข่าย Base Station ช่อง');
       } else if (REPORT_TYPE === 'ms') {
         onStationSelect('วิทยุลูกข่ายชนิดประจำที่ หมู่ 4 หนองจั่น');
       } else if (REPORT_TYPE === 'pole60') {
@@ -2652,7 +2651,7 @@
           removePhoto(null, i);
         }
         if (REPORT_TYPE === 'bs') {
-          onStationSelect('BS ช่อง');
+          onStationSelect('แม่ข่าย Base Station ช่อง');
         } else if (REPORT_TYPE === 'ms') {
           onStationSelect('วิทยุลูกข่ายชนิดประจำที่ หมู่ 4 หนองจั่น');
         } else if (REPORT_TYPE === 'pole60') {
