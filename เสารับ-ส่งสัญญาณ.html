@@ -510,7 +510,6 @@
       margin-top: 2px;
     }
 
-    .photo-table tr,
     .photo-table td {
       border: 1px solid #000000 !important;
       padding: 0;
@@ -519,9 +518,9 @@
     }
 
     .photo-box {
-      width: calc(100% - 4px);
+      width: 100%;
       height: 235px;
-      margin: 0 auto;
+      margin: 0;
       position: relative;
       cursor: pointer;
       background-color: transparent !important;
@@ -529,6 +528,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      box-sizing: border-box;
     }
 
     .photo-box input[type="file"] {
@@ -1062,6 +1062,18 @@
       body:not(.pdf-export-mode) .photo-box {
         height: 180px;
       }
+
+      body:not(.pdf-export-mode) .photo-box.tall {
+        height: 240px;
+      }
+
+      body:not(.pdf-export-mode) .photo-box.panoramic {
+        height: 250px;
+      }
+
+    .photo-box.panoramic {
+      height: 380px;
+    }
     }
 
     /* DIRECT PDF EXPORT MODE (IDENTICAL TO ORIGINAL A4) */
@@ -1551,8 +1563,8 @@
           </td>
         </tr>
         <tr class="caption-row">
-          <td><span class="editable-span" contenteditable="true">ภาพประกอบ</span></td>
-          <td><span class="editable-span" contenteditable="true">ภาพประกอบ</span></td>
+          <td><span class="editable-span" contenteditable="true">รูปภาพ โครงสร้างเสาสื่อสาร</span></td>
+          <td><span class="editable-span" contenteditable="true">รูปภาพ แท่งล่อฟ้าบนเสาสื่อสาร</span></td>
         </tr>
         <tr>
           <td>
@@ -1573,8 +1585,8 @@
           </td>
         </tr>
         <tr class="caption-row">
-          <td><span class="editable-span" contenteditable="true">ภาพประกอบ</span></td>
-          <td><span class="editable-span" contenteditable="true">ภาพประกอบ</span></td>
+          <td><span class="editable-span" contenteditable="true">รูปภาพ โครงสร้างเสาสื่อสาร</span></td>
+          <td><span class="editable-span" contenteditable="true">รูปภาพ ฐานโครงสร้างเสาสื่อสาร</span></td>
         </tr>
         <tr>
           <td>
@@ -1595,8 +1607,8 @@
           </td>
         </tr>
         <tr class="caption-row">
-          <td><span class="editable-span" contenteditable="true">ภาพประกอบ</span></td>
-          <td><span class="editable-span" contenteditable="true">ภาพประกอบ</span></td>
+          <td><span class="editable-span" contenteditable="true">รูปภาพ บ่อระบบสายดิน</span></td>
+          <td><span class="editable-span" contenteditable="true">รูปภาพ ค่าความต้านทานระบบสายดิน TOWER GND</span></td>
         </tr>
       </table>
     </div><!-- End Page 3 -->
@@ -3784,6 +3796,22 @@ const RADIO_SUBSTATION_DATA = [
       const loc4 = document.getElementById('station-loc-4');
       if (loc4) loc4.innerText = st.location;
 
+      // Page 5 (if present)
+      const name5 = document.getElementById('station-name-5');
+      if (name5) name5.innerText = st.name;
+      const zone5 = document.getElementById('station-zone-5');
+      if (zone5) zone5.innerText = st.zoneShort;
+      const loc5 = document.getElementById('station-loc-5');
+      if (loc5) loc5.innerText = (REPORT_TYPE === 'cc') ? 'กองการสื่อสาร กรมการปกครอง (วังสวนสุนันทา) ถนนนครราชสีมา แขวงดุสิต เขตดุสิต กรุงเทพมหานคร 10300' : st.location;
+
+      // Page 6 (if present)
+      const name6 = document.getElementById('station-name-6');
+      if (name6) name6.innerText = st.name;
+      const zone6 = document.getElementById('station-zone-6');
+      if (zone6) zone6.innerText = st.zoneShort;
+      const loc6 = document.getElementById('station-loc-6');
+      if (loc6) loc6.innerText = (REPORT_TYPE === 'cc') ? 'กองการสื่อสาร กรมการปกครอง (วังสวนสุนันทา) ถนนนครราชสีมา แขวงดุสิต เขตดุสิต กรุงเทพมหานคร 10300' : st.location;
+
       autoSave();
     }
 
@@ -3961,7 +3989,13 @@ const RADIO_SUBSTATION_DATA = [
           data.blackChecks[idx] = cb.checked;
         });
 
-        for (let i = 1; i <= 6; i++) {
+        data.captions = {};
+        document.querySelectorAll('.caption-row .editable-span').forEach((sp, idx) => {
+          data.captions['cap_' + idx] = sp.innerText.trim();
+        });
+
+        const maxPhotos = document.querySelectorAll('.photo-box').length || 20;
+        for (let i = 1; i <= maxPhotos; i++) {
           const img = document.getElementById('photo-img-' + i);
           if (img && img.src && img.src.startsWith('data:image')) {
             data.photos['photo_' + i] = img.src;
@@ -4319,16 +4353,30 @@ const RADIO_SUBSTATION_DATA = [
           });
         }
 
+        if (data.captions) {
+          const allSpans = document.querySelectorAll('.caption-row .editable-span');
+          Object.keys(data.captions).forEach(key => {
+            const idx = parseInt(key.substring(4), 10);
+            const txt = data.captions[key];
+            if (allSpans[idx] && txt && txt.trim() !== 'ภาพประกอบ' && !txt.trim().startsWith('ภาพประกอบที่')) {
+              allSpans[idx].innerText = txt;
+            }
+          });
+        }
+
         if (data.photos) {
-          for (let i = 1; i <= 6; i++) {
+          const maxPhotos = document.querySelectorAll('.photo-box').length || 20;
+          for (let i = 1; i <= maxPhotos; i++) {
             const src = data.photos['photo_' + i];
             if (src) {
               const img = document.getElementById('photo-img-' + i);
               if (img) {
                 img.src = src;
                 img.style.display = 'block';
-                document.getElementById('overlay-' + i).style.display = 'none';
-                document.getElementById('btn-del-' + i).style.display = 'flex';
+                const ov = document.getElementById('overlay-' + i);
+                if (ov) ov.style.display = 'none';
+                const btn = document.getElementById('btn-del-' + i);
+                if (btn) btn.style.display = 'flex';
               }
             }
           }
@@ -4338,7 +4386,7 @@ const RADIO_SUBSTATION_DATA = [
 
     // Sync Rounds (ครั้งที่) Across Pages
     function syncRounds() {
-      const roundIds = ['p1-round', 'p2-round', 'p3-round', 'p4-round'];
+      const roundIds = ['p1-round', 'p2-round', 'p3-round', 'p4-round', 'p5-round', 'p6-round'];
       const syncFn = (v) => {
         roundIds.forEach(id => {
           const el = document.getElementById(id);
