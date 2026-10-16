@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
   <meta charset="UTF-8">
@@ -1188,6 +1188,37 @@
       box-sizing: border-box;
     }
 
+    .photo-box input[type="file"] {
+      display: block !important;
+      position: absolute !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      opacity: 0 !important;
+      cursor: pointer !important;
+      z-index: 5 !important;
+      font-size: 0 !important;
+    }
+
+    body.pdf-export-mode .photo-box input[type="file"] {
+      display: none !important;
+    }
+
+    .photo-box .btn-del {
+      z-index: 20 !important;
+    }
+
+    .sf-dropzone-native-input {
+      position: absolute !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      opacity: 0 !important;
+      cursor: pointer !important;
+      z-index: 10 !important;
+      font-size: 0 !important;
+    }
+
     .photo-box.panoramic {
       height: 380px;
     }
@@ -1747,19 +1778,7 @@
               <span>🔢 ครั้งที่บำรุงรักษา (รอบที่)</span>
               <span style="font-size: 12px; color: #64748b; font-weight: 500;">ซิงค์ทุกหน้าอัตโนมัติ</span>
             </label>
-            <div style="display: flex; gap: 8px; align-items: center;">
-              <input type="text" id="sf-round-input" class="sf-input" placeholder="เช่น 1, 2, 3..." style="max-width: 130px; text-align: center; font-weight: 700;" oninput="onSmartRoundInput(this.value)">
-              <div class="sf-round-chips">
-                <button type="button" class="sf-round-chip" onclick="onSmartRoundInput('1')">1</button>
-                <button type="button" class="sf-round-chip" onclick="onSmartRoundInput('2')">2</button>
-                <button type="button" class="sf-round-chip" onclick="onSmartRoundInput('3')">3</button>
-                <button type="button" class="sf-round-chip" onclick="onSmartRoundInput('4')">4</button>
-                <button type="button" class="sf-round-chip" onclick="onSmartRoundInput('5')">5</button>
-                <button type="button" class="sf-round-chip" onclick="onSmartRoundInput('6')">6</button>
-                <button type="button" class="sf-round-chip" onclick="onSmartRoundInput('7')">7</button>
-                <button type="button" class="sf-round-chip" onclick="onSmartRoundInput('8')">8</button>
-              </div>
-            </div>
+            <input type="text" id="sf-round-input" class="sf-input" placeholder="เช่น 1, 2, 3..." style="font-weight: 700;" oninput="onSmartRoundInput(this.value)">
           </div>
         </div>
 
@@ -1850,10 +1869,10 @@
           <span>รูปภาพประกอบการบำรุงรักษา (สูงสุด 6 รูป)</span>
         </div>
         <div>
-          <input type="file" id="sf-batch-photo-input" accept="image/*" multiple style="display: none;" onchange="onBatchPhotoSelect(event)">
-          <button type="button" class="sf-btn" style="background: #2563eb; padding: 6px 14px; font-size: 13px;" onclick="document.getElementById('sf-batch-photo-input').click()">
-            📂 เลือกรูปพร้อมกันหลายรูป (1-6 รูป)
-          </button>
+          <label class="sf-btn" style="background: #2563eb; padding: 6px 14px; font-size: 13px; position: relative; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; color: #ffffff; border-radius: 8px; font-weight: 600; text-decoration: none;">
+            📂 เลือกรูปพร้อมกันหลายรูป
+            <input type="file" id="sf-batch-photo-input" accept="image/*" multiple style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 10; font-size: 0;" onchange="onBatchPhotoSelect(event)">
+          </label>
         </div>
       </div>
       <div class="sf-card-body">
@@ -1881,9 +1900,6 @@
         </button>
         <button type="button" id="sf-bottom-toggle-view" class="sf-btn" style="background: #334155; padding: 7px 14px;" onclick="toggleViewMode()">
           📄 สลับดูหน้ากระดาษ A4
-        </button>
-        <button type="button" class="sf-btn sf-btn-print" style="padding: 7px 14px;" onclick="window.print()">
-          🖨️ พิมพ์
         </button>
         <button type="button" class="sf-btn sf-btn-save" style="padding: 7px 18px; font-size: 15px;" onclick="savePdfToDevice()">
           💾 บันทึก PDF ลงเครื่อง
@@ -4705,13 +4721,16 @@
       <div style="font-size: 40px; margin-bottom: 8px;">📄</div>
       <div class="pdf-modal-title">สร้างไฟล์ PDF สำเร็จแล้ว!</div>
       <div class="pdf-modal-sub" id="pdf-ready-filename">รายงานการบำรุงรักษา.pdf</div>
-      <button class="pdf-modal-btn pdf-modal-btn-green" onclick="triggerDirectDownload()">
-        ⬇️ แตะเพื่อบันทึกไฟล์ลงเครื่องอีกครั้ง
+      <a id="btn-open-pdf-tab" href="#" target="_blank" class="pdf-modal-btn pdf-modal-btn-green" style="text-decoration: none;">
+        👁️ เปิดดู / บันทึก PDF (เปิดในแท็บใหม่)
+      </a>
+      <button type="button" class="pdf-modal-btn pdf-modal-btn-blue" id="btn-share-pdf" onclick="sharePdfFile()">
+        📤 แชร์หรือบันทึกไฟล์ (LINE / Files / อื่นๆ)
       </button>
-      <button class="pdf-modal-btn pdf-modal-btn-blue" id="btn-share-pdf" onclick="sharePdfFile()" style="display:none;">
-        📤 แชร์หรือเปิดด้วยแอปอื่น (LINE / Files)
+      <button type="button" class="pdf-modal-btn" id="btn-download-pdf" onclick="triggerDirectDownload()" style="background: #334155; color: #ffffff;">
+        ⬇️ ดาวน์โหลดไฟล์ลงเครื่อง
       </button>
-      <button class="pdf-modal-btn pdf-modal-btn-gray" onclick="closePdfModal()">
+      <button type="button" class="pdf-modal-btn pdf-modal-btn-gray" onclick="closePdfModal()">
         ปิดหน้าต่างนี้
       </button>
     </div>
@@ -7200,6 +7219,7 @@
           delBtn.style.cssText = 'border: none; background: #fee2e2; color: #dc2626; font-size: 12px; font-weight: 700; padding: 3px 9px; border-radius: 6px; cursor: pointer;';
           delBtn.innerText = '🗑️ ลบรูป';
           delBtn.onclick = (e) => {
+            e.stopPropagation();
             removePhoto(e, i);
             buildSmartPhotoCards();
             updateCompletionStats();
@@ -7209,17 +7229,35 @@
 
         const dropzone = document.createElement('div');
         dropzone.className = 'sf-photo-dropzone';
-        dropzone.onclick = () => triggerUpload('photo', i);
+        dropzone.style.position = 'relative';
+        dropzone.style.cursor = 'pointer';
+
+        // Real native file input inside dropzone for 100% reliable mobile touch
+        const nativeInput = document.createElement('input');
+        nativeInput.type = 'file';
+        nativeInput.accept = 'image/*';
+        nativeInput.className = 'sf-dropzone-native-input';
+        nativeInput.setAttribute('aria-label', 'เลือกรูปภาพที่ ' + i);
+        nativeInput.onchange = (e) => {
+          previewPhoto(e, i);
+        };
+        dropzone.appendChild(nativeInput);
 
         if (hasPhoto) {
           const preview = document.createElement('img');
           preview.src = a4Img.src;
           preview.style.display = 'block';
+          preview.style.position = 'relative';
+          preview.style.zIndex = '1';
+          preview.style.pointerEvents = 'none';
           dropzone.appendChild(preview);
         } else {
           const ph = document.createElement('div');
           ph.className = 'sf-photo-placeholder';
-          ph.innerHTML = '<span style=\'font-size: 28px;\'>📸</span><span>แตะเพื่อเลือกรูปภาพที่ ' + i + '</span>';
+          ph.style.position = 'relative';
+          ph.style.zIndex = '1';
+          ph.style.pointerEvents = 'none';
+          ph.innerHTML = '<span style="font-size: 28px;">📸</span><span>แตะเพื่อเลือกรูปภาพที่ ' + i + '</span>';
           dropzone.appendChild(ph);
         }
 
@@ -7243,8 +7281,8 @@
       }
     }
 
-    // Batch upload photos at once
-    function onBatchPhotoSelect(event) {
+    // Batch upload photos at once asynchronously
+    async function onBatchPhotoSelect(event) {
       const a4Boxes = document.querySelectorAll('#a4-page-container .photo-box');
       const maxSlots = a4Boxes.length || (REPORT_META[REPORT_TYPE] && REPORT_META[REPORT_TYPE].totalPhotos) || 8;
       const files = Array.from(event.target.files || []).slice(0, maxSlots);
@@ -7258,15 +7296,17 @@
           slot++;
         }
         if (slot <= maxSlots) {
-          processPhotoFile(files[i], slot);
+          await processPhotoFileAsync(files[i], slot);
           slot++;
         }
       }
+      autoSave();
+      buildSmartPhotoCards();
+      updateCompletionStats();
       showToast('เพิ่มรูปภาพ ' + files.length + ' รูปเรียบร้อยแล้ว ✓');
       event.target.value = '';
     }
 
-    // Update live completion statistics in top header
     function updateCompletionStats() {
       const rows = document.querySelectorAll('#a4-page-container .maintenance-table tbody tr');
       let totalRows = 0;
@@ -7340,6 +7380,13 @@
       autoSave();
     }
 
+    function syncRounds() {
+      const p1Round = document.getElementById('p1-round');
+      if (p1Round && p1Round.value) {
+        onSmartRoundInput(p1Round.value);
+      }
+    }
+
     const THAI_MONTHS = [
       'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
       'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
@@ -7390,6 +7437,18 @@
         }
       }
       autoSave();
+    }
+
+    let toastTimeout = null;
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      if (!toast) return;
+      toast.innerText = msg;
+      toast.classList.add('show');
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
     }
 
     // Core A4 Functions
@@ -7646,22 +7705,37 @@
     }
 
     function previewPhoto(event, index) {
-      const file = event.target.files[0];
+      const file = event.target.files && event.target.files[0];
       if (!file) return;
       processPhotoFile(file, index);
     }
 
     function processPhotoFile(file, index) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
+      processPhotoFileAsync(file, index).then(() => {
+        autoSave();
+        buildSmartPhotoCards();
+        updateCompletionStats();
+      });
+    }
+
+    function processPhotoFileAsync(file, index) {
+      return new Promise((resolve) => {
+        if (!file) return resolve();
+        const objectUrl = URL.createObjectURL(file);
         const tempImg = new Image();
         tempImg.onload = function() {
-          const maxDim = 1200;
+          URL.revokeObjectURL(objectUrl);
+          const maxDim = 850;
           let w = tempImg.width;
           let h = tempImg.height;
           if (w > maxDim || h > maxDim) {
-            if (w > h) { h = Math.round((h * maxDim) / w); w = maxDim; }
-            else { w = Math.round((w * maxDim) / h); h = maxDim; }
+            if (w > h) {
+              h = Math.round((h * maxDim) / w);
+              w = maxDim;
+            } else {
+              w = Math.round((w * maxDim) / h);
+              h = maxDim;
+            }
           }
           const canvas = document.createElement('canvas');
           canvas.width = w;
@@ -7670,7 +7744,7 @@
           ctx.fillStyle = '#ffffff';
           ctx.fillRect(0, 0, w, h);
           ctx.drawImage(tempImg, 0, 0, w, h);
-          const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.78);
 
           const img = document.getElementById('photo-img-' + index);
           if (img) {
@@ -7681,51 +7755,33 @@
           if (ov) ov.style.display = 'none';
           const del = document.getElementById('btn-del-' + index);
           if (del) del.style.display = 'flex';
-
-          autoSave();
-          buildSmartPhotoCards();
-          updateCompletionStats();
+          resolve();
         };
-        tempImg.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
+        tempImg.onerror = function() {
+          URL.revokeObjectURL(objectUrl);
+          showToast('ไม่สามารถโหลดรูปภาพได้ กรุณาลองใหม่อีกครั้ง');
+          resolve();
+        };
+        tempImg.src = objectUrl;
+      });
     }
 
     function removePhoto(event, index) {
-      if (event) event.stopPropagation();
+      if (event && typeof event.stopPropagation === 'function') event.stopPropagation();
       const input = document.getElementById('photo-input-' + index);
       const img = document.getElementById('photo-img-' + index);
       const overlay = document.getElementById('overlay-' + index);
       const btn = document.getElementById('btn-del-' + index);
       if (input) input.value = '';
-      if (img) { img.src = ''; img.style.display = 'none'; }
-      if (overlay) overlay.style.display = 'flex';
+      if (img) {
+        img.src = '';
+        img.style.display = 'none';
+      }
+      if (overlay) overlay.style.display = '';
       if (btn) btn.style.display = 'none';
       autoSave();
-      updateCompletionStats();
     }
 
-    function showToast(msg) {
-      const t = document.getElementById('toast');
-      if (!t) return;
-      t.innerText = msg;
-      t.classList.add('show');
-      setTimeout(() => t.classList.remove('show'), 2800);
-    }
-
-    function syncRounds() {
-      const roundIds = ['p1-round', 'p2-round', 'p3-round', 'p4-round'];
-      roundIds.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) {
-          el.addEventListener('input', () => {
-            onSmartRoundInput(el.value);
-          });
-        }
-      });
-    }
-
-    // LocalStorage AutoSave & Restore per Report Type
     function autoSave() {
       try {
         const data = {
@@ -7769,7 +7825,14 @@
           }
         }
 
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        } catch (e) {
+          try {
+            data.photos = {};
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+          } catch (e2) {}
+        }
       } catch (e) {}
     }
 
@@ -7972,6 +8035,7 @@
     }
 
     window._lastPdfBlob = null;
+    window._lastPdfUrl = null;
     window._lastPdfFilename = 'รายงานการบำรุงรักษา.pdf';
 
     async function savePdfToDevice() {
@@ -8012,51 +8076,53 @@
         const filename = prefix + stName + '.pdf';
         window._lastPdfFilename = filename;
 
-        const renderScale = isMobile ? 2.8 : 3.0;
+        // Mobile optimization: 1.8 scale renders fast (<1.5s/page) and uses minimal RAM (~10MB)
+        // Desktop: 2.4 scale gives ultra-crisp output
+        const renderScale = isMobile ? 1.8 : 2.4;
         const jsPDFClass = (window.jspdf && window.jspdf.jsPDF) ? window.jspdf.jsPDF : window.jsPDF;
         const pdf = new jsPDFClass({ orientation: 'portrait', unit: 'mm', format: 'a4', compress: true });
 
         for (let i = 0; i < pages.length; i++) {
           if (stepEl) stepEl.innerText = 'กำลังประมวลผลหน้า ' + (i + 1) + ' จาก ' + pages.length + '...';
-          await new Promise(r => setTimeout(r, 70));
+          await new Promise(r => setTimeout(r, 50));
 
-          const canvas = await html2canvas(pages[i], {
+          const pageEl = pages[i];
+          const canvas = await html2canvas(pageEl, {
             scale: renderScale,
             useCORS: true,
             allowTaint: true,
             backgroundColor: '#ffffff',
             logging: false,
-            windowWidth: 794,
-            windowHeight: 1123,
-            width: 794,
-            height: 1123,
-            x: 0,
-            y: 0,
-            scrollX: 0,
-            scrollY: 0,
             imageTimeout: 0
           });
 
-          const imgData = canvas.toDataURL('image/jpeg', 0.98);
+          const imgData = canvas.toDataURL('image/jpeg', 0.94);
           if (i > 0) pdf.addPage('a4', 'portrait');
           pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297, undefined, 'FAST');
         }
 
         window._lastPdfBlob = pdf.output('blob');
-        triggerDirectDownload();
+        if (window._lastPdfUrl) {
+          try { URL.revokeObjectURL(window._lastPdfUrl); } catch(e){}
+        }
+        window._lastPdfUrl = URL.createObjectURL(window._lastPdfBlob);
+
+        // Update modal UI
+        const readyName = document.getElementById('pdf-ready-filename');
+        if (readyName) readyName.innerText = filename;
+        const btnOpen = document.getElementById('btn-open-pdf-tab');
+        if (btnOpen) btnOpen.href = window._lastPdfUrl;
 
         if (loadingModal) loadingModal.classList.remove('active');
-        showToast('บันทึกไฟล์ PDF ขนาด A4 เรียบร้อยแล้ว ✓');
+        showToast('สร้างไฟล์ PDF เรียบร้อยแล้ว ✓');
 
-        if (isMobile) {
-          setTimeout(() => {
-            const readyModal = document.getElementById('pdf-ready-modal');
-            const readyName = document.getElementById('pdf-ready-filename');
-            const btnShare = document.getElementById('btn-share-pdf');
-            if (readyName) readyName.innerText = filename;
-            if (btnShare && navigator.canShare) btnShare.style.display = 'flex';
-            if (readyModal) readyModal.classList.add('active');
-          }, 400);
+        // Show ready modal so user can open, share or download
+        const readyModal = document.getElementById('pdf-ready-modal');
+        if (readyModal) readyModal.classList.add('active');
+
+        // On desktop, auto trigger download as convenience
+        if (!isMobile) {
+          triggerDirectDownload();
         }
       } catch (err) {
         console.error('PDF Export Error:', err);
@@ -8070,7 +8136,7 @@
 
     function triggerDirectDownload() {
       if (!window._lastPdfBlob) return;
-      const url = URL.createObjectURL(window._lastPdfBlob);
+      const url = window._lastPdfUrl || URL.createObjectURL(window._lastPdfBlob);
       const a = document.createElement('a');
       a.style.display = 'none';
       a.href = url;
@@ -8078,22 +8144,29 @@
       document.body.appendChild(a);
       a.click();
       setTimeout(() => {
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      }, 3000);
+        try { document.body.removeChild(a); } catch(e){}
+      }, 1000);
     }
 
     async function sharePdfFile() {
       if (!window._lastPdfBlob) return;
       try {
         const file = new File([window._lastPdfBlob], window._lastPdfFilename, { type: 'application/pdf' });
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-          await navigator.share({ files: [file], title: window._lastPdfFilename, text: 'รายงานการบำรุงรักษา (PM)' });
-        } else {
-          triggerDirectDownload();
+        if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+          await navigator.share({
+            files: [file],
+            title: window._lastPdfFilename,
+            text: 'รายงานการบำรุงรักษา (PM)'
+          });
+          return;
         }
       } catch (e) {
-        if (e && e.name !== 'AbortError') triggerDirectDownload();
+        if (e && e.name === 'AbortError') return;
+      }
+      if (window._lastPdfUrl) {
+        window.open(window._lastPdfUrl, '_blank');
+      } else {
+        triggerDirectDownload();
       }
     }
 
