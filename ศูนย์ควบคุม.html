@@ -531,6 +531,25 @@
       justify-content: center;
     }
 
+    .photo-box input[type="file"] {
+      display: block !important;
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      opacity: 0 !important;
+      cursor: pointer !important;
+      z-index: 5 !important;
+      font-size: 100px !important;
+    }
+
+    body.pdf-export-mode .photo-box input[type="file"] {
+      display: none !important;
+    }
+
     .photo-box:hover .photo-overlay {
       opacity: 1;
     }
@@ -2022,47 +2041,72 @@
 
     // Photo Upload
     function triggerUpload(group, index) {
-      document.getElementById('photo-input-' + index).click();
+      if (window.event && window.event.target && window.event.target.tagName === 'INPUT') return;
+      const inp = document.getElementById('photo-input-' + index);
+      if (inp) inp.click();
     }
 
     function previewPhoto(event, index) {
-      const file = event.target.files[0];
+      const file = event.target.files && event.target.files[0];
       if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const tempImg = new Image();
-        tempImg.onload = function() {
-          const maxDim = 1200;
-          let w = tempImg.width;
-          let h = tempImg.height;
-          if (w > maxDim || h > maxDim) {
-            if (w > h) {
-              h = Math.round((h * maxDim) / w);
-              w = maxDim;
-            } else {
-              w = Math.round((w * maxDim) / h);
-              h = maxDim;
-            }
+      const applyResized = (tempImg, objUrlToRevoke) => {
+        const maxDim = 960;
+        let w = tempImg.naturalWidth || tempImg.width || 800;
+        let h = tempImg.naturalHeight || tempImg.height || 600;
+        if (w > maxDim || h > maxDim) {
+          if (w > h) {
+            h = Math.round((h * maxDim) / w);
+            w = maxDim;
+          } else {
+            w = Math.round((w * maxDim) / h);
+            h = maxDim;
           }
-          const canvas = document.createElement('canvas');
-          canvas.width = w;
-          canvas.height = h;
-          const ctx = canvas.getContext('2d');
-          ctx.fillStyle = '#ffffff';
-          ctx.fillRect(0, 0, w, h);
-          ctx.drawImage(tempImg, 0, 0, w, h);
-          const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, w, h);
+        ctx.drawImage(tempImg, 0, 0, w, h);
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
+        canvas.width = 0;
+        canvas.height = 0;
+        if (objUrlToRevoke) URL.revokeObjectURL(objUrlToRevoke);
 
-          const img = document.getElementById('photo-img-' + index);
-          img.src = dataUrl;
-          img.style.display = 'block';
-          document.getElementById('overlay-' + index).style.display = 'none';
-          document.getElementById('btn-del-' + index).style.display = 'flex';
-          autoSave();
-        };
-        tempImg.src = e.target.result;
+        const img = document.getElementById('photo-img-' + index);
+        img.src = dataUrl;
+        img.style.display = 'block';
+        document.getElementById('overlay-' + index).style.display = 'none';
+        document.getElementById('btn-del-' + index).style.display = 'flex';
+        autoSave();
       };
-      reader.readAsDataURL(file);
+
+      if (window.URL && URL.createObjectURL) {
+        const objUrl = URL.createObjectURL(file);
+        const tempImg = new Image();
+        tempImg.onload = () => applyResized(tempImg, objUrl);
+        tempImg.onerror = () => {
+          URL.revokeObjectURL(objUrl);
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const fbImg = new Image();
+            fbImg.onload = () => applyResized(fbImg, null);
+            fbImg.src = e.target.result;
+          };
+          reader.readAsDataURL(file);
+        };
+        tempImg.src = objUrl;
+      } else {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const tempImg = new Image();
+          tempImg.onload = () => applyResized(tempImg, null);
+          tempImg.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+      event.target.value = '';
     }
 
     function removePhoto(event, index) {
@@ -2233,6 +2277,7 @@
         mv.setAttribute('content', window._savedMetaViewport);
       }
       document.querySelectorAll('.page').forEach(p => {
+        p.style.removeProperty('display');
         p.style.removeProperty('width');
         p.style.removeProperty('min-width');
         p.style.removeProperty('max-width');
@@ -2267,17 +2312,16 @@
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
 
-      await new Promise(r => setTimeout(r, 60));
+      await new Promise(r => requestAnimationFrame(() => setTimeout(r, 15)));
 
       try {
         prepareDomForPdf();
         if (document.fonts && document.fonts.ready) {
           await Promise.race([
             document.fonts.ready,
-            new Promise(r => setTimeout(r, 400))
+            new Promise(r => setTimeout(r, 120))
           ]);
         }
-        await new Promise(r => setTimeout(r, 80));
 
         const pages = Array.from(document.querySelectorAll('.page')).filter(p => p !== null);
 
@@ -2293,8 +2337,8 @@
         const filename = prefix + stName + '.pdf';
         window._lastPdfFilename = filename;
 
-        const renderScale = isMobile ? 2.8 : 3.0;
-        const imgQuality = 0.98;
+        const renderScale = isMobile ? 1.85 : 2.15;
+        const imgQuality = 0.88;
 
         const jsPDFClass = (window.jspdf && window.jspdf.jsPDF) ? window.jspdf.jsPDF : window.jsPDF;
         const pdf = new jsPDFClass({
@@ -2305,12 +2349,16 @@
         });
 
         for (let i = 0; i < pages.length; i++) {
-          if (stepEl) {
-            stepEl.innerText = 'กำลังประมวลผลหน้า ' + (i + 1) + ' จาก ' + pages.length + '...';
-          }
-          await new Promise(r => setTimeout(r, 80));
-
           const pageEl = pages[i];
+          if (stepEl) {
+            stepEl.innerText = 'กำลังบันทึกหน้า ' + (i + 1) + ' / ' + pages.length + '...';
+          }
+          pages.forEach((p, idx) => {
+            if (idx === i) p.style.setProperty('display', 'flex', 'important');
+            else p.style.setProperty('display', 'none', 'important');
+          });
+          await new Promise(r => requestAnimationFrame(() => setTimeout(r, 12)));
+
           const canvas = await html2canvas(pageEl, {
             scale: renderScale,
             useCORS: true,
@@ -2326,25 +2374,27 @@
             scrollX: 0,
             scrollY: 0,
             imageTimeout: 0,
-            onclone: (clonedDoc) => {
-              const pages = clonedDoc.querySelectorAll('.page');
-              pages.forEach(p => {
-                p.style.webkitFontSmoothing = 'antialiased';
-                p.style.mozOsxFontSmoothing = 'grayscale';
-                p.style.textRendering = 'geometricPrecision';
-              });
+            ignoreElements: (el) => {
+              if (!el) return false;
+              const tag = el.tagName;
+              if (tag === 'SCRIPT' || tag === 'TEMPLATE' || tag === 'NOSCRIPT') return true;
+              const id = el.id;
+              if (id === 'station-search-modal' || id === 'pdf-loading-modal' || id === 'pdf-ready-modal' || id === 'toast') return true;
+              const cl = el.classList;
+              if (cl) {
+                if (cl.contains('toolbar') || cl.contains('no-print') || cl.contains('photo-overlay') || cl.contains('btn-del')) return true;
+                if (cl.contains('page') && el !== pageEl) return true;
+              }
+              return false;
             }
           });
 
           const imgData = canvas.toDataURL('image/jpeg', imgQuality);
+          canvas.width = 0;
+          canvas.height = 0;
           if (i > 0) pdf.addPage('a4', 'portrait');
           pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297, undefined, 'FAST');
         }
-
-        if (stepEl) {
-          stepEl.innerText = 'กำลังจัดเตรียมไฟล์ PDF...';
-        }
-        await new Promise(r => setTimeout(r, 50));
 
         const blob = pdf.output('blob');
         window._lastPdfBlob = blob;
@@ -2362,7 +2412,7 @@
             if (readyName) readyName.innerText = filename;
             if (btnShare && navigator.canShare) btnShare.style.display = 'flex';
             if (readyModal) readyModal.classList.add('active');
-          }, 400);
+          }, 120);
         }
       } catch (err) {
         console.error('PDF Export Error:', err);
