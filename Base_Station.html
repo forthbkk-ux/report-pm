@@ -201,6 +201,11 @@
       border-bottom: 1px dotted #000000 !important;
     }
 
+    .date-input {
+      text-align: left !important;
+      padding-left: 0 !important;
+    }
+
     .table-input {
       border-bottom: 1px dotted #555555;
       padding: 0 3px;
@@ -280,6 +285,14 @@
 
     .black-chk-input:not(:checked) + .black-chk-svg .chk-mark {
       display: none !important;
+    }
+
+    .red-chk .black-chk-svg rect {
+      stroke: #dc2626 !important;
+    }
+
+    .red-chk .black-chk-svg polyline {
+      stroke: #dc2626 !important;
     }
 
     /* PAGE 1 (Cover) */
@@ -429,19 +442,19 @@
       width: 100%;
       border-collapse: collapse;
       font-size: 12px;
-      border: 1.5px solid #000;
+      border: 1px solid #000000 !important;
       line-height: 1.18;
     }
 
     .maintenance-table th,
     .maintenance-table td {
-      border: 1px solid #000;
+      border: 1px solid #000000 !important;
       padding: 1.5px 3px;
       vertical-align: middle;
     }
 
     .maintenance-table th {
-      background-color: #fff;
+      background-color: transparent;
       font-weight: bold;
       text-align: center;
       font-size: 12.5px;
@@ -455,7 +468,7 @@
 
     .sec-title {
       font-weight: bold;
-      background-color: #ffffff;
+      background-color: transparent;
       padding-left: 5px !important;
     }
 
@@ -493,23 +506,25 @@
       width: 100%;
       height: calc(100% - 135px);
       border-collapse: collapse;
-      border: 1.5px solid #000;
+      border: 1px solid #000000 !important;
       margin-top: 2px;
     }
 
+    .photo-table tr,
     .photo-table td {
-      border: 1px solid #000;
+      border: 1px solid #000000 !important;
       padding: 0;
       vertical-align: middle;
       text-align: center;
     }
 
     .photo-box {
-      width: 100%;
+      width: calc(100% - 4px);
       height: 235px;
+      margin: 0 auto;
       position: relative;
       cursor: pointer;
-      background-color: #ffffff;
+      background-color: transparent !important;
       overflow: hidden;
       display: flex;
       align-items: center;
@@ -522,12 +537,12 @@
 
     .photo-overlay {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.05);
-      border: 2px dashed #64748b;
+      top: 2px;
+      left: 2px;
+      right: 2px;
+      bottom: 2px;
+      background: rgba(0, 0, 0, 0.04);
+      border: 1.5px dashed #64748b;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -1223,6 +1238,14 @@
         stroke: #000000 !important;
         stroke-width: 2.2 !important;
       }
+
+      .red-chk .black-chk-svg rect {
+        stroke: #dc2626 !important;
+      }
+
+      .red-chk .black-chk-svg polyline {
+        stroke: #dc2626 !important;
+      }
     }
   </style>
 </head>
@@ -1299,7 +1322,7 @@
         <div class="p1-station-row" style="margin-top: 6px;">
           <span class="p1-station-label nowrap" style="white-space: nowrap;">วันที่ดำเนินการ :</span>
           <span class="p1-station-val">
-            <input type="text" class="dotted-input" style="width: 280px;" placeholder="....................................................................">
+            <input type="text" class="dotted-input date-input" style="width: 280px; text-align: left; padding-left: 0;" placeholder="....................................................................">
           </span>
         </div>
       </div>
@@ -1397,7 +1420,7 @@
             <td><input type="text" class="note-input"></td>
           </tr>
 
-          <!-- 2. สถานีแม่ข่ายแบบ 1 Carrier (Outdoor) -->
+          <!-- 2. สถานีแม่ข่ายแบบ 1 Carrier (Outdoor) พร้อมอุปกรณ์ประกอบ -->
           <tr>
             <td class="sec-title">2. สถานีแม่ข่ายแบบ 1 Carrier (Outdoor) พร้อมอุปกรณ์ประกอบ</td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
@@ -1423,51 +1446,99 @@
             <td><input type="text" class="note-input"></td>
           </tr>
           <tr>
-            <td class="sub-item">- ตรวจสอบพัดลมระบายความร้อนของตู้ ให้อยู่ในสภาพพร้อมใช้งาน</td>
+            <td class="sub-item">- Controller M830B S/N : <input type="text" class="table-input" style="width: 155px;"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td><input type="text" class="note-input"></td>
           </tr>
           <tr>
-            <td class="sub-item">- ตรวจสอบระบบล็อคของตู้ ให้อยู่ในสภาพสมบูรณ์ พร้อมใช้งาน</td>
+            <td class="sub-item">- Rectifier R48-1000e3 Module 1 S/N : <input type="text" class="table-input" style="width: 155px;"></td>
+            <td class="cell-check" onclick="toggleCheck(this)"></td>
+            <td class="cell-check" onclick="toggleCheck(this)"></td>
+            <td><input type="text" class="note-input"></td>
+          </tr>
+          <tr>
+            <td class="sub-item">- Rectifier R48-1000e3 Module 2 S/N : <input type="text" class="table-input" style="width: 155px;"></td>
+            <td class="cell-check" onclick="toggleCheck(this)"></td>
+            <td class="cell-check" onclick="toggleCheck(this)"></td>
+            <td><input type="text" class="note-input"></td>
+          </tr>
+          <tr>
+            <td class="sub-item">- Battery V-LFP48-100 48V100Ah S/N : <input type="text" class="table-input" style="width: 155px;"></td>
+            <td class="cell-check" onclick="toggleCheck(this)"></td>
+            <td class="cell-check" onclick="toggleCheck(this)"></td>
+            <td><input type="text" class="note-input"></td>
+          </tr>
+          <tr>
+            <td class="sub-item">- ระดับประจุแบตเตอรี่ (State of Charge : SOC) : <input type="text" class="table-input" style="width: 50px; text-align: center;"> %</td>
+            <td class="cell-check" onclick="toggleCheck(this)"></td>
+            <td class="cell-check" onclick="toggleCheck(this)"></td>
+            <td><input type="text" class="note-input"></td>
+          </tr>
+          <tr>
+            <td class="sub-item">- สถานะไฟแสดงผล : &nbsp;&nbsp;<label class="black-chk-wrap"><input type="checkbox" class="black-chk-input" checked onchange="autoSave()"><svg class="black-chk-svg" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" rx="2" fill="#fff" stroke="#111827" stroke-width="1.6"/><polyline class="chk-mark" points="3.5,8 6.5,12 12.5,4" fill="none" stroke="#111827" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>RUN</span></label>&nbsp;&nbsp;&nbsp;<label class="black-chk-wrap"><input type="checkbox" class="black-chk-input" onchange="autoSave()"><svg class="black-chk-svg" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" rx="2" fill="#fff" stroke="#111827" stroke-width="1.6"/><polyline class="chk-mark" points="3.5,8 6.5,12 12.5,4" fill="none" stroke="#111827" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>ALM</span></label></td>
+            <td class="cell-check" onclick="toggleCheck(this)"></td>
+            <td class="cell-check" onclick="toggleCheck(this)"></td>
+            <td><input type="text" class="note-input"></td>
+          </tr>
+          <tr>
+            <td class="sub-item">- ค่าแรงดันแบตเตอรี่ : <input type="text" class="table-input" style="width: 55px; text-align: center;"> โวลต์ (ค่าแรงดันระหว่าง 48 – 54 โวลต์)</td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td><input type="text" class="note-input"></td>
           </tr>
 
-          <!-- 3. แบตเตอรี่และระบบสำรองไฟฟ้า -->
+          <!-- 3. อุปกรณ์กระจายสัญญาณ (L3 Switch) แบบ 24 ช่อง -->
           <tr>
-            <td class="sec-title">3. แบตเตอรี่และระบบสำรองไฟฟ้า</td>
+            <td class="sec-title">3. อุปกรณ์กระจายสัญญาณ (L3 Switch) แบบ 24 ช่อง</td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td><input type="text" class="note-input"></td>
           </tr>
           <tr>
-            <td class="sub-item">- แบตเตอรี่ ไม่พบบวม รั่วซึม แตกร้าว หรือความเสียหาย</td>
+            <td class="sub-item">- ตรวจสอบสภาพภายนอกของอุปกรณ์ L3 Switch ให้อยู่ในสภาพสมบูรณ์ ไม่พบรอยชำรุด</td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td><input type="text" class="note-input"></td>
           </tr>
           <tr>
-            <td class="sub-item">- สายต่อแบตเตอรี่และจุดต่อสาย ให้ยึดแน่น ไม่หลวม และไม่พบการชำรุด</td>
+            <td class="sub-item">- L3 Switch S5735-S24T4XE-V2 S/N : <input type="text" class="table-input" style="width: 140px;"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td><input type="text" class="note-input"></td>
           </tr>
           <tr>
-            <td class="sub-item">- ทดสอบการทำงานของระบบสำรองไฟ โดยสามารถจ่ายไฟให้อุปกรณ์ได้ตามปกติ</td>
+            <td class="sub-item">- สถานะ LED หน้าอุปกรณ์ &nbsp;&nbsp;<label class="black-chk-wrap"><input type="checkbox" class="black-chk-input" checked onchange="autoSave()"><svg class="black-chk-svg" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" rx="2" fill="#fff" stroke="#111827" stroke-width="1.6"/><polyline class="chk-mark" points="3.5,8 6.5,12 12.5,4" fill="none" stroke="#111827" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Power</span></label>&nbsp;&nbsp;&nbsp;<label class="black-chk-wrap"><input type="checkbox" class="black-chk-input" checked onchange="autoSave()"><svg class="black-chk-svg" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" rx="2" fill="#fff" stroke="#111827" stroke-width="1.6"/><polyline class="chk-mark" points="3.5,8 6.5,12 12.5,4" fill="none" stroke="#111827" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Sys.</span></label></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td><input type="text" class="note-input"></td>
           </tr>
           <tr>
-            <td class="sub-item">- ค่าแรงดันแบตเตอรี่สำรอง : <input type="text" class="table-input" style="width: 60px; text-align: center;"> โวลต์ (ค่าแรงดันระหว่าง 49.2 - 55.2 โวลต์)</td>
+            <td class="sub-item">- สถานะ &nbsp;<label class="black-chk-wrap"><input type="checkbox" class="black-chk-input" checked onchange="autoSave()"><svg class="black-chk-svg" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" rx="2" fill="#fff" stroke="#111827" stroke-width="1.6"/><polyline class="chk-mark" points="3.5,8 6.5,12 12.5,4" fill="none" stroke="#111827" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>LAN Port : GE1/0/24 Active</span></label></td>
+            <td class="cell-check" onclick="toggleCheck(this)"></td>
+            <td class="cell-check" onclick="toggleCheck(this)"></td>
+            <td><input type="text" class="note-input"></td>
+          </tr>
+          <tr>
+            <td class="sub-item">- สถานะ &nbsp;<label class="black-chk-wrap"><input type="checkbox" class="black-chk-input" checked onchange="autoSave()"><svg class="black-chk-svg" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" rx="2" fill="#fff" stroke="#111827" stroke-width="1.6"/><polyline class="chk-mark" points="3.5,8 6.5,12 12.5,4" fill="none" stroke="#111827" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Port 10Ge : 1/0/1 Link จาก L3 Switch ไปยัง RTN320F</span></label></td>
+            <td class="cell-check" onclick="toggleCheck(this)"></td>
+            <td class="cell-check" onclick="toggleCheck(this)"></td>
+            <td><input type="text" class="note-input"></td>
+          </tr>
+          <tr>
+            <td class="sub-item">- สถานะ &nbsp;<label class="black-chk-wrap"><input type="checkbox" class="black-chk-input" checked onchange="autoSave()"><svg class="black-chk-svg" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" rx="2" fill="#fff" stroke="#111827" stroke-width="1.6"/><polyline class="chk-mark" points="3.5,8 6.5,12 12.5,4" fill="none" stroke="#111827" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Port 10Ge : 1/0/2 Link จาก L3 Switch ไปยัง DIB-R5 (Outdoor)</span></label></td>
+            <td class="cell-check" onclick="toggleCheck(this)"></td>
+            <td class="cell-check" onclick="toggleCheck(this)"></td>
+            <td><input type="text" class="note-input"></td>
+          </tr>
+          <tr>
+            <td class="sub-item">- สถานะการเชื่อมต่อ (Link) ระหว่าง L3 Switch กับ Base Station (10GE1/0/2)</td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td><input type="text" class="note-input"></td>
           </tr>
 
-          <!-- 4. ระบบไฟฟ้าและระบบสายดิน -->
+          <!-- 4. ระบบไฟฟ้าและระบบสายดิน (Electrical Power and Grounding System) -->
           <tr>
             <td class="sec-title">4. ระบบไฟฟ้าและระบบสายดิน (Electrical Power and Grounding System)</td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
@@ -1475,7 +1546,7 @@
             <td><input type="text" class="note-input"></td>
           </tr>
           <tr>
-            <td class="sub-item">- ตรวจสอบอุปกรณ์ภายในตู้ Breaker AC ให้อยู่ในสภาพสมบูรณ์ พร้อมใช้งาน</td>
+            <td class="sub-item">- ตรวจสอบอุปกรณ์ภายในตู้ Main AC ให้อยู่ในสภาพสมบูรณ์ พร้อมใช้งาน</td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td><input type="text" class="note-input"></td>
@@ -1487,19 +1558,19 @@
             <td><input type="text" class="note-input"></td>
           </tr>
           <tr>
-            <td class="sub-item">- แรงดันระหว่างสาย L – N : <input type="text" class="table-input" style="width: 60px; text-align: center;"> โวลต์ (ค่าแรงดันระหว่าง 180 - 240 โวลต์)</td>
+            <td class="sub-item">- แรงดันไฟฟ้าระหว่างสาย L - N : <input type="text" class="table-input" style="width: 55px; text-align: center;"> โวลต์ (ค่าแรงดันระหว่าง 180 - 240 โวลต์)</td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td><input type="text" class="note-input"></td>
           </tr>
           <tr>
-            <td class="sub-item">- แรงดันระหว่างสาย L – G : <input type="text" class="table-input" style="width: 60px; text-align: center;"> โวลต์ (ค่าแรงดันระหว่าง 180 - 240 โวลต์)</td>
+            <td class="sub-item">- แรงดันไฟฟ้าระหว่างสาย L - G : <input type="text" class="table-input" style="width: 55px; text-align: center;"> โวลต์ (ค่าแรงดันระหว่าง 180 - 240 โวลต์)</td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td><input type="text" class="note-input"></td>
           </tr>
           <tr>
-            <td class="sub-item">- แรงดันระหว่างสาย N – G : <input type="text" class="table-input" style="width: 60px; text-align: center;"> โวลต์ (ค่าแรงดันระหว่าง 0 - 2 โวลต์)</td>
+            <td class="sub-item">- แรงดันไฟฟ้าระหว่างสาย N - G : <input type="text" class="table-input" style="width: 55px; text-align: center;"> โวลต์ (ค่าแรงดันระหว่าง 0 - 2 โวลต์)</td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td><input type="text" class="note-input"></td>
@@ -1511,33 +1582,21 @@
             <td><input type="text" class="note-input"></td>
           </tr>
           <tr>
-            <td class="sub-item">- ค่าความต้านทานสายดินระบบไฟฟ้า (AC Ground) : <input type="text" class="table-input" style="width: 60px; text-align: center;"> <span class="nowrap">(ค่าไม่เกิน 5 โอห์ม)</span></td>
+            <td class="sub-item">- ค่าความต้านทานสายดินระบบไฟฟ้า (AC Ground) <input type="text" class="table-input" style="width: 45px; text-align: center;"> โอห์ม (ค่าไม่เกิน 5 โอห์ม)</td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td><input type="text" class="note-input"></td>
           </tr>
           <tr>
-            <td class="sub-item">- ค่าความต้านทานสายดินระบบวิทยุ (RF Ground) : <input type="text" class="table-input" style="width: 60px; text-align: center;"> <span class="nowrap">(ค่าไม่เกิน 5 โอห์ม)</span></td>
+            <td class="sub-item">- ค่าความต้านทานสายดินระบบวิทยุ (RF Ground) <input type="text" class="table-input" style="width: 45px; text-align: center;"> โอห์ม (ค่าไม่เกิน 5 โอห์ม)</td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td><input type="text" class="note-input"></td>
           </tr>
 
-          <!-- 5. เสาโทรคมนาคมชนิด Guyed Mast -->
+          <!-- 5. เครื่องสำรองไฟฟ้าขนาด 3kVA รุ่น HE-RT-3K -->
           <tr>
-            <td class="sec-title">5. เสาโทรคมนาคมชนิด Guyed Mast ความสูง 30 เมตร พร้อมอุปกรณ์ประกอบ</td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input"></td>
-          </tr>
-          <tr>
-            <td class="sub-item">- ตรวจสอบสภาพเสาโทรคมนาคม กายวาย (Guy Wire) และฐานราก ให้อยู่ในสภาพสมบูรณ์ มั่นคง แข็งแรง</td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td class="cell-check" onclick="toggleCheck(this)"></td>
-            <td><input type="text" class="note-input"></td>
-          </tr>
-          <tr>
-            <td class="sub-item">- ตรวจสอบชุดหัวล่อฟ้าและระบบป้องกันฟ้าผ่าบนเสา ให้อยู่ในสภาพสมบูรณ์ พร้อมใช้งาน</td>
+            <td class="sec-title">5. เครื่องสำรองไฟฟ้าขนาด 3kVA รุ่น HE-RT-3K S/N : <input type="text" class="table-input" style="width: 160px;"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td class="cell-check" onclick="toggleCheck(this)"></td>
             <td><input type="text" class="note-input"></td>
@@ -1677,7 +1736,7 @@
   </div>
   <script>
     const REPORT_TYPE = 'bs';
-    const STORAGE_KEY = 'pm_report_bs_v4';
+    const STORAGE_KEY = 'pm_report_bs_v5';
     const TEAM_MEMBERS = [
       "นางสาวดวงดาว ทวีศรีพายัพ",
       "นางสาวสุรีรัตน์ รอดโพธิ์ทอง",
@@ -2247,15 +2306,26 @@
 
       document.querySelectorAll('.page input[type="text"]').forEach(inp => {
         const span = document.createElement('span');
-        span.className = 'pdf-temp-span black-text nowrap';
+        span.className = 'pdf-temp-span nowrap';
         span.style.fontFamily = "'TH Sarabun New', sans-serif";
         span.style.fontSize = window.getComputedStyle(inp).fontSize;
         span.style.whiteSpace = 'nowrap';
+        if (inp.style.color && inp.style.color !== '' && inp.style.color !== 'inherit') {
+          span.style.color = inp.style.color;
+        } else {
+          span.classList.add('black-text');
+        }
         if (inp.classList.contains('dotted-input')) {
           span.style.borderBottom = '1px dotted #000000';
           span.style.display = 'inline-block';
           span.style.minWidth = inp.style.width || '80px';
-          span.style.textAlign = inp.style.textAlign || 'center';
+          if (inp.classList.contains('date-input') || inp.style.textAlign === 'left') {
+            span.style.textAlign = 'left';
+            span.style.paddingLeft = '0';
+            span.style.marginLeft = '0';
+          } else {
+            span.style.textAlign = inp.style.textAlign || 'center';
+          }
         }
         span.innerText = inp.value || '';
         inp.style.setProperty('display', 'none', 'important');
