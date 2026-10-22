@@ -1585,6 +1585,7 @@
       line-height: 1 !important;
       padding: 0 1px !important;
       vertical-align: middle !important;
+      font-weight: normal !important;
     }
     .black-chk-svg,
     body.pdf-export-mode .black-chk-svg {
@@ -2201,7 +2202,7 @@
         </tr>
         <tr class="caption-row">
           <td><span class="editable-span" contenteditable="true">รูปภาพ บ่อระบบสายดิน</span></td>
-          <td><span class="editable-span" contenteditable="true">รูปภาพ ค่าความต้านทานระบบสายดิน TOWER GND</span></td>
+          <td><span class="editable-span" contenteditable="true">รูปภาพ ค่าความต้านทานระบบสายดิน Tower Ground</span></td>
         </tr>
       </table>
     </div><!-- End Page 3 -->
@@ -5197,7 +5198,12 @@ const RADIO_SUBSTATION_DATA = [
             const idx = parseInt(key.substring(4), 10);
             const txt = data.captions[key];
             if (allSpans[idx] && txt && txt.trim() !== 'ภาพประกอบ' && !txt.trim().startsWith('ภาพประกอบที่')) {
-              allSpans[idx].innerText = txt;
+              allSpans[idx].innerText = txt
+                .replace(/MAIN AC/g, 'Main AC')
+                .replace(/YAGI/g, 'Yagi')
+                .replace(/TOWER/g, 'Tower')
+                .replace(/GND/g, 'Ground')
+                .replace(/GROUND/g, 'Ground');
             }
           });
         }
