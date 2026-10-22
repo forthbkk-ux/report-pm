@@ -56,6 +56,21 @@
       font-display: block;
     }
 
+        @font-face {
+      font-family: 'TH Sarabun New';
+      src: url('Font/THSarabunNew Bold.ttf') format('truetype');
+      font-weight: 600;
+      font-style: normal;
+      font-display: block;
+    }
+    @font-face {
+      font-family: 'THSarabunNew';
+      src: url('Font/THSarabunNew Bold.ttf') format('truetype');
+      font-weight: 600;
+      font-style: normal;
+      font-display: block;
+    }
+
     @page {
       size: A4 portrait;
       margin: 0 !important;
@@ -63,7 +78,9 @@
 
     * {
       box-sizing: border-box;
-      -webkit-font-smoothing: antialiased;
+      -webkit-font-smoothing: antialiased !important;
+      -moz-osx-font-smoothing: grayscale !important;
+      text-rendering: geometricPrecision !important;
       -webkit-text-size-adjust: 100% !important;
       -moz-text-size-adjust: 100% !important;
       -ms-text-size-adjust: 100% !important;
@@ -239,6 +256,28 @@
       padding-left: 0 !important;
     }
 
+    #p1-round,
+    #ag-p1-round,
+    #bs-p1-round {
+      width: 45px !important;
+      text-align: left !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border: none !important;
+      border-bottom: none !important;
+      font-weight: 600 !important;
+      color: #000000 !important;
+    }
+
+    .date-input,
+    #ag-station-date-1,
+    #bs-station-date-1 {
+      border: none !important;
+      border-bottom: none !important;
+      font-weight: 600 !important;
+      color: #000000 !important;
+    }
+
     .table-input {
       border-bottom: 1px dotted #555555;
       padding: 0 3px;
@@ -288,7 +327,7 @@
 
     .station-select-p1 {
       font-size: 14px;
-      font-weight: normal !important;
+      font-weight: 600 !important;
       min-width: 195px;
     }
 
@@ -378,9 +417,7 @@
       flex-shrink: 0;
     }
 
-    .p1-station-val {
-      flex: 1;
-      font-weight: normal;
+    600 !important; color: #000000 !important;
     }
 
     .p1-signatures {
@@ -536,14 +573,16 @@
     .col-note { width: 13.5%; text-align: center; }
 
     .sec-title {
-      font-weight: bold;
+      font-weight: bold !important;
       background-color: transparent;
       padding-left: 5px !important;
+      color: #000000 !important;
     }
 
     .sub-item {
-      font-weight: normal;
-      padding-left: 12px !important;
+      font-weight: normal !important;
+      padding-left: 25px !important;
+      color: #000000 !important;
     }
 
     /* Solid Black Checkmark in Table Cells */
@@ -562,12 +601,7 @@
       background-color: #e2e8f0;
     }
 
-    .note-input {
-      width: 100%;
-      border: none;
-      font-size: 14px;
-      color: #000000 !important;
-      font-weight: normal !important;
+    600 !important;
     }
 
     /* Photo Grid */
@@ -653,10 +687,7 @@
       display: none;
     }
 
-    .caption-row {
-      height: 24px;
-      font-size: 14px;
-      font-weight: normal;
+    600 !important; color: #000000 !important;
       text-align: center;
     }
 
@@ -1273,6 +1304,7 @@
 
     /* PRINT SETUP (IDENTICAL TO ORIGINAL A4) */
     @media print {
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
       body {
         background: transparent !important;
         font-size: 12px !important;
@@ -1389,6 +1421,7 @@
       font-size: 14px !important;
     }
     @media print {
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
       .page {
         padding: 8mm 15mm 8mm 15mm !important;
         font-size: 14px !important;
@@ -1477,20 +1510,38 @@
       padding: 2px 4px !important;
     }
     .sec-title,
-    .sec-title * {
+    .sec-title *,
+    body.pdf-export-mode .sec-title,
+    body.pdf-export-mode .sec-title * {
       font-family: 'TH Sarabun New', 'THSarabunNew', sans-serif !important;
       font-size: 14px !important;
       line-height: 1.15 !important;
       font-weight: bold !important;
+      padding-left: 5px !important;
+      color: #000000 !important;
     }
     .sub-item,
-    .sub-item * {
+    body.pdf-export-mode .sub-item {
       font-family: 'TH Sarabun New', 'THSarabunNew', sans-serif !important;
       font-size: 14px !important;
       line-height: 1.15 !important;
+      font-weight: normal !important;
+      padding-left: 25px !important;
+      color: #000000 !important;
     }
-    .page input[type="text"],
-    .maintenance-table input[type="text"],
+    .sub-item *,
+    body.pdf-export-mode .sub-item * {
+      font-family: 'TH Sarabun New', 'THSarabunNew', sans-serif !important;
+      font-size: 14px !important;
+      line-height: 1.15 !important;
+      font-weight: normal !important;
+      color: #000000 !important;
+    }
+
+      color: #000000 !important;
+    }
+    .page input[type=text],
+    .maintenance-table input[type=text],
     .table-input,
     .dotted-input,
     body.pdf-export-mode .page .pdf-temp-span,
@@ -1503,8 +1554,10 @@
       margin: 0 !important;
       vertical-align: baseline !important;
       color: #000000 !important;
+      font-weight: normal !important;
     }
-    .note-input {
+    .note-input,
+    body.pdf-export-mode .note-input {
       display: block !important;
       width: 100% !important;
       font-family: 'TH Sarabun New', 'THSarabunNew', sans-serif !important;
@@ -1515,7 +1568,9 @@
       margin: 0 !important;
       border: none !important;
       color: #000000 !important;
+      font-weight: normal !important;
     }
+
     .cell-check {
       font-family: 'TH Sarabun New', 'THSarabunNew', sans-serif !important;
       font-size: 14px !important;
@@ -1531,11 +1586,19 @@
       padding: 0 1px !important;
       vertical-align: middle !important;
     }
-    .black-chk-svg {
-      width: 12px !important;
-      height: 12px !important;
+    .black-chk-svg,
+    body.pdf-export-mode .black-chk-svg {
+      width: 14px !important;
+      height: 14px !important;
+      min-width: 14px !important;
+      min-height: 14px !important;
+      display: inline-block !important;
       vertical-align: middle !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      box-sizing: content-box !important;
     }
+
     .caption-row,
     .caption-row *,
     .photo-caption-cell,
@@ -1584,7 +1647,7 @@
       margin: 0 auto !important;
       padding: 0 !important;
     }
-  
+
     /* === Smart Form & UI Readable Font Size Override (TH Sarabun New) === */
     .sf-header,
     .sf-header *,
@@ -1805,9 +1868,9 @@
 <body>
   <!-- Minimal Floating Action Bar (Top Right) -->
   <div class="toolbar no-print">
-    <button class="btn btn-save" onclick="savePdfToDevice()" title="บันทึกและดาวน์โหลดไฟล์ PDF ขนาด A4 ลงเครื่อง">
-      <svg width="15" height="15" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
-      บันทึก PDF ลงเครื่อง
+    <button class="btn btn-save" onclick="savePdfToDevice()" title="บันทึกและดาวน์โหลดไฟล์ PDF ลงเครื่องทันที">
+      <svg width="15" height="15" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
+      บันทึกเป็น PDF
     </button>
     <button class="btn btn-check" onclick="checkAllNormal()" title="ติ๊ก 'ปกติ' ทุกข้อในตารางอัตโนมัติ">
       ⭐ ติ๊กปกติทั้งหมด
@@ -1840,7 +1903,7 @@
       </div>
 
       <div class="p1-title-box">
-        <div class="nowrap" style="white-space: nowrap !important;">รายงานการบำรุงรักษาเพื่อป้องกันตามรอบระยะเวลา ครั้งที่ <input type="text" id="p1-round" class="dotted-input" style="width: 85px; text-align: center;" placeholder="..........."></div>
+        <div class="nowrap" style="white-space: nowrap !important;">รายงานการบำรุงรักษาเพื่อป้องกันตามรอบระยะเวลา ครั้งที่ <input type="text" id="p1-round" class="dotted-input" style="width: 45px; text-align: left; padding: 0; margin: 0;" placeholder="..........."></div>
         <div class="nowrap" style="white-space: nowrap !important; margin-top: 4px;">ชุดอุปกรณ์ทวนสัญญาณผ่านคลื่นความถี่สูง (SHF) และสถานีแม่ข่ายแบบ 1 Carrier (Outdoor) พร้อมอุปกรณ์ประกอบ</div>
       </div>
 
@@ -1901,7 +1964,9 @@
           <div style="margin-top: 22px; width: 100%; text-align: center; white-space: nowrap;">
             ( <span class="editable-span nowrap" contenteditable="true" style="min-width: 175px; text-align: center; white-space: nowrap;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> )
           </div>
-          <div class="nowrap" style="margin-top: 4px; white-space: nowrap; visibility: hidden;">&nbsp;</div>
+          <div class="nowrap local-officer-pos-wrap" style="margin-top: 4px; width: 100%; text-align: center; white-space: nowrap;">
+            <input type="text" class="dotted-input local-officer-pos-input" placeholder="ตำแหน่ง (ถ้ามี)..." style="width: 175px; text-align: center; font-weight: normal;">
+          </div>
           <div class="nowrap" style="margin-top: 4px; white-space: nowrap;">เจ้าหน้าที่รับผิดชอบในพื้นที่</div>
         </div>
       </div>
@@ -2645,7 +2710,7 @@
             opt.innerText = st.name;
             if (st.name === 'วิทยุลูกข่ายชนิดประจำที่ หมู่ 4 ใสขนุน') opt.selected = true;
           } else if (REPORT_TYPE === 'pole60') {
-            opt.innerText = st.shortName || st.name;
+            opt.innerText = st.name;
             if (st.name === 'ที่ว่าการอำเภอย่านตาขาว') opt.selected = true;
           } else if (REPORT_TYPE === 'bs') {
             opt.innerText = st.name;
@@ -2979,13 +3044,18 @@
       });
 
       document.querySelectorAll('.page select.dropdown-field').forEach(sel => {
+        if ((sel.id === 'station-select-p1' || sel.classList.contains('station-select-p1')) && document.getElementById('station-search-container')) {
+          sel.style.setProperty('display', 'none', 'important');
+          return;
+        }
         let valText = sel.value;
         if (!valText && sel.options[sel.selectedIndex]) valText = sel.options[sel.selectedIndex].text;
         const span = document.createElement('span');
         span.className = 'pdf-temp-span black-text nowrap';
         span.style.fontFamily = "'TH Sarabun New', sans-serif";
         span.style.fontSize = window.getComputedStyle(sel).fontSize || '15.5px';
-        span.style.fontWeight = 'normal';
+        const isStation = sel.classList.contains('station-select-p1') || sel.id === 'station-select-p1';
+        span.style.fontWeight = isStation ? '600' : 'normal';
         span.style.whiteSpace = 'nowrap';
         span.innerText = valText;
         sel.style.setProperty('display', 'none', 'important');
@@ -3003,7 +3073,38 @@
         } else {
           span.classList.add('black-text');
         }
-        if (inp.classList.contains('dotted-input')) {
+        const isP1Round = inp.id === 'p1-round' || inp.id === 'ag-p1-round' || inp.id === 'bs-p1-round';
+        const isDateInput = inp.classList.contains('date-input') || inp.id === 'ag-station-date-1' || inp.id === 'bs-station-date-1';
+        if (isP1Round || isDateInput) {
+          span.style.border = 'none';
+          span.style.borderBottom = 'none';
+          span.style.display = 'inline-block';
+          span.style.fontWeight = '600';
+          span.style.fontSize = '14px';
+          if (isP1Round) {
+            span.style.display = 'inline';
+            span.style.textAlign = 'left';
+            span.style.padding = '0';
+            span.style.margin = '0';
+          } else {
+            span.style.textAlign = 'left';
+            span.style.paddingLeft = '0';
+          }
+          span.innerText = (inp.value || '').trim();
+        } else if (inp.classList.contains('local-officer-pos-input')) {
+          span.style.border = 'none';
+          span.style.borderBottom = 'none';
+          span.style.display = 'inline-block';
+          span.style.width = '100%';
+          span.style.textAlign = 'center';
+          const posVal = (inp.value || '').trim();
+          if (posVal) {
+            span.innerText = posVal;
+          } else {
+            span.innerHTML = '&nbsp;';
+            span.style.visibility = 'hidden';
+          }
+        } else if (inp.classList.contains('dotted-input')) {
           span.style.borderBottom = '1px dotted #000000';
           span.style.display = 'inline-block';
           span.style.minWidth = inp.style.width || '80px';
@@ -3028,7 +3129,7 @@
         span.className = 'pdf-temp-span black-text nowrap';
         span.style.fontFamily = "'TH Sarabun New', sans-serif";
         span.style.fontSize = '14px';
-        span.style.fontWeight = 'normal';
+        span.style.fontWeight = '600';
         span.style.whiteSpace = 'nowrap';
         span.innerText = valText;
         searchContainer.style.setProperty('display', 'none', 'important');
@@ -3037,19 +3138,27 @@
       const btnModal = document.querySelector('.btn-open-search-modal');
       if (btnModal) btnModal.style.setProperty('display', 'none', 'important');
 
-      document.querySelectorAll('.black-chk-wrap').forEach(wrap => {
+      document.querySelectorAll('#a4-page-container .black-chk-wrap, .page .black-chk-wrap').forEach(wrap => {
         const cb = wrap.querySelector('.black-chk-input');
         const mark = wrap.querySelector('.chk-mark');
         const svg = wrap.querySelector('.black-chk-svg');
         if (svg) {
+        if (svg) {
           svg.setAttribute('width', '14');
+          svg.setAttribute('height', '14');
+          svg.style.setProperty('width', '14px', 'important');
+          svg.style.setProperty('height', '14px', 'important');
+          svg.style.setProperty('padding', '0', 'important');
+          svg.style.setProperty('box-sizing', 'content-box', 'important');
+          svg.style.setProperty('display', 'inline-block', 'important');
+        }
           svg.setAttribute('height', '14');
         }
         if (cb && mark) {
           mark.style.display = cb.checked ? 'block' : 'none';
         }
       });
-    
+
       document.querySelectorAll('.photo-box .photo-img').forEach(img => {
         if (img.src && img.src.startsWith('data:image') && img.style.display !== 'none') {
           const box = img.closest('.photo-box');
@@ -3088,9 +3197,15 @@
         p.style.removeProperty('max-width');
       });
       document.querySelectorAll('.pdf-temp-span').forEach(sp => sp.remove());
-      document.querySelectorAll('.page select.dropdown-field').forEach(sel => sel.style.removeProperty('display'));
+      document.querySelectorAll('.page select.dropdown-field').forEach(sel => {
+        if ((sel.id === 'station-select-p1' || sel.classList.contains('station-select-p1')) && document.getElementById('station-search-container')) {
+          sel.style.setProperty('display', 'none');
+        } else {
+          sel.style.removeProperty('display');
+        }
+      });
       document.querySelectorAll('.page input[type="text"]').forEach(inp => inp.style.removeProperty('display'));
-      document.querySelectorAll('.black-chk-wrap .chk-mark').forEach(mark => mark.style.display = '');
+      document.querySelectorAll('#a4-page-container .black-chk-wrap .chk-mark, .page .black-chk-wrap .chk-mark').forEach(mark => mark.style.display = '');
       document.body.classList.remove('pdf-export-mode');
       document.querySelectorAll('.photo-box .photo-img').forEach(img => fitPhotoImgToBox(img));
       document.documentElement.classList.remove('pdf-export-mode');
@@ -3098,6 +3213,141 @@
 
     window._lastPdfBlob = null;
     window._lastPdfFilename = 'รายงานการบำรุงรักษา.pdf';
+
+        function printRealPdf() {
+      autoSave();
+      if (document.activeElement && typeof document.activeElement.blur === 'function') {
+        document.activeElement.blur();
+      }
+      const readyModal = document.getElementById('pdf-ready-modal');
+      if (readyModal) readyModal.classList.remove('active');
+      const loadingModal = document.getElementById('pdf-loading-modal');
+      if (loadingModal) loadingModal.classList.remove('active');
+
+      prepareDomForPdf();
+
+      const prevTitle = document.title;
+      const stSelect = document.getElementById('station-select') || document.getElementById('p1-station') || document.querySelector('.station-select');
+      const stName = (stSelect && stSelect.value ? stSelect.value : (window.currentSelectedStation || 'à¸ªà¸–à¸²à¸™à¸µ')).replace(/[\\/:*?"<>|\s]+/g, '_');
+
+      let prefix = 'à¸£à¸²à¸¢à¸‡à¸²à¸™à¸à¸²à¸£à¸šà¸³à¸£à¸¸à¸‡à¸£à¸±à¸à¸©à¸²_';
+      if (typeof REPORT_TYPE !== 'undefined') {
+        if (REPORT_TYPE === 'bs') prefix = 'à¸£à¸²à¸¢à¸‡à¸²à¸™à¸à¸²à¸£à¸šà¸³à¸£à¸¸à¸‡à¸£à¸±à¸à¸©à¸²_Base_Station_';
+        else if (REPORT_TYPE === 'ag') prefix = 'à¸£à¸²à¸¢à¸‡à¸²à¸™à¸à¸²à¸£à¸šà¸³à¸£à¸¸à¸‡à¸£à¸±à¸à¸©à¸²_Analog_Gateway_';
+        else if (REPORT_TYPE === 'ms') prefix = 'à¸£à¸²à¸¢à¸‡à¸²à¸™à¸à¸²à¸£à¸šà¸³à¸£à¸¸à¸‡à¸£à¸±à¸à¸©à¸²_à¸ªà¸–à¸²à¸™à¸µà¸§à¸´à¸—à¸¢à¸¸à¸¥à¸¹à¸à¸‚à¹ˆà¸²à¸¢_';
+        else if (REPORT_TYPE === 'pole60') prefix = 'à¸£à¸²à¸¢à¸‡à¸²à¸™à¸à¸²à¸£à¸šà¸³à¸£à¸¸à¸‡à¸£à¸±à¸à¸©à¸²_à¹€à¸ªà¸²à¸ªà¸·à¹ˆà¸­à¸ªà¸²à¸£_';
+        else if (REPORT_TYPE === 'pole9') prefix = 'à¸£à¸²à¸¢à¸‡à¸²à¸™à¸à¸²à¸£à¸šà¸³à¸£à¸¸à¸‡à¸£à¸±à¸à¸©à¸²_à¹€à¸ªà¸²à¸£à¸±à¸š-à¸ªà¹ˆà¸‡à¸ªà¸±à¸à¸à¸²à¸™_';
+        else if (REPORT_TYPE === 'cc') prefix = 'à¸£à¸²à¸¢à¸‡à¸²à¸™à¸à¸²à¸£à¸šà¸³à¸£à¸¸à¸‡à¸£à¸±à¸à¸©à¸²_à¸¨à¸¹à¸™à¸¢à¹Œà¸„à¸§à¸šà¸„à¸¸à¸¡_';
+      }
+
+      document.title = prefix + stName;
+
+      let cleanedUp = false;
+      const cleanup = () => {
+        if (cleanedUp) return;
+        cleanedUp = true;
+        document.title = prevTitle;
+        restoreDomAfterPdf();
+      };
+
+      const handleAfterPrint = () => {
+        window.removeEventListener('afterprint', handleAfterPrint);
+        cleanup();
+        showToast('à¸žà¸´à¸¡à¸žà¹Œ / à¸šà¸±à¸™à¸—à¸¶à¸ PDF à¹€à¸£à¸µà¸¢à¸šà¸£à¹‰à¸­à¸¢à¹à¸¥à¹‰à¸§ âœ“');
+      };
+
+      window.addEventListener('afterprint', handleAfterPrint);
+
+      setTimeout(() => {
+        window.print();
+        setTimeout(cleanup, 3500);
+      }, 150);
+    }
+
+        function getThSarabunBase64() {
+      if (window._cachedThSarabunBase64) return window._cachedThSarabunBase64;
+      const styleTags = document.querySelectorAll('style');
+      for (const s of styleTags) {
+        const m = s.textContent.match(/data:font\/[^;]+;base64,([A-Za-z0-9+/=]+)/);
+        if (m) {
+          window._cachedThSarabunBase64 = m[1];
+          return m[1];
+        }
+      }
+      return null;
+    }
+
+    function addSearchableTextLayer(pdf, pageEl) {
+      if (!window._thSarabunLoaded) return;
+      const pageRect = pageEl.getBoundingClientRect();
+      if (pageRect.width === 0 || pageRect.height === 0) return;
+      const scaleX = 210 / pageRect.width;
+      const scaleY = 297 / pageRect.height;
+
+      const walker = document.createTreeWalker(pageEl, NodeFilter.SHOW_TEXT, {
+        acceptNode: function(node) {
+          if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+          const p = node.parentElement;
+          if (!p) return NodeFilter.FILTER_REJECT;
+          const tag = p.tagName;
+          if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'NOSCRIPT' || tag === 'TEMPLATE') return NodeFilter.FILTER_REJECT;
+          const cl = p.classList;
+          if (cl && (cl.contains('btn-del') || cl.contains('photo-overlay') || cl.contains('no-print') || cl.contains('sf-dropzone-native-input'))) return NodeFilter.FILTER_REJECT;
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      });
+
+      const range = document.createRange();
+      let node;
+      while (node = walker.nextNode()) {
+        const text = node.nodeValue.trim();
+        if (!text) continue;
+        try {
+          range.selectNode(node);
+          const rect = range.getBoundingClientRect();
+          if (rect.width === 0 || rect.height === 0) continue;
+
+          const x = (rect.left - pageRect.left) * scaleX;
+          const y = (rect.top - pageRect.top) * scaleY;
+          const h = rect.height * scaleY;
+
+          const parentStyle = window.getComputedStyle(node.parentElement);
+          const fontSizePx = parseFloat(parentStyle.fontSize) || 14;
+          const fontSizePt = Math.max(7, fontSizePx * 0.75);
+
+          pdf.setFont('THSarabunNew', 'normal');
+          pdf.setFontSize(fontSizePt);
+          pdf.text(text, Math.max(0, x), Math.min(295, y + (h * 0.82)), { renderingMode: 'invisible' });
+        } catch(e){}
+      }
+      try { range.detach(); } catch(e){}
+
+      const formFields = pageEl.querySelectorAll('input[type="text"], select, .note-input, .table-input, .dotted-input');
+      formFields.forEach(field => {
+        let val = '';
+        if (field.tagName === 'SELECT') {
+          const opt = field.options[field.selectedIndex];
+          val = opt ? opt.text : field.value;
+        } else {
+          val = field.value || field.innerText || '';
+        }
+        val = (val || '').trim();
+        if (!val) return;
+        try {
+          const rect = field.getBoundingClientRect();
+          if (rect.width === 0 || rect.height === 0) return;
+          const x = (rect.left - pageRect.left) * scaleX;
+          const y = (rect.top - pageRect.top) * scaleY;
+          const h = rect.height * scaleY;
+          const parentStyle = window.getComputedStyle(field);
+          const fontSizePx = parseFloat(parentStyle.fontSize) || 13;
+          const fontSizePt = Math.max(7, fontSizePx * 0.75);
+          pdf.setFont('THSarabunNew', 'normal');
+          pdf.setFontSize(fontSizePt);
+          pdf.text(val, Math.max(0, x + 1), Math.min(295, y + (h * 0.78)), { renderingMode: 'invisible' });
+        } catch(e){}
+      });
+    }
 
     async function savePdfToDevice() {
       autoSave();
@@ -3133,7 +3383,7 @@
 
         const stSel = document.getElementById('station-select-p1');
         const stName = (stSel && stSel.value ? stSel.value : 'สถานี').replace(/[\\/:*?"<>|\s]+/g, '_');
-        
+
         let prefix = 'รายงานการบำรุงรักษา_Analog_Gateway_';
         if (REPORT_TYPE === 'bs') prefix = 'รายงานการบำรุงรักษา_Base_Station_';
         else if (REPORT_TYPE === 'ms') prefix = 'รายงานการบำรุงรักษา_สถานีวิทยุลูกข่าย_';
@@ -3143,8 +3393,8 @@
         const filename = prefix + stName + '.pdf';
         window._lastPdfFilename = filename;
 
-        const renderScale = isMobile ? 1.85 : 2.15;
-        const imgQuality = 0.88;
+        const renderScale = isMobile ? 2.8 : 3.0;
+        const imgQuality = 0.98;
 
         const jsPDFClass = (window.jspdf && window.jspdf.jsPDF) ? window.jspdf.jsPDF : window.jsPDF;
         const pdf = new jsPDFClass({
@@ -3195,14 +3445,18 @@
             }
           });
 
-          const imgData = canvas.toDataURL('image/jpeg', imgQuality);
+          const imgData = canvas.toDataURL('image/png');
           canvas.width = 0;
           canvas.height = 0;
           if (i > 0) pdf.addPage('a4', 'portrait');
-          pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297, undefined, 'FAST');
+          pdf.addImage(imgData, 'PNG', 0, 0, 210, 297, undefined, 'FAST');
+          if (window._thSarabunLoaded) {
+            addSearchableTextLayer(pdf, pageEl);
+          }
         }
 
         const blob = pdf.output('blob');
+        window._lastPdfDoc = pdf;
         window._lastPdfBlob = blob;
 
         triggerDirectDownload();
@@ -3210,16 +3464,7 @@
         if (loadingModal) loadingModal.classList.remove('active');
         showToast('บันทึกไฟล์ PDF ขนาด A4 เรียบร้อยแล้ว ✓');
 
-        if (isMobile) {
-          setTimeout(() => {
-            const readyModal = document.getElementById('pdf-ready-modal');
-            const readyName = document.getElementById('pdf-ready-filename');
-            const btnShare = document.getElementById('btn-share-pdf');
-            if (readyName) readyName.innerText = filename;
-            if (btnShare && navigator.canShare) btnShare.style.display = 'flex';
-            if (readyModal) readyModal.classList.add('active');
-          }, 120);
-        }
+        showToast('ดาวน์โหลด ' + filename + ' ลงเครื่องเรียบร้อยแล้ว ✓');
       } catch (err) {
         console.error('PDF Export Error:', err);
         if (loadingModal) loadingModal.classList.remove('active');
@@ -3231,18 +3476,44 @@
     }
 
     function triggerDirectDownload() {
+      const filename = window._lastPdfFilename || 'à¸£à¸²à¸¢à¸‡à¸²à¸™à¸à¸²à¸£à¸šà¸³à¸£à¸¸à¸‡à¸£à¸±à¸à¸©à¸².pdf';
+
+      if (window._lastPdfDoc && typeof window._lastPdfDoc.save === 'function') {
+        try {
+          window._lastPdfDoc.save(filename);
+          showToast('à¹€à¸£à¸´à¹ˆà¸¡à¸”à¸²à¸§à¸™à¹Œà¹‚à¸«à¸¥à¸”à¹„à¸Ÿà¸¥à¹Œ PDF âœ“');
+          return;
+        } catch (e) {
+          console.warn('pdf.save failed, falling back to Blob download:', e);
+        }
+      }
+
       if (!window._lastPdfBlob) return;
-      const url = URL.createObjectURL(window._lastPdfBlob);
+      const pdfBlob = (window._lastPdfBlob.type === 'application/pdf')
+        ? window._lastPdfBlob
+        : new Blob([window._lastPdfBlob], { type: 'application/pdf' });
+
+      if (window.navigator && typeof window.navigator.msSaveOrOpenBlob === 'function') {
+        window.navigator.msSaveOrOpenBlob(pdfBlob, filename);
+        showToast('à¹€à¸£à¸´à¹ˆà¸¡à¸”à¸²à¸§à¸™à¹Œà¹‚à¸«à¸¥à¸”à¹„à¸Ÿà¸¥à¹Œ PDF âœ“');
+        return;
+      }
+
+      const url = URL.createObjectURL(pdfBlob);
       const a = document.createElement('a');
       a.style.display = 'none';
       a.href = url;
-      a.download = window._lastPdfFilename;
+      a.download = filename;
+      a.setAttribute('download', filename);
       document.body.appendChild(a);
       a.click();
+      showToast('à¹€à¸£à¸´à¹ˆà¸¡à¸”à¸²à¸§à¸™à¹Œà¹‚à¸«à¸¥à¸”à¹„à¸Ÿà¸¥à¹Œ PDF âœ“');
       setTimeout(() => {
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      }, 3000);
+        try { document.body.removeChild(a); } catch(e){}
+        setTimeout(() => {
+          try { URL.revokeObjectURL(url); } catch(e){}
+        }, 60000);
+      }, 800);
     }
 
     async function sharePdfFile() {
@@ -3396,7 +3667,7 @@
           inp.value = '';
         }
       });
-      
+
       // If no station restored from localStorage, trigger onStationSelect with default
       const s1 = document.getElementById('station-select-p1');
       if (s1 && s1.value) {
@@ -3735,11 +4006,11 @@ function Be(t){var e=0;if(71!==t[e++]||73!==t[e++]||70!==t[e++]||56!==t[e++]||56
 
     * Redistributions of source code must retain the above copyright notice, 
       this list of conditions and the following disclaimer.
-    
+
     * Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the 
       documentation and/or other materials provided with the distribution.
-    
+
     * Neither the name of Adobe Systems Incorporated nor the names of its 
       contributors may be used to endorse or promote products derived from 
       this software without specific prior written permission.
