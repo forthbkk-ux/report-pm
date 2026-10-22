@@ -23,39 +23,31 @@ const ROOT_FOLDER_NAME = "รายงานเข้าบำรุงรัก
 const SPREADSHEET_NAME = "ทะเบียนสรุปรายงานบำรุงรักษา_PM";
 
 /**
- * ดึงโฟลเดอร์หลักเป้าหมาย ("รายงานเข้าบำรุงรักษา(PM)") อย่างแม่นยำ 100%
- * ลำดับการค้นหา:
- * 1. ค้นหาจากชื่อโฟลเดอร์ "รายงานเข้าบำรุงรักษา(PM)" ใน Google Drive โดยตรงเป็นลำดับแรก (ตรงกับโฟลเดอร์ที่ผู้ใช้สร้างไว้ในไดรฟ์ของฉัน)
- * 2. หากค้นหาด้วยชื่อไม่พบ และมี ID ระบุมา (และไม่ใช่ ID เก่าที่ยกเลิกแล้ว) ให้ตรวจสอบจาก ID
- * 3. หากยังไม่มีโฟลเดอร์ชื่อนี้เลย จะสร้างโฟลเดอร์ใหม่ชื่อ "รายงานเข้าบำรุงรักษา(PM)" ในไดรฟ์ของฉันอัตโนมัติ
+ * ดึงโฟลเดอร์หลักเป้าหมาย ("รายงานเข้าบำรุงรักษา(PM)") จาก ID "1diLmmVPuClBDo7XRACqV4ff7VQJvKiVw" เท่านั้น
  */
 function getTargetRootFolder(customFolderId) {
-  // ลำดับที่ 1: ค้นหาโฟลเดอร์จากชื่อ "รายงานเข้าบำรุงรักษา(PM)" ใน Google Drive โดยตรง
+  // บังคับใช้โฟลเดอร์จาก ID "1diLmmVPuClBDo7XRACqV4ff7VQJvKiVw" เป็นหลักเสมอ
+  const targetId = (ROOT_FOLDER_ID || "1diLmmVPuClBDo7XRACqV4ff7VQJvKiVw").toString().trim();
   try {
-    const folders = DriveApp.getFoldersByName(ROOT_FOLDER_NAME);
-    while (folders.hasNext()) {
-      const f = folders.next();
-      if (!f.isTrashed()) {
-        return f;
-      }
-    }
+    const folder = DriveApp.getFolderById(targetId);
+    if (folder && !folder.isTrashed()) return folder;
   } catch(e) {
-    Logger.log("getFoldersByName error: " + e);
+    Logger.log("getFolderById failed for ROOT_FOLDER_ID (" + targetId + "): " + e);
   }
 
-  // ลำดับที่ 2: หากค้นหาตามชื่อไม่พบ และมี ID ระบุมา (และไม่ใช่ ID เก่า) ให้ดึงจาก ID
-  const targetId = (customFolderId || ROOT_FOLDER_ID || '').toString().trim();
-  if (targetId && targetId !== "1Fezq0bPD2_2x0jO50hyuDTgZQPbHYsik") {
+  // หากมี customFolderId ระบุมา
+  const customId = (customFolderId || '').toString().trim();
+  if (customId && customId !== targetId && customId !== "1Fezq0bPD2_2x0jO50hyuDTgZQPbHYsik") {
     try {
-      const folder = DriveApp.getFolderById(targetId);
+      const folder = DriveApp.getFolderById(customId);
       if (folder && !folder.isTrashed()) return folder;
     } catch(e) {
-      Logger.log("getFolderById failed for " + targetId + ": " + e);
+      Logger.log("getFolderById failed for customId (" + customId + "): " + e);
     }
   }
 
-  // ลำดับที่ 3: หากยังไม่มีโฟลเดอร์ชื่อนี้ ให้สร้างโฟลเดอร์ใหม่ขึ้นในไดรฟ์ของฉัน
-  return DriveApp.createFolder(ROOT_FOLDER_NAME);
+  // ดึงจาก targetId ID "1diLmmVPuClBDo7XRACqV4ff7VQJvKiVw"
+  return DriveApp.getFolderById(targetId);
 }
 
 /**
