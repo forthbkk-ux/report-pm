@@ -5199,7 +5199,7 @@ const RADIO_SUBSTATION_DATA = [
             const txt = data.captions[key];
             if (allSpans[idx] && txt && txt.trim() !== 'ภาพประกอบ' && !txt.trim().startsWith('ภาพประกอบที่')) {
               allSpans[idx].innerText = txt
-                .replace(/MAIN AC/g, 'Main AC')
+                .replace(/Main AC IN/gi, 'Main AC').replace(/MAIN AC/g, 'Main AC').replace(/\(Yagi\)/gi, 'Yagi').replace(/\(Arrester\)/gi, 'Arrester').replace(/\(AC Ground\)/gi, 'AC Ground').replace(/\(RF Ground\)/gi, 'RF Ground')
                 .replace(/YAGI/g, 'Yagi')
                 .replace(/TOWER/g, 'Tower')
                 .replace(/GND/g, 'Ground')
