@@ -6193,7 +6193,7 @@
           <a id="drive-sheet-link" href="#" target="_blank" class="drive-act-btn" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; text-decoration: none; padding: 6px 12px; font-size: 13px;" title="เปิดทะเบียนสรุปรายงานบน Google Sheets">
             📊 ทะเบียนประวัติ
           </a>
-          <a id="drive-folder-link" href="https://drive.google.com/drive/my-drive" target="_blank" class="drive-act-btn" style="background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; text-decoration: none; padding: 6px 12px; font-size: 13px;" title="เปิดโฟลเดอร์หลัก รายงานเข้าบำรุงรักษา(PM) บน Google Drive">
+          <a id="drive-folder-link" href="https://drive.google.com/drive/folders/1diLmmVPuClBDo7XRACqV4ff7VQJvKiVw" target="_blank" class="drive-act-btn" style="background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; text-decoration: none; padding: 6px 12px; font-size: 13px;" title="เปิดโฟลเดอร์หลัก รายงานเข้าบำรุงรักษา(PM) บน Google Drive">
             📂 เปิด Drive
           </a>
           <button type="button" class="drive-act-btn" onclick="openDriveSetupModal()" style="background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; padding: 6px 10px; font-size: 13px;" title="ตั้งค่า Google Apps Script Web App">
@@ -6341,7 +6341,7 @@
         <label style="display: block; font-size: 14px; font-weight: 600; color: #334155; margin-bottom: 5px;">
           Google Apps Script Web App URL <span style="color: #ef4444;">*</span>
         </label>
-        <input type="url" id="drive-gas-url-input" class="sf-input" style="width: 100%; box-sizing: border-box; padding: 8px 10px; font-size: 14px; font-family: monospace;" placeholder="https://script.google.com/macros/s/.../exec">
+        <input type="url" id="drive-gas-url-input" class="sf-input" style="width: 100%; box-sizing: border-box; padding: 8px 10px; font-size: 14px; font-family: monospace;" value="https://script.google.com/macros/s/AKfycbx_ApjcpjQcGv7R89de7lVWF0jPS9gniihakXL6UopH_U_T7CRHnvZdjV4-Dq2-lcTr/exec" placeholder="https://script.google.com/macros/s/.../exec">
         <div style="font-size: 12px; color: #64748b; margin-top: 4px;">
           คัดลอก Web app URL จากการ Deploy ใน Google Apps Script (Who has access: Anyone)
         </div>
@@ -6351,7 +6351,7 @@
         <label style="display: block; font-size: 14px; font-weight: 600; color: #334155; margin-bottom: 5px;">
           โฟลเดอร์หลัก Google Drive (ค่าเริ่มต้น: โฟลเดอร์ "รายงานเข้าบำรุงรักษา(PM)")
         </label>
-        <input type="text" id="drive-root-folder-input" class="sf-input" style="width: 100%; box-sizing: border-box; padding: 8px 10px; font-size: 14px; font-family: monospace;" placeholder="ระบบจะค้นหาโฟลเดอร์ 'รายงานเข้าบำรุงรักษา(PM)' ในไดรฟ์ให้อัตโนมัติ">
+        <input type="text" id="drive-root-folder-input" class="sf-input" style="width: 100%; box-sizing: border-box; padding: 8px 10px; font-size: 14px; font-family: monospace;" value="1diLmmVPuClBDo7XRACqV4ff7VQJvKiVw" placeholder="ระบบจะค้นหาโฟลเดอร์ 'รายงานเข้าบำรุงรักษา(PM)' ในไดรฟ์ให้อัตโนมัติ">
         <div style="font-size: 12px; color: #64748b; margin-top: 4px;">
           💡 ระบบจะเชื่อมต่อกับโฟลเดอร์ชื่อ <b>"รายงานเข้าบำรุงรักษา(PM)"</b> ใน Google Drive ของท่านให้อัตโนมัติ (ไม่จำเป็นต้องระบุ ID)
         </div>
@@ -10302,23 +10302,30 @@
        - Separates reports by Round (ครั้งที่) > Province (จังหวัด) > PDF
        - Synchronizes with central Google Sheet log
        ========================================================================= */
-    const DEFAULT_ROOT_FOLDER_ID = "";
+    const DEFAULT_GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbx_ApjcpjQcGv7R89de7lVWF0jPS9gniihakXL6UopH_U_T7CRHnvZdjV4-Dq2-lcTr/exec";
+    const DEFAULT_ROOT_FOLDER_ID = "1diLmmVPuClBDo7XRACqV4ff7VQJvKiVw";
 
     function getGasWebAppUrl() {
-      return (localStorage.getItem('gas_report_webapp_url') || '').trim();
+      const stored = (localStorage.getItem('gas_report_webapp_url') || '').trim();
+      return stored || DEFAULT_GAS_WEBAPP_URL;
     }
 
     function setGasWebAppUrl(url) {
-      localStorage.setItem('gas_report_webapp_url', (url || '').trim());
+      const clean = (url || '').trim();
+      if (clean) {
+        localStorage.setItem('gas_report_webapp_url', clean);
+      } else {
+        localStorage.removeItem('gas_report_webapp_url');
+      }
     }
 
     function getGasRootFolderId() {
       const stored = (localStorage.getItem('gas_root_folder_id') || '').trim();
       if (stored === "1Fezq0bPD2_2x0jO50hyuDTgZQPbHYsik") {
         localStorage.removeItem('gas_root_folder_id');
-        return '';
+        return DEFAULT_ROOT_FOLDER_ID;
       }
-      return stored;
+      return stored || DEFAULT_ROOT_FOLDER_ID;
     }
 
     function setGasRootFolderId(id) {
