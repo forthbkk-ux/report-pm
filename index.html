@@ -239,8 +239,9 @@
       box-shadow: 0 4px 12px rgba(217, 119, 6, 0.45);
     }
 
-    /* Primary Action: Blue Gradient */
+    /* Primary Action: Blue Gradient (Hidden per user request) */
     .sf-btn-save {
+      display: none !important;
       background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
       color: #ffffff;
       box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
@@ -248,6 +249,7 @@
       font-weight: 700;
     }
     .sf-btn-save:hover {
+      display: none !important;
       background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%);
       box-shadow: 0 4px 12px rgba(37, 99, 235, 0.45);
     }
@@ -274,6 +276,230 @@
       background: rgba(239, 68, 68, 0.18);
       color: #fca5a5;
       border-color: rgba(239, 68, 68, 0.35);
+    }
+
+    /* Google Drive Cloud & View Buttons */
+    .sf-btn-drive {
+      background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
+      border: 1px solid rgba(52, 211, 153, 0.4);
+      font-weight: 700;
+    }
+    .sf-btn-drive:hover {
+      background: linear-gradient(135deg, #047857 0%, #059669 100%);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.45);
+    }
+    .sf-btn-drive-view {
+      background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(14, 165, 233, 0.35);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      font-weight: 700;
+    }
+    .sf-btn-drive-view:hover {
+      background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
+      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.45);
+    }
+
+    /* Drive Modals & Data Viewer Styling */
+    .drive-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(5px);
+      z-index: 3100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .drive-modal-backdrop.active {
+      display: flex;
+    }
+    .drive-modal-card {
+      background: #ffffff;
+      color: #0f172a;
+      width: 100%;
+      max-width: 520px;
+      border-radius: 18px;
+      padding: 24px 22px;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+      text-align: center;
+      position: relative;
+    }
+    .drive-viewer-card {
+      max-width: 1000px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      overflow: hidden;
+      text-align: left;
+    }
+    .drive-viewer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      background: #f8fafc;
+      border-bottom: 1px solid #e2e8f0;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .drive-viewer-body {
+      padding: 16px 20px;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .drive-filter-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 14px;
+      background: #f1f5f9;
+      padding: 10px 12px;
+      border-radius: 10px;
+    }
+    .drive-filter-select, .drive-filter-search {
+      padding: 6px 10px;
+      font-size: 15px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      background: #ffffff;
+      font-family: inherit;
+    }
+    .drive-filter-search {
+      flex: 1;
+      min-width: 150px;
+    }
+    .drive-cat-pills-bar {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 12px;
+      padding: 2px 0 6px 0;
+    }
+    .drive-cat-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color: #334155;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+    .drive-cat-pill:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+    }
+    .drive-cat-pill.active {
+      background: #2563eb;
+      color: #ffffff;
+      border-color: #1d4ed8;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+    }
+    .drive-cat-pill .cat-count-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      border-radius: 10px;
+      font-size: 11.5px;
+      font-weight: 700;
+      background: #f1f5f9;
+      color: #334155;
+    }
+    .drive-cat-pill.active .cat-count-badge {
+      background: #ffffff;
+      color: #1d4ed8;
+    }
+    .drive-table-wrap {
+      overflow-x: auto;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+    }
+    .drive-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14.5px;
+    }
+    .drive-table th {
+      background: #1e293b;
+      color: #f8fafc;
+      padding: 10px 10px;
+      text-align: left;
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+      white-space: nowrap;
+    }
+    .drive-table td {
+      padding: 9px 10px;
+      border-bottom: 1px solid #e2e8f0;
+      vertical-align: middle;
+    }
+    .drive-table tr:hover td {
+      background: #f8fafc;
+    }
+    .drive-pill-round {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #dbeafe;
+      color: #1e40af;
+      font-weight: 600;
+      font-size: 13.5px;
+      white-space: nowrap;
+    }
+    .drive-pill-prov {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #dcfce7;
+      color: #166534;
+      font-weight: 600;
+      font-size: 13.5px;
+      white-space: nowrap;
+    }
+    .drive-act-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      white-space: nowrap;
+    }
+    .drive-act-view {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+    }
+    .drive-act-view:hover {
+      background: #dbeafe;
+    }
+    .drive-act-folder {
+      background: #f0fdf4;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
+    }
+    .drive-act-folder:hover {
+      background: #dcfce7;
     }
 
     /* 6 REPORT TYPE TABS: Beautiful Segmented Bar */
@@ -2758,11 +2984,20 @@
           <button type="button" class="sf-btn sf-btn-checkall" onclick="checkAllNormal()">
             ⭐ ติ๊กปกติทั้งหมด
           </button>
-          <button type="button" class="sf-btn sf-btn-save" onclick="savePdfToDevice()" title="บันทึกและดาวน์โหลดไฟล์ PDF ลงเครื่องทันที">
+          <button type="button" class="sf-btn sf-btn-drive" onclick="uploadReportToGoogleDrive()" title="บันทึกและส่งรายงานขึ้น Google Drive (แยกโฟลเดอร์ ครั้งที่ > จังหวัด อัตโนมัติ)">
+            ☁️ บันทึกลง Drive
+          </button>
+          <button type="button" class="sf-btn sf-btn-drive-view" onclick="openDriveReportsModal()" title="ดูข้อมูลรายงานและค้นหาประวัติบน Google Drive">
+            📂 ดูข้อมูล Drive
+          </button>
+          <button type="button" class="sf-btn sf-btn-save" onclick="savePdfToDevice()" title="บันทึกและดาวน์โหลดไฟล์ PDF ลงเครื่องทันที" style="display: none !important;">
             💾 บันทึกเป็น PDF
           </button>
           <button type="button" class="sf-btn sf-btn-reset" onclick="resetForm()">
             🔄 ล้างข้อมูล
+          </button>
+          <button type="button" class="sf-btn sf-btn-reset" onclick="openDriveSetupModal()" title="ตั้งค่าหรือเปลี่ยน URL Google Apps Script">
+            ⚙️ ตั้งค่า Drive
           </button>
         </div>
       </div>
@@ -2838,13 +3073,24 @@
             <select id="sf-station-select" class="sf-select" onchange="onSmartStationChange(this.value)"></select>
           </div>
 
-          <!-- Maintenance Round -->
+          <!-- Maintenance Round & Target Province -->
           <div class="sf-field">
-            <label class="sf-label">
-              <span>🔢 ครั้งที่บำรุงรักษา (รอบที่)</span>
-              <span style="font-size: 12px; color: #64748b; font-weight: 500;">ซิงค์ทุกหน้าอัตโนมัติ</span>
-            </label>
-            <input type="text" id="sf-round-input" class="sf-input" placeholder="เช่น 1, 2, 3..." style="font-weight: 700;" oninput="onSmartRoundInput(this.value)">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div>
+                <label class="sf-label">
+                  <span>🔢 ครั้งที่บำรุงรักษา</span>
+                  <span style="font-size: 12px; color: #64748b; font-weight: 500;">(โฟลเดอร์หลัก)</span>
+                </label>
+                <input type="text" id="sf-round-input" class="sf-input" placeholder="เช่น 1, 2, 3..." style="font-weight: 700;" oninput="onSmartRoundInput(this.value)">
+              </div>
+              <div>
+                <label class="sf-label">
+                  <span>🏙️ จังหวัด</span>
+                  <span style="font-size: 12px; color: #059669; font-weight: 600;">(โฟลเดอร์ย่อย Drive)</span>
+                </label>
+                <input type="text" id="sf-province-input" class="sf-input" placeholder="เช่น กาญจนบุรี, ตรัง..." style="font-weight: 600;" oninput="onSmartProvinceInput(this.value)">
+              </div>
+            </div>
           </div>
         </div>
 
@@ -2972,7 +3218,13 @@
         <button type="button" id="sf-bottom-toggle-view" class="sf-btn" style="background: #334155; padding: 7px 14px;" onclick="toggleViewMode()">
           📄 สลับดูหน้ากระดาษ A4
         </button>
-        <button type="button" class="sf-btn sf-btn-save" style="padding: 7px 18px; font-size: 15px;" onclick="savePdfToDevice()" title="บันทึกและดาวน์โหลดไฟล์ PDF ลงเครื่องทันที">
+        <button type="button" class="sf-btn sf-btn-drive" style="padding: 7px 16px; font-size: 15px;" onclick="uploadReportToGoogleDrive()" title="บันทึกและส่งรายงานขึ้น Google Drive (แยกโฟลเดอร์ตาม ครั้งที่ และ จังหวัด อัตโนมัติ)">
+          ☁️ บันทึกลง Drive
+        </button>
+        <button type="button" class="sf-btn sf-btn-drive-view" style="padding: 7px 14px;" onclick="openDriveReportsModal()" title="ดูข้อมูลรายงานและค้นหาประวัติบน Google Drive">
+          📂 ดูข้อมูล Drive
+        </button>
+        <button type="button" class="sf-btn sf-btn-save" style="display: none !important; padding: 7px 18px; font-size: 15px;" onclick="savePdfToDevice()" title="บันทึกและดาวน์โหลดไฟล์ PDF ลงเครื่องทันที">
           💾 บันทึกเป็น PDF
         </button>
       </div>
@@ -5926,6 +6178,227 @@
     </div>
   </div>
 
+  <!-- ================= GOOGLE DRIVE REPORTS VIEWER MODAL ================= -->
+  <div id="sf-drive-modal" class="drive-modal-backdrop no-print" onclick="if(event.target === this) closeDriveReportsModal()">
+    <div class="drive-modal-card drive-viewer-card">
+      <div class="drive-viewer-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 26px;">📁</span>
+          <div>
+            <div style="font-size: 19px; font-weight: 700; color: #0f172a;">รายงาน PM บน Google Drive</div>
+            <div style="font-size: 13.5px; color: #64748b;" id="drive-header-sub">โฟลเดอร์อัตโนมัติ: ครั้งที่ &gt; จังหวัด &gt; ไฟล์ PDF</div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+          <a id="drive-sheet-link" href="#" target="_blank" class="drive-act-btn" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; text-decoration: none; padding: 6px 12px; font-size: 13px;" title="เปิดทะเบียนสรุปรายงานบน Google Sheets">
+            📊 ทะเบียนประวัติ
+          </a>
+          <a id="drive-folder-link" href="https://drive.google.com/drive/my-drive" target="_blank" class="drive-act-btn" style="background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; text-decoration: none; padding: 6px 12px; font-size: 13px;" title="เปิดโฟลเดอร์หลัก รายงานเข้าบำรุงรักษา(PM) บน Google Drive">
+            📂 เปิด Drive
+          </a>
+          <button type="button" class="drive-act-btn" onclick="openDriveSetupModal()" style="background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; padding: 6px 10px; font-size: 13px;" title="ตั้งค่า Google Apps Script Web App">
+            ⚙️ ตั้งค่า
+          </button>
+          <button type="button" class="station-modal-close" onclick="closeDriveReportsModal()" style="background: none; border: none; font-size: 22px; cursor: pointer; color: #64748b; padding: 0 6px;">✕</button>
+        </div>
+      </div>
+
+      <div class="drive-viewer-body">
+        <!-- Search & Filter Controls -->
+        <div class="drive-filter-bar">
+          <input type="text" id="drive-search-input" class="drive-filter-search" placeholder="🔍 ค้นหาชื่อสถานี, จังหวัด, ผู้ตรวจสอบ, ชื่อไฟล์..." oninput="filterDriveReports()">
+          
+          <!-- Dropdown เลือกประเภทสถานี (ตามชื่อในรูปที่ 2) พร้อมนับจำนวน -->
+          <select id="drive-filter-station-type" class="drive-filter-select" onchange="filterDriveReports()" style="font-weight: 600; color: #0f172a; min-width: 210px; border-color: #93c5fd;" title="เลือกประเภทสถานี (ตามรูปที่ 2)">
+            <option value="">🏢 ทุกประเภทสถานี (ทั้งหมด)</option>
+            <option value="ag">🏢 Analog Gateway</option>
+            <option value="bs">📡 Base Station</option>
+            <option value="ms">📻 สถานีวิทยุลูกข่าย</option>
+            <option value="pole60">🗼 เสาสื่อสาร</option>
+            <option value="pole9">📶 เสารับ-ส่งสัญญาณ</option>
+            <option value="cc">🖥️ ศูนย์ควบคุม</option>
+          </select>
+
+          <!-- Dropdown เลือกชื่อสถานี -->
+          <select id="drive-filter-station" class="drive-filter-select" onchange="filterDriveReports()" style="max-width: 170px;" title="เลือกชื่อสถานี">
+            <option value="">ทุกชื่อสถานี</option>
+          </select>
+
+          <select id="drive-filter-round" class="drive-filter-select" onchange="onDriveRoundChange()" style="border: 2px solid #3b82f6; border-radius: 8px; font-weight: 700; color: #1e40af; padding: 7px 12px; background: #ffffff;" title="เลือกครั้งที่ (รอบการบำรุงรักษา PM)">
+            <option value="">ทุกรอบ</option>
+            <option value="ครั้งที่ 1">ครั้งที่ 1 (17 สถานี)</option>
+            <option value="ครั้งที่ 2">ครั้งที่ 2 (198 สถานี)</option>
+            <option value="ครั้งที่ 3">ครั้งที่ 3 (17 สถานี)</option>
+            <option value="ครั้งที่ 4">ครั้งที่ 4 (198 สถานี)</option>
+            <option value="ครั้งที่ 5">ครั้งที่ 5 (17 สถานี)</option>
+            <option value="ครั้งที่ 6">ครั้งที่ 6 (198 สถานี)</option>
+            <option value="ครั้งที่ 7">ครั้งที่ 7 (17 สถานี)</option>
+            <option value="ครั้งที่ 8">ครั้งที่ 8 (198 สถานี)</option>
+            <option value="ครั้งที่ 9">ครั้งที่ 9 (17 สถานี)</option>
+            <option value="ครั้งที่ 10">ครั้งที่ 10 (198 สถานี)</option>
+          </select>
+          <select id="drive-filter-province" class="drive-filter-select" onchange="onDriveProvinceChange()" style="border: 1.5px solid #059669; border-radius: 8px; font-weight: 600; color: #065f46; padding: 7px 12px; background: #ffffff;" title="เลือกจังหวัด">
+            <option value="">ทุกจังหวัด</option>
+          </select>
+          <button type="button" class="drive-act-btn" onclick="fetchDriveReports()" style="background: #3b82f6; color: #ffffff; padding: 6px 14px; border: none; font-weight: 600;" title="โหลดข้อมูลรายงานใหม่จาก Google Drive">
+            🔄 รีเฟรช
+          </button>
+        </div>
+
+        <!-- แถบปุ่มสรุปนับจำนวนแต่ละสถานีตามรูปที่ 2 (Category Summary Chips) -->
+        <div id="drive-cat-summary-pills" class="drive-cat-pills-bar"></div>
+
+        <!-- Status / Counter -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 13.5px; color: #64748b;">
+          <span id="drive-records-count">กำลังโหลดข้อมูล...</span>
+          <span id="drive-last-updated" style="font-size: 12px;"></span>
+        </div>
+
+        <!-- Table Container -->
+        <div class="drive-table-wrap" style="max-height: 480px; overflow-y: auto;">
+          <table class="drive-table">
+            <thead>
+              <tr>
+                <th style="width: 140px;">วันเวลาที่บันทึก</th>
+                <th style="width: 80px; text-align: center;">ครั้งที่</th>
+                <th style="width: 110px;">จังหวัด</th>
+                <th>ชื่อสถานี</th>
+                <th style="width: 130px;">ประเภทรายงาน</th>
+                <th style="width: 130px;">ผู้ตรวจสอบ</th>
+                <th style="width: 180px; text-align: center;">จัดการ / เอกสาร</th>
+              </tr>
+            </thead>
+            <tbody id="drive-reports-table-body">
+              <tr>
+                <td colspan="7" style="text-align: center; padding: 30px; color: #64748b;">
+                  กำลังเชื่อมต่อไปยัง Google Drive...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= GOOGLE DRIVE AUTH / PASSWORD MODAL ================= -->
+  <div id="sf-drive-auth-modal" class="drive-modal-backdrop no-print" onclick="if(event.target === this) closeDriveAuthModal()">
+    <div class="drive-modal-card" style="max-width: 440px; text-align: left; padding: 24px 26px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 12px; margin-bottom: 16px;">
+        <div style="font-size: 18px; font-weight: 700; color: #0f172a; display: flex; align-items: center; gap: 8px;">
+          <span>🔒</span> ยืนยันรหัสผ่านตั้งค่า Drive
+        </div>
+        <button type="button" onclick="closeDriveAuthModal()" style="background: none; border: none; font-size: 22px; cursor: pointer; color: #64748b;">✕</button>
+      </div>
+
+      <div style="font-size: 14px; color: #475569; margin-bottom: 16px; line-height: 1.5;">
+        กรุณากรอกรหัสผ่านเพื่อเข้าใช้งานหน้าตั้งค่า Google Drive (GAS)
+      </div>
+
+      <form onsubmit="submitDrivePassword(event); return false;" style="margin: 0;">
+        <div style="margin-bottom: 14px;">
+          <label for="drive-auth-password-input" style="display: block; font-size: 14px; font-weight: 600; color: #334155; margin-bottom: 6px;">
+            รหัสผ่าน (Password)
+          </label>
+          <div style="position: relative; display: flex; align-items: center;">
+            <input type="password" id="drive-auth-password-input" class="sf-input" style="width: 100%; box-sizing: border-box; padding: 10px 42px 10px 12px; font-size: 16px; border-radius: 8px;" placeholder="กรอกรหัสผ่าน" autocomplete="current-password" autofocus>
+            <button type="button" id="drive-auth-eye-btn" onclick="toggleDrivePasswordVisibility()" style="position: absolute; right: 10px; background: none; border: none; font-size: 18px; cursor: pointer; padding: 4px; color: #64748b;" title="แสดง/ซ่อนรหัสผ่าน">
+              👁️
+            </button>
+          </div>
+          <div id="drive-auth-error" style="display: none; color: #dc2626; font-size: 13px; font-weight: 600; margin-top: 6px; padding: 6px 10px; background: #fef2f2; border: 1px solid #fecaca; border-radius: 6px;">
+            ⚠️ รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 8px; justify-content: flex-end; margin-top: 20px;">
+          <button type="button" class="drive-act-btn" onclick="closeDriveAuthModal()" style="background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; padding: 8px 16px; font-size: 14px; border-radius: 8px; cursor: pointer;">
+            ยกเลิก
+          </button>
+          <button type="submit" class="drive-act-btn" style="background: #2563eb; color: #ffffff; border: none; padding: 8px 20px; font-size: 14px; font-weight: 600; border-radius: 8px; cursor: pointer;">
+            ปลดล็อก
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= GOOGLE DRIVE SETUP / CONFIG MODAL ================= -->
+  <div id="sf-drive-setup-modal" class="drive-modal-backdrop no-print" onclick="if(event.target === this) closeDriveSetupModal()">
+    <div class="drive-modal-card" style="max-width: 560px; text-align: left;">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 12px; margin-bottom: 16px;">
+        <div style="font-size: 18px; font-weight: 700; color: #0f172a; display: flex; align-items: center; gap: 8px;">
+          <span>⚙️</span> ตั้งค่าเชื่อมต่อ Google Drive (GAS)
+        </div>
+        <button type="button" onclick="closeDriveSetupModal()" style="background: none; border: none; font-size: 22px; cursor: pointer; color: #64748b;">✕</button>
+      </div>
+
+      <div style="font-size: 14px; color: #475569; margin-bottom: 16px; line-height: 1.5;">
+        ระบบจะจัดเก็บไฟล์ PDF ของรายงาน PM แยกโฟลเดอร์ตาม <b>"ครั้งที่"</b> และ <b>"จังหวัด"</b> ใน Google Drive อัตโนมัติ พร้อมบันทึกสรุปข้อมูลลง Google Sheets ทันที
+      </div>
+
+      <div style="margin-bottom: 14px;">
+        <label style="display: block; font-size: 14px; font-weight: 600; color: #334155; margin-bottom: 5px;">
+          Google Apps Script Web App URL <span style="color: #ef4444;">*</span>
+        </label>
+        <input type="url" id="drive-gas-url-input" class="sf-input" style="width: 100%; box-sizing: border-box; padding: 8px 10px; font-size: 14px; font-family: monospace;" placeholder="https://script.google.com/macros/s/.../exec">
+        <div style="font-size: 12px; color: #64748b; margin-top: 4px;">
+          คัดลอก Web app URL จากการ Deploy ใน Google Apps Script (Who has access: Anyone)
+        </div>
+      </div>
+
+      <div style="margin-bottom: 18px;">
+        <label style="display: block; font-size: 14px; font-weight: 600; color: #334155; margin-bottom: 5px;">
+          โฟลเดอร์หลัก Google Drive (ค่าเริ่มต้น: โฟลเดอร์ "รายงานเข้าบำรุงรักษา(PM)")
+        </label>
+        <input type="text" id="drive-root-folder-input" class="sf-input" style="width: 100%; box-sizing: border-box; padding: 8px 10px; font-size: 14px; font-family: monospace;" placeholder="ระบบจะค้นหาโฟลเดอร์ 'รายงานเข้าบำรุงรักษา(PM)' ในไดรฟ์ให้อัตโนมัติ">
+        <div style="font-size: 12px; color: #64748b; margin-top: 4px;">
+          💡 ระบบจะเชื่อมต่อกับโฟลเดอร์ชื่อ <b>"รายงานเข้าบำรุงรักษา(PM)"</b> ใน Google Drive ของท่านให้อัตโนมัติ (ไม่จำเป็นต้องระบุ ID)
+        </div>
+      </div>
+
+      <div id="drive-setup-status" style="display: none; padding: 10px 12px; border-radius: 8px; margin-bottom: 14px; font-size: 13.5px;"></div>
+
+      <div style="display: flex; gap: 8px; justify-content: flex-end;">
+        <button type="button" class="drive-act-btn" onclick="testDriveConnection()" style="background: #f1f5f9; color: #1e293b; border: 1px solid #cbd5e1; padding: 8px 14px; font-size: 14px;">
+          🔌 ทดสอบการเชื่อมต่อ
+        </button>
+        <button type="button" class="drive-act-btn" onclick="saveDriveSettings()" style="background: #10b981; color: #ffffff; border: none; padding: 8px 18px; font-size: 14px; font-weight: bold;">
+          💾 บันทึกการตั้งค่า
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= DRIVE UPLOAD SUCCESS MODAL ================= -->
+  <div id="sf-drive-success-modal" class="drive-modal-backdrop no-print" onclick="if(event.target === this) closeDriveSuccessModal()">
+    <div class="drive-modal-card" style="max-width: 480px; text-align: center; padding: 28px 24px;">
+      <div style="font-size: 48px; margin-bottom: 8px;">☁️</div>
+      <div style="font-size: 22px; font-weight: bold; color: #047857; margin-bottom: 6px;">
+        บันทึกขึ้น Google Drive สำเร็จ!
+      </div>
+      <div style="font-size: 14.5px; color: #475569; margin-bottom: 18px; line-height: 1.5;" id="drive-success-sub">
+        ไฟล์ PDF ถูกจัดเก็บในโฟลเดอร์ ครั้งที่ &gt; จังหวัด เรียบร้อยแล้ว
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px;">
+        <a id="drive-success-file-btn" href="#" target="_blank" class="pdf-modal-btn" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); color: #fff; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; font-size: 16px; border-radius: 8px; font-weight: bold;">
+          📄 เปิดดูไฟล์ PDF บน Google Drive
+        </a>
+        <a id="drive-success-folder-btn" href="#" target="_blank" class="pdf-modal-btn" style="background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px; font-size: 15px; border-radius: 8px; font-weight: 600;">
+          📁 เปิดโฟลเดอร์จังหวัดใน Google Drive
+        </a>
+        <a id="drive-success-sheet-btn" href="#" target="_blank" class="pdf-modal-btn" style="background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px; font-size: 15px; border-radius: 8px; font-weight: 600;">
+          📊 ดูทะเบียนประวัติใน Google Sheets
+        </a>
+      </div>
+
+      <button type="button" class="pdf-modal-btn pdf-modal-btn-gray" onclick="closeDriveSuccessModal()" style="width: 100%; padding: 8px; font-size: 14px;">
+        ปิดหน้าต่าง
+      </button>
+    </div>
+  </div>
+
   <script>
     const RADIO_SUBSTATION_DATA = [
       {
@@ -8673,6 +9146,12 @@
       }
     }
 
+    function onSmartProvinceInput(val) {
+      const sfProv = document.getElementById('sf-province-input');
+      if (sfProv && sfProv.value !== val) sfProv.value = val;
+      autoSave();
+    }
+
     const THAI_MONTHS = [
       'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
       'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
@@ -8791,6 +9270,24 @@
       renderStationList(STATIONS_DATA, 'modal-station-results-list', true);
     }
 
+    function extractProvinceFromStation(st) {
+      if (!st) return '';
+      if (st.province) return st.province;
+      if (st.cat === 'cc' || (typeof REPORT_TYPE !== 'undefined' && REPORT_TYPE === 'cc')) return 'กรุงเทพมหานคร';
+      const text = (st.location || '') + ' ' + (st.shortName || '') + ' ' + (st.name || '');
+      if (text.includes('กรุงเทพ')) return 'กรุงเทพมหานคร';
+      const match = text.match(/(?:จังหวัด|จ\.)\s*([ก-๙]+)/);
+      if (match && match[1]) {
+        return match[1].trim();
+      }
+      if (st.shortName && st.shortName.includes(',')) {
+        const parts = st.shortName.split(',');
+        const candidate = parts[parts.length - 1].trim();
+        if (candidate) return candidate;
+      }
+      return '';
+    }
+
     function onStationSelect(name) {
       const st = STATIONS_DATA.find(s => s.name === name);
       if (!st) return;
@@ -8826,6 +9323,13 @@
       if (sfCoord) sfCoord.innerText = st.coords || '-';
       const sfBottomSt = document.getElementById('sf-bottom-station');
       if (sfBottomSt) sfBottomSt.innerText = st.name;
+
+      // Auto-fill Province into Smart Form Step 1
+      const autoProv = extractProvinceFromStation(st);
+      const sfProvInput = document.getElementById('sf-province-input');
+      if (sfProvInput && autoProv) {
+        sfProvInput.value = autoProv;
+      }
 
       const height = st.poleHeight || st.height || (REPORT_TYPE === 'pole60' ? '60' : '9');
       ['pole-height-p1', 'pole-height-p2', 'pole-height-p3'].forEach(id => {
@@ -9110,6 +9614,7 @@
           selectedStation: document.getElementById('station-select-p1')?.value,
           selectedOperator: document.getElementById('operator-select-1')?.value,
           round: document.getElementById('p1-round')?.value,
+          province: document.getElementById('sf-province-input')?.value || '',
           textInputs: {},
           checks: [],
           blackChecks: [],
@@ -9168,6 +9673,10 @@
         const data = JSON.parse(raw);
 
         if (data.selectedStation) onStationSelect(data.selectedStation);
+        if (data.province) {
+          const sfProv = document.getElementById('sf-province-input');
+          if (sfProv) sfProv.value = data.province;
+        }
         if (data.selectedOperator) onOperatorSelect(data.selectedOperator);
 
         if (data.textInputs) {
@@ -9788,6 +10297,1118 @@
       if (readyModal) readyModal.classList.remove('active');
     }
 
+    /* =========================================================================
+       GOOGLE DRIVE INTEGRATION & GAS API CLIENT FUNCTIONS
+       - Separates reports by Round (ครั้งที่) > Province (จังหวัด) > PDF
+       - Synchronizes with central Google Sheet log
+       ========================================================================= */
+    const DEFAULT_ROOT_FOLDER_ID = "";
+
+    function getGasWebAppUrl() {
+      return (localStorage.getItem('gas_report_webapp_url') || '').trim();
+    }
+
+    function setGasWebAppUrl(url) {
+      localStorage.setItem('gas_report_webapp_url', (url || '').trim());
+    }
+
+    function getGasRootFolderId() {
+      const stored = (localStorage.getItem('gas_root_folder_id') || '').trim();
+      if (stored === "1Fezq0bPD2_2x0jO50hyuDTgZQPbHYsik") {
+        localStorage.removeItem('gas_root_folder_id');
+        return '';
+      }
+      return stored;
+    }
+
+    function setGasRootFolderId(id) {
+      const cleanId = (id || '').trim();
+      if (cleanId && cleanId !== "1Fezq0bPD2_2x0jO50hyuDTgZQPbHYsik") {
+        localStorage.setItem('gas_root_folder_id', cleanId);
+      } else {
+        localStorage.removeItem('gas_root_folder_id');
+      }
+    }
+
+    function openDriveReportsModal() {
+      const modal = document.getElementById('sf-drive-modal');
+      if (modal) modal.classList.add('active');
+      const folderLink = document.getElementById('drive-folder-link');
+      if (folderLink) {
+        const fid = getGasRootFolderId();
+        folderLink.href = fid ? ('https://drive.google.com/drive/folders/' + fid) : 'https://drive.google.com/drive/my-drive';
+      }
+      populateDriveFilterDropdowns(window._driveReportsList || []);
+      fetchDriveReports();
+    }
+
+    function closeDriveReportsModal() {
+      const modal = document.getElementById('sf-drive-modal');
+      if (modal) modal.classList.remove('active');
+    }
+
+    const DRIVE_SETUP_PASSWORD = '11223344';
+
+    function openDriveAuthModal() {
+      const authModal = document.getElementById('sf-drive-auth-modal');
+      if (authModal) {
+        authModal.classList.add('active');
+        const pwdInput = document.getElementById('drive-auth-password-input');
+        const errEl = document.getElementById('drive-auth-error');
+        if (pwdInput) {
+          pwdInput.value = '';
+          pwdInput.type = 'password';
+          setTimeout(() => pwdInput.focus(), 100);
+        }
+        if (errEl) errEl.style.display = 'none';
+        const eyeBtn = document.getElementById('drive-auth-eye-btn');
+        if (eyeBtn) eyeBtn.textContent = '👁️';
+      }
+    }
+
+    function closeDriveAuthModal() {
+      const authModal = document.getElementById('sf-drive-auth-modal');
+      if (authModal) authModal.classList.remove('active');
+    }
+
+    function toggleDrivePasswordVisibility() {
+      const pwdInput = document.getElementById('drive-auth-password-input');
+      const eyeBtn = document.getElementById('drive-auth-eye-btn');
+      if (!pwdInput) return;
+      if (pwdInput.type === 'password') {
+        pwdInput.type = 'text';
+        if (eyeBtn) eyeBtn.textContent = '🙈';
+      } else {
+        pwdInput.type = 'password';
+        if (eyeBtn) eyeBtn.textContent = '👁️';
+      }
+    }
+
+    function submitDrivePassword(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      const pwdInput = document.getElementById('drive-auth-password-input');
+      const errEl = document.getElementById('drive-auth-error');
+      const enteredVal = pwdInput ? pwdInput.value.trim() : '';
+
+      if (enteredVal === DRIVE_SETUP_PASSWORD) {
+        if (errEl) errEl.style.display = 'none';
+        if (pwdInput) pwdInput.value = '';
+        closeDriveAuthModal();
+        openDriveSetupModal(true);
+      } else {
+        if (errEl) {
+          errEl.textContent = '⚠️ รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง';
+          errEl.style.display = 'block';
+        }
+        if (pwdInput) {
+          pwdInput.select();
+          pwdInput.focus();
+        }
+      }
+    }
+
+    function openDriveSetupModal(isAuthorized) {
+      if (!isAuthorized) {
+        openDriveAuthModal();
+        return;
+      }
+      const modal = document.getElementById('sf-drive-setup-modal');
+      if (modal) modal.classList.add('active');
+      const urlInput = document.getElementById('drive-gas-url-input');
+      if (urlInput) urlInput.value = getGasWebAppUrl();
+      const folderInput = document.getElementById('drive-root-folder-input');
+      if (folderInput) folderInput.value = getGasRootFolderId();
+      const statusEl = document.getElementById('drive-setup-status');
+      if (statusEl) statusEl.style.display = 'none';
+    }
+
+    function closeDriveSetupModal() {
+      const modal = document.getElementById('sf-drive-setup-modal');
+      if (modal) modal.classList.remove('active');
+    }
+
+    function closeDriveSuccessModal() {
+      const modal = document.getElementById('sf-drive-success-modal');
+      if (modal) modal.classList.remove('active');
+    }
+
+    function saveDriveSettings() {
+      const urlInput = document.getElementById('drive-gas-url-input');
+      const folderInput = document.getElementById('drive-root-folder-input');
+      const gasUrl = urlInput ? urlInput.value.trim() : '';
+      const rootFolderId = folderInput ? folderInput.value.trim() : DEFAULT_ROOT_FOLDER_ID;
+
+      setGasWebAppUrl(gasUrl);
+      setGasRootFolderId(rootFolderId);
+
+      const statusEl = document.getElementById('drive-setup-status');
+      if (statusEl) {
+        statusEl.style.display = 'block';
+        statusEl.style.background = '#ecfdf5';
+        statusEl.style.color = '#047857';
+        statusEl.style.border = '1px solid #a7f3d0';
+        statusEl.innerHTML = '💾 บันทึกการตั้งค่าเรียบร้อยแล้ว ✓';
+      }
+
+      showToast('บันทึกการตั้งค่า Google Drive สำเร็จ ✓');
+
+      setTimeout(() => {
+        closeDriveSetupModal();
+        const driveModal = document.getElementById('sf-drive-modal');
+        if (driveModal && driveModal.classList.contains('active')) {
+          fetchDriveReports();
+        }
+      }, 700);
+    }
+
+    async function testDriveConnection() {
+      const gasUrlInput = document.getElementById('drive-gas-url-input');
+      const gasUrl = gasUrlInput ? gasUrlInput.value.trim() : '';
+      const statusEl = document.getElementById('drive-setup-status');
+
+      if (!gasUrl) {
+        if (statusEl) {
+          statusEl.style.display = 'block';
+          statusEl.style.background = '#fef2f2';
+          statusEl.style.color = '#b91c1c';
+          statusEl.style.border = '1px solid #fecaca';
+          statusEl.innerHTML = '⚠️ กรุณาระบุ Google Apps Script Web App URL ก่อนทดสอบ';
+        }
+        return;
+      }
+
+      if (statusEl) {
+        statusEl.style.display = 'block';
+        statusEl.style.background = '#eff6ff';
+        statusEl.style.color = '#1d4ed8';
+        statusEl.style.border = '1px solid #bfdbfe';
+        statusEl.innerHTML = '⏳ กำลังทดสอบเชื่อมต่อไปยัง Google Apps Script...';
+      }
+
+      try {
+        const sep = gasUrl.includes('?') ? '&' : '?';
+        const res = await fetch(gasUrl + sep + 'action=test&t=' + Date.now(), { method: 'GET', mode: 'cors' });
+        const data = await res.json();
+        if (data.status === 'success') {
+          if (statusEl) {
+            statusEl.style.background = '#ecfdf5';
+            statusEl.style.color = '#047857';
+            statusEl.style.border = '1px solid #a7f3d0';
+            statusEl.innerHTML = '✓ เชื่อมต่อสำเร็จ! โฟลเดอร์: <b>' + (data.folderName || 'Google Drive Root') + '</b><br><span style="font-size:12px;color:#059669;">' + (data.message || '') + '</span>';
+          }
+          showToast('เชื่อมต่อ Google Drive สำเร็จ ✓');
+        } else {
+          throw new Error(data.message || 'การตอบกลับจาก Script ไม่ถูกต้อง');
+        }
+      } catch (e) {
+        console.error('Test connection error:', e);
+        if (statusEl) {
+          statusEl.style.background = '#fef2f2';
+          statusEl.style.color = '#b91c1c';
+          statusEl.style.border = '1px solid #fecaca';
+          statusEl.innerHTML = '❌ เชื่อมต่อไม่สำเร็จ: ' + (e.message || e) + '<br><span style="font-size:12px;">โปรดตรวจสอบว่าได้ Deploy Web App ให้สิทธิ์ Who has access เป็น "Anyone" หรือยัง</span>';
+        }
+      }
+    }
+
+    async function fetchDriveReports() {
+      const gasUrl = getGasWebAppUrl();
+      const tbody = document.getElementById('drive-reports-table-body');
+      const countEl = document.getElementById('drive-records-count');
+      const updatedEl = document.getElementById('drive-last-updated');
+
+      if (!gasUrl) {
+        if (tbody) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 36px 20px; color: #64748b;">
+            <div style="font-size: 32px; margin-bottom: 8px;">⚙️</div>
+            <div style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 6px;">ยังไม่ได้ตั้งค่า Google Apps Script Web App URL</div>
+            <div style="font-size: 13.5px; margin-bottom: 14px;">กรุณาระบุ URL ของสคริปต์เพื่อเชื่อมต่อและดึงข้อมูลรายงานจาก Google Drive</div>
+            <button type="button" class="drive-act-btn" onclick="openDriveSetupModal()" style="background: #3b82f6; color: #fff; padding: 7px 16px; border: none; font-size: 14px; cursor: pointer;">ตั้งค่า Google Apps Script ทันที</button>
+          </td></tr>`;
+        }
+        if (countEl) countEl.innerText = 'ยังไม่ได้ตั้งค่า';
+        return;
+      }
+
+      if (tbody) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 32px; color: #64748b;">
+          <div style="font-size: 24px; margin-bottom: 6px;">⏳</div>
+          <div>กำลังดึงข้อมูลรายงานจาก Google Drive และ Google Sheets...</div>
+        </td></tr>`;
+      }
+      if (countEl) countEl.innerText = 'กำลังโหลดข้อมูล...';
+
+      try {
+        const sep = gasUrl.includes('?') ? '&' : '?';
+        const res = await fetch(gasUrl + sep + 'action=list&t=' + Date.now(), { method: 'GET', mode: 'cors' });
+        const data = await res.json();
+
+        if (data.status === 'success') {
+          window._driveReportsList = Array.isArray(data.reports) ? data.reports : [];
+          if (data.rootFolderId) {
+            setGasRootFolderId(data.rootFolderId);
+          }
+          if (data.rootFolderUrl) {
+            const folderLink = document.getElementById('drive-folder-link');
+            if (folderLink) folderLink.href = data.rootFolderUrl;
+          }
+          if (data.sheetUrl) {
+            const sheetLink = document.getElementById('drive-sheet-link');
+            if (sheetLink) sheetLink.href = data.sheetUrl;
+          }
+          if (updatedEl) {
+            const now = new Date();
+            updatedEl.innerText = 'อัปเดตล่าสุด: ' + now.toLocaleTimeString('th-TH');
+          }
+
+          populateDriveFilterDropdowns(window._driveReportsList);
+          filterDriveReports();
+        } else {
+          throw new Error(data.message || 'ไม่สามารถดึงข้อมูลได้');
+        }
+      } catch (e) {
+        console.error('Fetch Drive Reports Error:', e);
+        if (tbody) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 30px; color: #b91c1c; background: #fff5f5;">
+            ❌ เกิดข้อผิดพลาดในการโหลดข้อมูล: ${e.message || e}<br>
+            <button type="button" class="drive-act-btn" onclick="fetchDriveReports()" style="margin-top: 10px; background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; padding: 6px 14px; cursor: pointer;">ลองใหม่อีกครั้ง</button>
+          </td></tr>`;
+        }
+        if (countEl) countEl.innerText = 'เกิดข้อผิดพลาด';
+      }
+    }
+
+    const DRIVE_STATION_TYPES = [
+      { id: 'ag', label: 'Analog Gateway', icon: '🏢', sub: '8 อำเภอ', color: '#0284c7', bg: '#e0f2fe' },
+      { id: 'bs', label: 'Base Station', icon: '📡', sub: '8 สถานีแม่ข่าย', color: '#7c3aed', bg: '#f3e8ff' },
+      { id: 'ms', label: 'สถานีวิทยุลูกข่าย', icon: '📻', sub: '181 แห่ง', color: '#059669', bg: '#d1fae5' },
+      { id: 'pole60', label: 'เสาสื่อสาร', icon: '🗼', sub: '16 สถานี', color: '#ea580c', bg: '#ffedd5' },
+      { id: 'pole9', label: 'เสารับ-ส่งสัญญาณ', icon: '📶', sub: '181 แห่ง', color: '#2563eb', bg: '#dbeafe' },
+      { id: 'cc', label: 'ศูนย์ควบคุม', icon: '🖥️', sub: 'วังสวนสุนันทา', color: '#475569', bg: '#f1f5f9' }
+    ];
+
+    function getDriveReportCategory(r) {
+      if (!r) return 'other';
+      const typeStr = (r.reportType || '').toLowerCase();
+      const fileStr = (r.fileName || '').toLowerCase();
+      const stStr = (r.station || '').toLowerCase();
+
+      // ตรวจสอบ เสาสื่อสาร และ เสารับ-ส่งสัญญาณ
+      if (typeStr.includes('เสาสื่อสาร') || fileStr.includes('เสาสื่อสาร') || fileStr.includes('pole60') || typeStr.includes('pole60')) {
+        return 'pole60';
+      }
+      if (typeStr.includes('เสารับ-ส่งสัญญาณ') || typeStr.includes('เสารับส่งสัญญาณ') || fileStr.includes('เสารับ-ส่งสัญญาณ') || fileStr.includes('pole9') || typeStr.includes('pole9')) {
+        return 'pole9';
+      }
+
+      // Analog Gateway
+      if (typeStr.includes('analog') || typeStr.includes('gateway') || fileStr.includes('analog_gateway') || stStr.startsWith('ที่ว่าการอำเภอ')) {
+        return 'ag';
+      }
+
+      // Base Station
+      if (typeStr.includes('base') || typeStr.includes('station') || fileStr.includes('base_station') || stStr.startsWith('bs') || stStr.startsWith('แม่ข่าย')) {
+        return 'bs';
+      }
+
+      // ศูนย์ควบคุม
+      if (typeStr.includes('ศูนย์ควบคุม') || fileStr.includes('ศูนย์ควบคุม') || fileStr.includes('bssc') || typeStr.includes('bssc') || stStr.includes('สุนันทา') || stStr.includes('ศูนย์ควบคุม')) {
+        return 'cc';
+      }
+
+      // สถานีวิทยุลูกข่าย
+      if (typeStr.includes('ลูกข่าย') || fileStr.includes('สถานีวิทยุลูกข่าย') || stStr.startsWith('หมู่')) {
+        return 'ms';
+      }
+
+      return 'ms';
+    }
+
+    function selectDriveCategory(catId) {
+      const typeSelect = document.getElementById('drive-filter-station-type');
+      if (typeSelect) {
+        typeSelect.value = catId;
+      }
+      filterDriveReports();
+    }
+
+    // การกำหนดโควตาเป้าหมายรอบการบำรุงรักษา PM ตามรูปที่ 2
+    // รอบคี่: 17 สถานี (9 จังหวัด: กาญจนบุรี 2, กำแพงเพชร 2, ขอนแก่น 2, จันทบุรี 2, ตรัง 2, นครราชสีมา 2, นครศรีธรรมราช 2, พิจิตร 2, กรุงเทพฯ 1)
+    // รอบคู่: 198 สถานี (11 จังหวัด: กาญจนบุรี 32, ขอนแก่น 29, นครราชสีมา 26, เพชรบูรณ์ 22, นครศรีธรรมราช 22, ตรัง 19, กำแพงเพชร 18, จันทบุรี 18, พิจิตร 6, นครสวรรค์ 5, กรุงเทพฯ 1)
+    const PM_ROUND_CONFIG = {
+      rounds: [
+        { round: 1, name: 'ครั้งที่ 1', total: 17, isEven: false },
+        { round: 2, name: 'ครั้งที่ 2', total: 198, isEven: true },
+        { round: 3, name: 'ครั้งที่ 3', total: 17, isEven: false },
+        { round: 4, name: 'ครั้งที่ 4', total: 198, isEven: true },
+        { round: 5, name: 'ครั้งที่ 5', total: 17, isEven: false },
+        { round: 6, name: 'ครั้งที่ 6', total: 198, isEven: true },
+        { round: 7, name: 'ครั้งที่ 7', total: 17, isEven: false },
+        { round: 8, name: 'ครั้งที่ 8', total: 198, isEven: true },
+        { round: 9, name: 'ครั้งที่ 9', total: 17, isEven: false },
+        { round: 10, name: 'ครั้งที่ 10', total: 198, isEven: true }
+      ],
+      categories: {
+        odd: { ag: 8, bs: 8, ms: 0, pole60: 0, pole9: 0, cc: 1, total: 17 },
+        even: { ag: 8, bs: 8, ms: 181, pole60: 0, pole9: 0, cc: 1, total: 198 }
+      },
+      provinces: {
+        odd: {
+          'กาญจนบุรี': 2,
+          'กำแพงเพชร': 2,
+          'ขอนแก่น': 2,
+          'จันทบุรี': 2,
+          'ตรัง': 2,
+          'นครราชสีมา': 2,
+          'นครศรีธรรมราช': 2,
+          'พิจิตร': 2,
+          'กรุงเทพมหานคร': 1
+        },
+        even: {
+          'กาญจนบุรี': 32,
+          'ขอนแก่น': 29,
+          'นครราชสีมา': 26,
+          'เพชรบูรณ์': 22,
+          'นครศรีธรรมราช': 22,
+          'ตรัง': 19,
+          'กำแพงเพชร': 18,
+          'จันทบุรี': 18,
+          'พิจิตร': 6,
+          'นครสวรรค์': 5,
+          'กรุงเทพมหานคร': 1
+        }
+      }
+    };
+
+    function getPmRoundInfo(roundVal) {
+      if (!roundVal) return null;
+      const num = parseInt(roundVal.toString().replace(/[^0-9]/g, ''), 10);
+      if (!num || isNaN(num)) return null;
+      const isEven = (num % 2 === 0);
+      return {
+        num: num,
+        name: 'ครั้งที่ ' + num,
+        isEven: isEven,
+        total: isEven ? 198 : 17,
+        categories: isEven ? PM_ROUND_CONFIG.categories.even : PM_ROUND_CONFIG.categories.odd,
+        provinces: isEven ? PM_ROUND_CONFIG.provinces.even : PM_ROUND_CONFIG.provinces.odd
+      };
+    }
+
+    function populateDriveFilterDropdowns(reports) {
+      const roundSelect = document.getElementById('drive-filter-round');
+      const curRound = roundSelect ? roundSelect.value : '';
+
+      // 1. เติมตัวเลือก "ครั้งที่" ตามรูปที่ 2 (Option Text: ครั้งที่ X (Y สถานี))
+      if (roundSelect) {
+        let roundOpts = `<option value="" ${!curRound ? 'selected' : ''}>ทุกรอบ</option>`;
+        PM_ROUND_CONFIG.rounds.forEach(r => {
+          const isSel = (curRound === r.name || curRound === String(r.round));
+          roundOpts += `<option value="${r.name}" ${isSel ? 'selected' : ''}>${r.name} (${r.total} สถานี)</option>`;
+        });
+        roundSelect.innerHTML = roundOpts;
+      }
+
+      // 2. ปรับปรุงตัวเลือกจังหวัดและชื่อสถานีตามรอบที่เลือก
+      updateDriveProvinceAndStationDropdowns(false);
+      filterDriveReports();
+    }
+
+    function onDriveRoundChange() {
+      updateDriveProvinceAndStationDropdowns(false);
+      filterDriveReports();
+    }
+
+    function onDriveProvinceChange() {
+      updateDriveStationDropdown();
+      filterDriveReports();
+    }
+
+    function updateDriveProvinceAndStationDropdowns(preserveProv) {
+      const list = window._driveReportsList || [];
+      const roundSelect = document.getElementById('drive-filter-round');
+      const provSelect = document.getElementById('drive-filter-province');
+      const curRound = roundSelect ? roundSelect.value.trim() : '';
+      const curProv = provSelect ? provSelect.value.trim() : '';
+      const roundInfo = getPmRoundInfo(curRound);
+
+      if (provSelect) {
+        let provHtml = '';
+        if (roundInfo) {
+          const provMap = roundInfo.provinces;
+          const provKeys = Object.keys(provMap);
+
+          // นับจำนวนสถานีที่บันทึกแล้วในแต่ละจังหวัดสำหรับรอบนี้
+          const provRecorded = {};
+          let totalRecordedInRound = 0;
+
+          list.forEach(r => {
+            const rRound = (r.round || '').toString().trim();
+            const rRoundNum = rRound.replace(/[^0-9]/g, '');
+            if (rRoundNum === String(roundInfo.num)) {
+              const cat = getDriveReportCategory(r);
+              // นับเฉพาะสถานีบำรุงรักษา PM หลัก (ไม่รวมเสาสื่อสาร/เสารับ-ส่งสัญญาณ)
+              if (cat === 'ag' || cat === 'bs' || cat === 'ms' || cat === 'cc') {
+                const p = (r.province || '').toString().trim();
+                for (const pk of provKeys) {
+                  if (p.includes(pk) || pk.includes(p)) {
+                    provRecorded[pk] = (provRecorded[pk] || 0) + 1;
+                    totalRecordedInRound++;
+                    break;
+                  }
+                }
+              }
+            }
+          });
+
+          provHtml = `<option value="">ทุกจังหวัด (บันทึกแล้ว ${totalRecordedInRound} / ${roundInfo.total} สถานี)</option>`;
+          provKeys.forEach(p => {
+            const target = provMap[p] || 0;
+            const rec = provRecorded[p] || 0;
+            const isDone = (rec >= target && target > 0);
+            const isSel = (preserveProv && curProv === p);
+            const checkIcon = isDone ? '✓ ' : '';
+            provHtml += `<option value="${p}" ${isSel ? 'selected' : ''}>${checkIcon}${p} (บันทึกแล้ว ${rec} / ${target} สถานี)</option>`;
+          });
+        } else {
+          // กรณี "ทุกรอบ"
+          const allProvs = [
+            { name: 'กาญจนบุรี', target: 32 },
+            { name: 'ขอนแก่น', target: 29 },
+            { name: 'นครราชสีมา', target: 26 },
+            { name: 'เพชรบูรณ์', target: 22 },
+            { name: 'นครศรีธรรมราช', target: 22 },
+            { name: 'ตรัง', target: 19 },
+            { name: 'กำแพงเพชร', target: 18 },
+            { name: 'จันทบุรี', target: 18 },
+            { name: 'พิจิตร', target: 6 },
+            { name: 'นครสวรรค์', target: 5 },
+            { name: 'กรุงเทพมหานคร', target: 1 }
+          ];
+
+          const provRecordedAll = {};
+          let totalAll = 0;
+          list.forEach(r => {
+            const cat = getDriveReportCategory(r);
+            if (cat === 'ag' || cat === 'bs' || cat === 'ms' || cat === 'cc') {
+              const p = (r.province || '').toString().trim();
+              for (const item of allProvs) {
+                if (p.includes(item.name) || item.name.includes(p)) {
+                  provRecordedAll[item.name] = (provRecordedAll[item.name] || 0) + 1;
+                  totalAll++;
+                  break;
+                }
+              }
+            }
+          });
+
+          provHtml = `<option value="">ทุกจังหวัด (บันทึกแล้ว ${totalAll} / 198 สถานี)</option>`;
+          allProvs.forEach(item => {
+            const rec = provRecordedAll[item.name] || 0;
+            const isSel = (preserveProv && curProv === item.name);
+            const isDone = (rec >= item.target);
+            const checkIcon = isDone ? '✓ ' : '';
+            provHtml += `<option value="${item.name}" ${isSel ? 'selected' : ''}>${checkIcon}${item.name} (บันทึกแล้ว ${rec} / ${item.target} สถานี)</option>`;
+          });
+        }
+
+        provSelect.innerHTML = provHtml;
+      }
+
+      updateDriveStationDropdown();
+    }
+
+    function updateDriveStationDropdown() {
+      const list = window._driveReportsList || [];
+      const stationSelect = document.getElementById('drive-filter-station');
+      const roundSelect = document.getElementById('drive-filter-round');
+      const provSelect = document.getElementById('drive-filter-province');
+      const curRound = roundSelect ? roundSelect.value.trim() : '';
+      const curProv = provSelect ? provSelect.value.trim() : '';
+      const curStation = stationSelect ? stationSelect.value.trim() : '';
+      const roundInfo = getPmRoundInfo(curRound);
+
+      if (!stationSelect) return;
+
+      let targetStations = [];
+      if (roundInfo) {
+        const isEven = roundInfo.isEven;
+        const agStations = (ALL_STATIONS_MAP.ag || []).map(s => ({ ...s, cat: 'ag' }));
+        const bsStations = (ALL_STATIONS_MAP.bs || []).map(s => ({ ...s, cat: 'bs' }));
+        const ccStations = (ALL_STATIONS_MAP.cc || []).map(s => ({ ...s, cat: 'cc' }));
+        const msStations = isEven ? (ALL_STATIONS_MAP.ms || []).map(s => ({ ...s, cat: 'ms' })) : [];
+        targetStations = [...agStations, ...bsStations, ...ccStations, ...msStations];
+      } else {
+        const agStations = (ALL_STATIONS_MAP.ag || []).map(s => ({ ...s, cat: 'ag' }));
+        const bsStations = (ALL_STATIONS_MAP.bs || []).map(s => ({ ...s, cat: 'bs' }));
+        const ccStations = (ALL_STATIONS_MAP.cc || []).map(s => ({ ...s, cat: 'cc' }));
+        const msStations = (ALL_STATIONS_MAP.ms || []).map(s => ({ ...s, cat: 'ms' }));
+        targetStations = [...agStations, ...bsStations, ...ccStations, ...msStations];
+      }
+
+      if (curProv) {
+        targetStations = targetStations.filter(s => {
+          const sp = extractProvinceFromStation(s);
+          return sp.includes(curProv) || curProv.includes(sp);
+        });
+      }
+
+      const recordedStationNames = new Set();
+      list.forEach(r => {
+        const rRound = (r.round || '').toString().trim();
+        const rRoundNum = rRound.replace(/[^0-9]/g, '');
+        const fRoundNum = curRound ? curRound.replace(/[^0-9]/g, '') : '';
+        if (!fRoundNum || rRoundNum === fRoundNum) {
+          if (!curProv || (r.province && (r.province.includes(curProv) || curProv.includes(r.province)))) {
+            if (r.station) recordedStationNames.add(r.station.toString().trim());
+          }
+        }
+      });
+
+      let stHtml = '<option value="">ทุกชื่อสถานี</option>';
+      const seen = new Set();
+      targetStations.forEach(s => {
+        const sName = s.name.trim();
+        if (seen.has(sName)) return;
+        seen.add(sName);
+        const isDone = recordedStationNames.has(sName);
+        const icon = isDone ? '✓ ' : '⏳ ';
+        const suffix = isDone ? ' (บันทึกแล้ว)' : ' (ยังไม่บันทึก)';
+        const isSel = (curStation === sName);
+        stHtml += `<option value="${sName}" ${isSel ? 'selected' : ''}>${icon}${sName}${suffix}</option>`;
+      });
+
+      // เติมสถานีที่มีในรายการบันทึกจริงแต่ไม่อยู่ในเป้าหมาย (เช่น เสาสื่อสาร)
+      list.forEach(r => {
+        if (r.station) {
+          const sn = r.station.toString().trim();
+          if (!seen.has(sn)) {
+            if (!curProv || (r.province && (r.province.includes(curProv) || curProv.includes(r.province)))) {
+              seen.add(sn);
+              stHtml += `<option value="${sn}" ${curStation === sn ? 'selected' : ''}>📄 ${sn}</option>`;
+            }
+          }
+        }
+      });
+
+      stationSelect.innerHTML = stHtml;
+    }
+
+    function filterDriveReports() {
+      const list = window._driveReportsList || [];
+      const searchInput = document.getElementById('drive-search-input');
+      const typeSelect = document.getElementById('drive-filter-station-type');
+      const stationSelect = document.getElementById('drive-filter-station');
+      const roundSelect = document.getElementById('drive-filter-round');
+      const provSelect = document.getElementById('drive-filter-province');
+      const pillsBar = document.getElementById('drive-cat-summary-pills');
+
+      const q = searchInput ? searchInput.value.toLowerCase().trim() : '';
+      const fType = typeSelect ? typeSelect.value.trim() : '';
+      const fStation = stationSelect ? stationSelect.value.trim() : '';
+      const fRound = roundSelect ? roundSelect.value.trim() : '';
+      const fProv = provSelect ? provSelect.value.trim() : '';
+      const roundInfo = getPmRoundInfo(fRound);
+
+      // 1. กรองข้อมูลรายงานตามเงื่อนไขค้นหา
+      const filtered = list.filter(r => {
+        if (fRound) {
+          const rRoundStr = (r.round || '').toString().trim();
+          const rNum = rRoundStr.replace(/[^0-9]/g, '');
+          const fNum = fRound.replace(/[^0-9]/g, '');
+          if (rNum && fNum && rNum !== fNum) return false;
+        }
+        if (fProv) {
+          const rProvStr = (r.province || '').toString().trim();
+          if (!rProvStr.includes(fProv) && !fProv.includes(rProvStr)) return false;
+        }
+        if (fStation) {
+          const rSt = (r.station || '').toString().trim();
+          if (rSt !== fStation && !rSt.includes(fStation) && !fStation.includes(rSt)) return false;
+        }
+        if (fType) {
+          const cat = getDriveReportCategory(r);
+          if (cat !== fType) return false;
+        }
+        if (q) {
+          const match = (
+            (r.station && r.station.toLowerCase().includes(q)) ||
+            (r.province && r.province.toLowerCase().includes(q)) ||
+            (r.round && r.round.toString().toLowerCase().includes(q)) ||
+            (r.inspector && r.inspector.toLowerCase().includes(q)) ||
+            (r.reportType && r.reportType.toLowerCase().includes(q)) ||
+            (r.fileName && r.fileName.toLowerCase().includes(q)) ||
+            (r.date && r.date.toLowerCase().includes(q)) ||
+            (r.timestamp && r.timestamp.toString().toLowerCase().includes(q))
+          );
+          if (!match) return false;
+        }
+        return true;
+      });
+
+      // 2. คำนวณจำนวนที่บันทึกแล้ว vs เป้าหมายทั้งหมดในขอบเขต (Scope) ของ Round + Province ที่เลือก
+      const scopeReports = list.filter(r => {
+        if (fRound) {
+          const rNum = (r.round || '').toString().replace(/[^0-9]/g, '');
+          const fNum = fRound.replace(/[^0-9]/g, '');
+          if (rNum && fNum && rNum !== fNum) return false;
+        }
+        if (fProv) {
+          const rProvStr = (r.province || '').toString().trim();
+          if (!rProvStr.includes(fProv) && !fProv.includes(rProvStr)) return false;
+        }
+        return true;
+      });
+
+      const catCounts = { ag: 0, bs: 0, ms: 0, pole60: 0, pole9: 0, cc: 0, total: scopeReports.length };
+      scopeReports.forEach(r => {
+        const cat = getDriveReportCategory(r);
+        if (catCounts[cat] !== undefined) catCounts[cat]++;
+      });
+
+      // เป้าหมายจำนวนสถานี
+      let targetTotal = 0;
+      let targetAg = 8;
+      let targetBs = 8;
+      let targetMs = 0;
+      let targetCc = 1;
+
+      if (roundInfo) {
+        if (fProv) {
+          targetTotal = roundInfo.provinces[fProv] || 0;
+          if (fProv === 'กรุงเทพมหานคร') {
+            targetAg = 0; targetBs = 0; targetMs = 0; targetCc = 1;
+          } else {
+            targetCc = 0;
+            if (roundInfo.isEven) {
+              const msMap = { 'กาญจนบุรี': 30, 'ขอนแก่น': 27, 'นครราชสีมา': 24, 'เพชรบูรณ์': 22, 'นครศรีธรรมราช': 20, 'ตรัง': 17, 'กำแพงเพชร': 16, 'จันทบุรี': 16, 'พิจิตร': 4, 'นครสวรรค์': 5 };
+              targetMs = msMap[fProv] || 0;
+              targetAg = (fProv === 'เพชรบูรณ์' || fProv === 'นครสวรรค์') ? 0 : 1;
+              targetBs = (fProv === 'เพชรบูรณ์' || fProv === 'นครสวรรค์') ? 0 : 1;
+            } else {
+              targetMs = 0;
+              targetAg = 1;
+              targetBs = 1;
+            }
+          }
+        } else {
+          targetTotal = roundInfo.total; // 17 หรือ 198
+          targetAg = 8;
+          targetBs = 8;
+          targetCc = 1;
+          targetMs = roundInfo.isEven ? 181 : 0;
+        }
+      } else {
+        targetTotal = fProv ? (scopeReports.length) : 198;
+      }
+
+      // นับเฉพาะ 4 ประเภทหลักของ PM ที่บันทึกแล้ว
+      const recordedPmStations = catCounts.ag + catCounts.bs + catCounts.ms + catCounts.cc;
+
+      // 3. แสดงแถบปุ่มสรุปนับจำนวนแต่ละสถานี (แสดงเฉพาะจำนวนที่บันทึกแล้ว)
+      if (pillsBar) {
+        let pillsHtml = `<button type="button" class="drive-cat-pill ${fType === '' ? 'active' : ''}" onclick="selectDriveCategory('')">
+          <span>📋 ทั้งหมด</span>
+          <span class="cat-count-badge">${scopeReports.length}</span>
+        </button>`;
+
+        DRIVE_STATION_TYPES.forEach(t => {
+          const cnt = catCounts[t.id] || 0;
+          const isActive = (fType === t.id);
+          pillsHtml += `<button type="button" class="drive-cat-pill ${isActive ? 'active' : ''}" onclick="selectDriveCategory('${t.id}')">
+            <span>${t.icon} ${t.label}</span>
+            <span class="cat-count-badge">${cnt}</span>
+          </button>`;
+        });
+
+        pillsBar.innerHTML = pillsHtml;
+      }
+
+      // 4. แสดงสถานะและแถบความคืบหน้า (บันทึกแล้ว / ทั้งหมด)
+      const countEl = document.getElementById('drive-records-count');
+      if (countEl) {
+        let statText = `พบ <b>${filtered.length}</b> รายการ`;
+        if (roundInfo) {
+          const percent = targetTotal > 0 ? Math.min(100, Math.round((recordedPmStations / targetTotal) * 100)) : 0;
+          const provTag = fProv ? ` (จังหวัด${fProv})` : '';
+          statText = `<span style="font-size: 14px; font-weight: 600; color: #334155;">พบ <b>${filtered.length}</b> รายการ</span>
+            <span style="display: inline-flex; align-items: center; gap: 6px; background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 4px 14px; border-radius: 9999px; font-weight: 700; font-size: 13.5px; margin-left: 10px;">
+              📊 ${roundInfo.name}${provTag}: บันทึกแล้ว <b style="font-size: 15px; color: #065f46;">${recordedPmStations}</b> / <b style="font-size: 15px; color: #065f46;">${targetTotal}</b> สถานี
+              <span style="background: #059669; color: #ffffff; padding: 2px 8px; border-radius: 9999px; font-size: 12px; margin-left: 4px;">${percent}%</span>
+            </span>`;
+        } else {
+          statText = `พบ <b>${filtered.length}</b> รายการ (จากทั้งหมด ${list.length} รายการ)`;
+        }
+        countEl.innerHTML = statText;
+      }
+
+      renderDriveReportsTable(filtered);
+    }
+
+    function renderDriveReportsTable(reports) {
+      const tbody = document.getElementById('drive-reports-table-body');
+      if (!tbody) return;
+
+      if (reports.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 40px; color: #94a3b8;">
+          <div style="font-size: 26px; margin-bottom: 6px;">🔍</div>
+          <div>ไม่พบข้อมูลรายงานตามเงื่อนไขที่ค้นหา</div>
+        </td></tr>`;
+        return;
+      }
+
+      let html = '';
+      reports.forEach(r => {
+        const timeStr = r.timestamp || '-';
+        const roundStr = r.round ? `<span class="drive-pill-round">${r.round}</span>` : '-';
+        const provStr = r.province ? `<span class="drive-pill-prov">${r.province}</span>` : '-';
+        const stStr = r.station ? `<strong style="color: #0f172a;">${r.station}</strong>` : '-';
+        const inspStr = r.inspector || '-';
+
+        // จัดรูปแบบป้ายประเภทรายงานให้ตรงกับ 6 ประเภทในรูปที่ 2
+        const cat = getDriveReportCategory(r);
+        const catMeta = DRIVE_STATION_TYPES.find(t => t.id === cat);
+        let typeBadge = '';
+        if (catMeta) {
+          typeBadge = `<span style="display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 6px; font-size: 12.5px; font-weight: 600; background: ${catMeta.bg}; color: ${catMeta.color}; white-space: nowrap;">
+            <span>${catMeta.icon}</span> ${catMeta.label}
+          </span>`;
+        } else {
+          typeBadge = `<span style="font-size: 13px; color: #475569;">${r.reportType || '-'}</span>`;
+        }
+
+        let actions = '<div style="display: flex; gap: 5px; justify-content: center; flex-wrap: wrap;">';
+        if (r.fileUrl) {
+          actions += `<a href="${r.fileUrl}" target="_blank" class="drive-act-btn" style="background: #ecfdf5; color: #047857; text-decoration: none;" title="เปิดดูไฟล์ PDF บน Google Drive">📄 PDF</a>`;
+        }
+        const folderUrl = r.provinceFolderUrl || r.roundFolderUrl;
+        if (folderUrl) {
+          actions += `<a href="${folderUrl}" target="_blank" class="drive-act-btn" style="background: #eff6ff; color: #1d4ed8; text-decoration: none;" title="เปิดโฟลเดอร์ใน Google Drive">📁 โฟลเดอร์</a>`;
+        }
+        const fileIdEsc = (r.fileId || '').replace(/'/g, "\\'");
+        const fileNameEsc = (r.fileName || '').replace(/'/g, "\\'");
+        const stEsc = (r.station || '').replace(/'/g, "\\'");
+        const rndEsc = (r.round || '').replace(/'/g, "\\'");
+        const provEsc = (r.province || '').replace(/'/g, "\\'");
+        const typeEsc = (r.reportType || '').replace(/'/g, "\\'");
+        actions += `<button type="button" class="drive-act-btn" onclick="deleteDriveReport('${fileIdEsc}', '${fileNameEsc}', '${stEsc}', '${rndEsc}', '${provEsc}', '${typeEsc}')" style="background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; cursor: pointer;" title="ลบไฟล์รายงานนี้ออกจาก Google Drive">🗑️ ลบ</button>`;
+        actions += '</div>';
+
+        html += `<tr>
+          <td style="font-size: 13px; color: #64748b; white-space: nowrap;">${timeStr}</td>
+          <td style="text-align: center;">${roundStr}</td>
+          <td>${provStr}</td>
+          <td>${stStr}</td>
+          <td>${typeBadge}</td>
+          <td style="font-size: 13px; color: #475569;">${inspStr}</td>
+          <td style="text-align: center;">${actions}</td>
+        </tr>`;
+      });
+
+      tbody.innerHTML = html;
+    }
+
+    async function deleteDriveReport(fileId, fileName, station, round, province, reportType) {
+      const gasUrl = getGasWebAppUrl();
+      if (!gasUrl) {
+        openDriveSetupModal();
+        showToast('⚠️ กรุณาระบุ Google Apps Script Web App URL ก่อน');
+        return;
+      }
+
+      const stName = station || 'สถานี';
+      const rName = round || 'รายงาน';
+      const promptMsg = `คุณต้องการลบไฟล์รายงานนี้ออกจาก Google Drive หรือไม่?\n\n• สถานี: ${stName}\n• ${rName} (${province || '-'})\n• ประเภท: ${reportType || '-'}\n• ไฟล์: ${fileName || '-'}\n\n⚠️ เมื่อลบแล้ว:\n1. ไฟล์ PDF จะถูกย้ายไปถังขยะใน Google Drive\n2. ลบประวัติออกจากทะเบียนสรุป`;
+
+      if (!confirm(promptMsg)) {
+        return;
+      }
+
+      showToast('⏳ กำลังลบไฟล์รายงานออกจาก Google Drive...');
+
+      try {
+        let rTypeCode = '';
+        if (fileName && fileName.includes('Analog_Gateway')) rTypeCode = 'ag';
+        else if (fileName && fileName.includes('Base_Station')) rTypeCode = 'bs';
+        else if (fileName && fileName.includes('สถานีวิทยุลูกข่าย')) rTypeCode = 'ms';
+        else if (fileName && fileName.includes('ศูนย์ควบคุม')) rTypeCode = 'cc';
+        else if (fileName && (fileName.includes('เสาสื่อสาร') || fileName.includes('pole60'))) rTypeCode = 'pole60';
+        else if (fileName && (fileName.includes('เสารับ-ส่งสัญญาณ') || fileName.includes('pole9'))) rTypeCode = 'pole9';
+
+        const payload = {
+          action: 'deleteReport',
+          rootFolderId: getGasRootFolderId(),
+          fileId: fileId,
+          fileName: fileName,
+          station: station,
+          round: round,
+          province: province,
+          reportType: reportType,
+          reportTypeCode: rTypeCode
+        };
+
+        const response = await fetch(gasUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+        if (result.status === 'success') {
+          showToast('ลบไฟล์รายงานเรียบร้อยแล้ว ✓');
+          fetchDriveReports();
+        } else {
+          throw new Error(result.message || 'ไม่สามารถลบไฟล์ได้');
+        }
+      } catch (err) {
+        console.error('Delete Drive Report Error:', err);
+        alert('เกิดข้อผิดพลาดในการลบไฟล์: ' + (err.message || err));
+      }
+    }
+
+    function blobToBase64(blob) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const dataUrl = reader.result;
+          const base64 = (dataUrl && dataUrl.includes(',')) ? dataUrl.split(',')[1] : dataUrl;
+          resolve(base64);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+    }
+
+    async function uploadReportToGoogleDrive() {
+      const gasUrl = getGasWebAppUrl();
+      if (!gasUrl) {
+        openDriveSetupModal();
+        showToast('⚠️ กรุณาระบุ Google Apps Script Web App URL ก่อนบันทึกขึ้น Drive');
+        return;
+      }
+
+      autoSave();
+      if (document.activeElement && typeof document.activeElement.blur === 'function') {
+        document.activeElement.blur();
+      }
+
+      // ดึงข้อมูลและประเภทรายงานที่กำลังบันทึก
+      let roundVal = (document.getElementById('sf-round-input') && document.getElementById('sf-round-input').value.trim()) || '1';
+      let provVal = (document.getElementById('sf-province-input') && document.getElementById('sf-province-input').value.trim()) || '';
+      if (!provVal && currentSelectedStation) {
+        provVal = extractProvinceFromStation(currentSelectedStation);
+      }
+      if (!provVal) provVal = 'ทั่วไป';
+      const cleanStName = (currentSelectedStation || 'สถานี').replace(/[\\/:*?"<>|\s]+/g, '_');
+      const reportTitle = (REPORT_META[REPORT_TYPE] && REPORT_META[REPORT_TYPE].title) ? REPORT_META[REPORT_TYPE].title : 'รายงานการบำรุงรักษา';
+
+      // 1. ตรวจสอบข้อมูลรายงานซ้ำก่อนดำเนินการ (Duplicate Check)
+      try {
+        const sep = gasUrl.includes('?') ? '&' : '?';
+        const checkUrl = gasUrl + sep +
+          'action=checkDuplicate' +
+          '&station=' + encodeURIComponent(currentSelectedStation || '') +
+          '&round=' + encodeURIComponent(roundVal) +
+          '&reportType=' + encodeURIComponent(reportTitle) +
+          '&reportTypeCode=' + encodeURIComponent(REPORT_TYPE) +
+          '&rootFolderId=' + encodeURIComponent(getGasRootFolderId() || '') +
+          '&t=' + Date.now();
+
+        const checkResp = await fetch(checkUrl);
+        const checkData = await checkResp.json();
+
+        if (checkData && checkData.status === 'success' && checkData.exists) {
+          const ex = checkData.existingFile || {};
+          let msg = '⚠️ ตรวจพบข้อมูลรายงานซ้ำในระบบ!\n\n' +
+            '• สถานี: ' + (currentSelectedStation || '-') + '\n' +
+            '• ครั้งที่: ' + (ex.round || ('ครั้งที่ ' + roundVal.replace(/[^0-9]/g, ''))) + ' (' + (ex.province || provVal) + ')\n' +
+            '• ประเภทรายงาน: ' + reportTitle + '\n';
+          if (ex.fileName) msg += '• ไฟล์เดิมใน Drive: ' + ex.fileName + '\n';
+          if (ex.timestamp) msg += '• วันที่บันทึกล่าสุด: ' + ex.timestamp + '\n';
+          msg += '\n⚠️ หากดำเนินการต่อ ระบบจะ "ลบไฟล์เก่าทิ้งทันที" และบันทึกไฟล์ใหม่แทนที่\n\n' +
+            'คุณต้องการบันทึกทับและลบไฟล์เดิมหรือไม่?';
+
+          const ok = confirm(msg);
+          if (!ok) {
+            showToast('ยกเลิกการบันทึกรายงาน');
+            return;
+          }
+        }
+      } catch (checkErr) {
+        console.warn('Duplicate check warning:', checkErr);
+      }
+
+      const isMobile = /Android|webOS|iPhone|iPad|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 768);
+      const loadingModal = document.getElementById('pdf-loading-modal');
+      const stepEl = document.getElementById('pdf-loading-step');
+      const titleEl = document.getElementById('pdf-loading-title');
+
+      if (loadingModal) loadingModal.classList.add('active');
+      if (titleEl) titleEl.innerText = 'กำลังบันทึกลง Google Drive...';
+      if (stepEl) stepEl.innerText = 'กำลังเตรียมข้อมูลเอกสาร A4...';
+
+      const prevScrollX = window.scrollX || 0;
+      const prevScrollY = window.scrollY || 0;
+      window.scrollTo(0, 0);
+
+      await new Promise(r => setTimeout(r, 60));
+
+      try {
+        prepareDomForPdf();
+        if (document.fonts && document.fonts.ready) {
+          await Promise.race([document.fonts.ready, new Promise(r => setTimeout(r, 400))]);
+        }
+        await new Promise(r => setTimeout(r, 80));
+
+        const pages = Array.from(document.querySelectorAll('#a4-page-container .page'));
+
+        let prefix = 'รายงานการบำรุงรักษา_Analog_Gateway_';
+        if (REPORT_TYPE === 'bs') prefix = 'รายงานการบำรุงรักษา_Base_Station_';
+        else if (REPORT_TYPE === 'ms') prefix = 'รายงานการบำรุงรักษา_สถานีวิทยุลูกข่าย_';
+        else if (REPORT_TYPE === 'pole60') prefix = 'รายงานการบำรุงรักษา_เสาสื่อสาร_';
+        else if (REPORT_TYPE === 'pole9') prefix = 'รายงานการบำรุงรักษา_เสารับ-ส่งสัญญาณ_';
+        else if (REPORT_TYPE === 'cc') prefix = 'รายงานการบำรุงรักษา_ศูนย์ควบคุม_';
+
+        const filename = prefix + cleanStName + '.pdf';
+        window._lastPdfFilename = filename;
+
+        const renderScale = isMobile ? 2.8 : 3.0;
+        const jsPDFClass = (window.jspdf && window.jspdf.jsPDF) ? window.jspdf.jsPDF : window.jsPDF;
+        const pdf = new jsPDFClass({ orientation: 'portrait', unit: 'mm', format: 'a4', compress: true });
+
+        window._thSarabunLoaded = false;
+        const fontB64 = getThSarabunBase64();
+        if (fontB64) {
+          try {
+            pdf.addFileToVFS('THSarabunNew.ttf', fontB64);
+            pdf.addFont('THSarabunNew.ttf', 'THSarabunNew', 'normal');
+            pdf.setFont('THSarabunNew', 'normal');
+            window._thSarabunLoaded = true;
+          } catch(e) {
+            console.warn('Font loading in jsPDF failed:', e);
+          }
+        }
+
+        for (let i = 0; i < pages.length; i++) {
+          if (stepEl) stepEl.innerText = 'กำลังประมวลผลหน้า ' + (i + 1) + ' จาก ' + pages.length + '...';
+          await new Promise(r => setTimeout(r, 50));
+
+          const pageEl = pages[i];
+          const canvas = await html2canvas(pageEl, {
+            scale: renderScale,
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: '#ffffff',
+            logging: false,
+            imageTimeout: 0
+          });
+
+          const imgData = canvas.toDataURL('image/png');
+          if (i > 0) pdf.addPage('a4', 'portrait');
+          pdf.addImage(imgData, 'PNG', 0, 0, 210, 297, undefined, 'FAST');
+
+          if (window._thSarabunLoaded) {
+            addSearchableTextLayer(pdf, pageEl);
+          }
+        }
+
+        window._lastPdfDoc = pdf;
+        const pdfBlob = pdf.output('blob');
+        window._lastPdfBlob = pdfBlob;
+        if (window._lastPdfUrl) {
+          try { URL.revokeObjectURL(window._lastPdfUrl); } catch(e){}
+        }
+        window._lastPdfUrl = URL.createObjectURL(pdfBlob);
+
+        if (stepEl) stepEl.innerText = 'กำลังแปลงไฟล์และเตรียมส่งขึ้น Google Drive...';
+        const pdfBase64 = await blobToBase64(pdfBlob);
+
+        let inspector = '';
+        const opSelect = document.getElementById('sf-operator-select');
+        if (opSelect && opSelect.value) {
+          inspector = opSelect.value;
+        }
+
+        let inspectionDate = '';
+        const dateInput = document.getElementById('sf-date-input');
+        if (dateInput && dateInput.value) {
+          inspectionDate = dateInput.value;
+        }
+
+        const payload = {
+          action: 'saveReport',
+          rootFolderId: getGasRootFolderId(),
+          round: roundVal,
+          province: provVal,
+          station: currentSelectedStation || 'สถานี',
+          reportType: reportTitle,
+          reportTypeCode: REPORT_TYPE,
+          inspector: inspector,
+          date: inspectionDate,
+          filename: filename,
+          pdfBase64: pdfBase64
+        };
+
+        if (stepEl) stepEl.innerText = 'กำลังส่งไฟล์ไปยังโฟลเดอร์ Google Drive (ครั้งที่ ' + roundVal + ' > ' + provVal + ')...';
+
+        const response = await fetch(gasUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain;charset=utf-8'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+        if (result.status !== 'success') {
+          throw new Error(result.message || 'บันทึกไม่สำเร็จ');
+        }
+
+        if (loadingModal) loadingModal.classList.remove('active');
+        showToast('บันทึกขึ้น Google Drive สำเร็จเรียบร้อย ✓');
+
+        // Show Success Modal
+        const succModal = document.getElementById('sf-drive-success-modal');
+        if (succModal) {
+          const subEl = document.getElementById('drive-success-sub');
+          if (subEl) {
+            const rTxt = (result.data && result.data.round) ? result.data.round : ('ครั้งที่ ' + roundVal);
+            const pTxt = (result.data && result.data.province) ? result.data.province : provVal;
+            const statusBadge = '<div style="margin-top: 10px;"><span style="display:inline-block; padding: 4px 12px; background: #ecfdf5; color: #047857; border-radius: 9999px; font-size: 13px; font-weight: 600; border: 1px solid #a7f3d0;">✓ บันทึกลง Google Drive และลงทะเบียนประวัติรายงานเรียบร้อยแล้ว</span></div>';
+            subEl.innerHTML = 'ไฟล์ <b>"' + filename + '"</b> ถูกจัดเก็บในโฟลเดอร์<br><span class="drive-pill-round">' + rTxt + '</span> &gt; <span class="drive-pill-prov">' + pTxt + '</span> บน Google Drive เรียบร้อยแล้ว' + statusBadge;
+          }
+          const fileBtn = document.getElementById('drive-success-file-btn');
+          if (fileBtn) {
+            fileBtn.href = (result.data && result.data.fileUrl) ? result.data.fileUrl : '#';
+            fileBtn.style.display = (result.data && result.data.fileUrl) ? 'flex' : 'none';
+          }
+          const folderBtn = document.getElementById('drive-success-folder-btn');
+          if (folderBtn) {
+            folderBtn.href = (result.data && (result.data.provinceFolderUrl || result.data.roundFolderUrl)) ? (result.data.provinceFolderUrl || result.data.roundFolderUrl) : '#';
+            folderBtn.style.display = (result.data && (result.data.provinceFolderUrl || result.data.roundFolderUrl)) ? 'flex' : 'none';
+          }
+          const sheetBtn = document.getElementById('drive-success-sheet-btn');
+          if (sheetBtn) {
+            sheetBtn.href = (result.data && result.data.sheetUrl) ? result.data.sheetUrl : ('https://drive.google.com/drive/folders/' + getGasRootFolderId());
+            sheetBtn.style.display = 'flex';
+          }
+          succModal.classList.add('active');
+        }
+
+      } catch (err) {
+        console.error('Google Drive Upload Error:', err);
+        if (loadingModal) loadingModal.classList.remove('active');
+        alert('เกิดข้อผิดพลาดในการบันทึกขึ้น Google Drive: ' + (err.message || err));
+      } finally {
+        restoreDomAfterPdf();
+        window.scrollTo(prevScrollX, prevScrollY);
+        if (titleEl) titleEl.innerText = 'กำลังสร้างไฟล์ PDF คุณภาพสูง...';
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       const urlParams = new URLSearchParams(window.location.search);
       const initialType = urlParams.get('type') || 'ag';
@@ -9797,6 +11418,9 @@
         if (e.key === 'Escape') {
           closeStationSearch();
           closeStationModal();
+          closeDriveReportsModal();
+          closeDriveSetupModal();
+          closeDriveSuccessModal();
         }
       });
     });
