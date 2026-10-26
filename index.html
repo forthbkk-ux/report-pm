@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="th">
 <head>
   <meta charset="UTF-8">
@@ -844,6 +844,25 @@
       font-size: 14.5px;
       font-weight: 600;
       color: #0f172a;
+    }
+
+    .sf-info-input {
+      background: #ffffff !important;
+      border: 1.5px solid #bae6fd !important;
+      border-radius: 8px !important;
+      padding: 6px 11px !important;
+      font-size: 14.5px !important;
+      font-weight: 600 !important;
+      color: #0f172a !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      outline: none !important;
+      transition: all 0.18s ease !important;
+    }
+    .sf-info-input:focus {
+      border-color: #0284c7 !important;
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.18) !important;
+      background: #ffffff !important;
     }
 
     /* Filter Bar for Checklist */
@@ -2863,6 +2882,12 @@
       font-size: 21px !important;
       line-height: 1.3 !important;
     }
+    .sf-info-input {
+      font-size: 20px !important;
+      font-weight: 600 !important;
+      line-height: 1.3 !important;
+      padding: 6px 11px !important;
+    }
     .sf-filter-pill {
       font-size: 19px !important;
       padding: 6px 14px !important;
@@ -3516,19 +3541,19 @@
           </div>
         </div>
 
-        <!-- Auto-filled Station Info Box -->
+        <!-- Auto-filled & Editable Station Info Box -->
         <div class="sf-station-info-card">
           <div class="sf-info-item">
-            <span class="sf-info-label">สถานที่ตั้ง</span>
-            <span id="sf-info-loc" class="sf-info-val">-</span>
+            <label class="sf-info-label" for="sf-info-loc">สถานที่ตั้ง</label>
+            <input type="text" id="sf-info-loc" class="sf-input sf-info-input" placeholder="ระบุสถานที่ตั้ง..." oninput="onSmartLocInput(this.value)">
           </div>
           <div class="sf-info-item">
-            <span class="sf-info-label">เขตพื้นที่รับผิดชอบ</span>
-            <span id="sf-info-zone" class="sf-info-val">-</span>
+            <label class="sf-info-label" for="sf-info-zone">เขตพื้นที่รับผิดชอบ</label>
+            <input type="text" id="sf-info-zone" class="sf-input sf-info-input" placeholder="ระบุเขตพื้นที่รับผิดชอบ..." oninput="onSmartZoneInput(this.value)">
           </div>
           <div class="sf-info-item">
-            <span class="sf-info-label">พิกัดที่ตั้ง (Latitude, Longitude)</span>
-            <span id="sf-info-coord" class="sf-info-val">-</span>
+            <label class="sf-info-label" for="sf-info-coord">พิกัดที่ตั้ง (Latitude, Longitude)</label>
+            <input type="text" id="sf-info-coord" class="sf-input sf-info-input" placeholder="เช่น 7.385692 , 99.666228" oninput="onSmartCoordInput(this.value)">
           </div>
         </div>
 
@@ -9076,6 +9101,24 @@
         sfOfficerPos.value = a4OfficerPos.value || '';
       }
 
+      // 5.2 Sync Location, Zone, and Coordinates into Smart Form
+      const a4Loc1 = document.getElementById('station-loc-1');
+      const sfLocInp = document.getElementById('sf-info-loc');
+      if (sfLocInp && a4Loc1) {
+        sfLocInp.value = a4Loc1.innerText.trim();
+      }
+      const a4Zone1 = document.getElementById('station-zone-1');
+      const sfZoneInp = document.getElementById('sf-info-zone');
+      if (sfZoneInp && a4Zone1) {
+        sfZoneInp.value = a4Zone1.innerText.trim();
+      }
+      const a4CoordInp = document.getElementById('coord-input');
+      const a4Coord1 = document.getElementById('station-coord-1');
+      const sfCoordInp = document.getElementById('sf-info-coord');
+      if (sfCoordInp) {
+        sfCoordInp.value = a4CoordInp ? a4CoordInp.value : (a4Coord1 ? a4Coord1.innerText.trim() : '');
+      }
+
       // 6. Build Checklist Sections from all .maintenance-table in #a4-page-container
       const checklistContainer = document.getElementById('sf-checklist-container');
       if (checklistContainer) {
@@ -9818,6 +9861,24 @@
       autoSave();
     }
 
+    function onSmartLocInput(val) {
+      document.querySelectorAll('#a4-page-container [id^="station-loc-"]').forEach(el => el.innerText = val);
+      autoSave();
+    }
+
+    function onSmartZoneInput(val) {
+      document.querySelectorAll('#a4-page-container [id^="station-zone-"]').forEach(el => el.innerText = val);
+      autoSave();
+    }
+
+    function onSmartCoordInput(val) {
+      const coord1 = document.getElementById('station-coord-1');
+      if (coord1) coord1.innerText = val;
+      const coordInp = document.getElementById('coord-input');
+      if (coordInp) coordInp.value = val;
+      autoSave();
+    }
+
     const THAI_MONTHS = [
       'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
       'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
@@ -9982,11 +10043,20 @@
 
       // Update Smart Form Info Banner & Bottom Bar
       const sfLoc = document.getElementById('sf-info-loc');
-      if (sfLoc) sfLoc.innerText = locText || '-';
+      if (sfLoc) {
+        if ('value' in sfLoc) sfLoc.value = locText || '';
+        else sfLoc.innerText = locText || '-';
+      }
       const sfZone = document.getElementById('sf-info-zone');
-      if (sfZone) sfZone.innerText = st.zoneFull || '-';
+      if (sfZone) {
+        if ('value' in sfZone) sfZone.value = st.zoneFull || '';
+        else sfZone.innerText = st.zoneFull || '-';
+      }
       const sfCoord = document.getElementById('sf-info-coord');
-      if (sfCoord) sfCoord.innerText = st.coords || '-';
+      if (sfCoord) {
+        if ('value' in sfCoord) sfCoord.value = st.coords || '';
+        else sfCoord.innerText = st.coords || '-';
+      }
       const sfBottomSt = document.getElementById('sf-bottom-station');
       if (sfBottomSt) sfBottomSt.innerText = st.name;
 
@@ -10281,6 +10351,9 @@
           selectedOperator: document.getElementById('operator-select-1')?.value,
           round: document.getElementById('p1-round')?.value,
           province: document.getElementById('sf-province-input')?.value || '',
+          customLoc: document.getElementById('sf-info-loc')?.value || '',
+          customZone: document.getElementById('sf-info-zone')?.value || '',
+          customCoord: document.getElementById('sf-info-coord')?.value || '',
           textInputs: {},
           checks: [],
           blackChecks: [],
@@ -10344,6 +10417,25 @@
           if (sfProv) sfProv.value = data.province;
         }
         if (data.selectedOperator) onOperatorSelect(data.selectedOperator);
+
+        if (data.customLoc !== undefined && data.customLoc !== '') {
+          const sfLoc = document.getElementById('sf-info-loc');
+          if (sfLoc) sfLoc.value = data.customLoc;
+          document.querySelectorAll('#a4-page-container [id^="station-loc-"]').forEach(el => el.innerText = data.customLoc);
+        }
+        if (data.customZone !== undefined && data.customZone !== '') {
+          const sfZone = document.getElementById('sf-info-zone');
+          if (sfZone) sfZone.value = data.customZone;
+          document.querySelectorAll('#a4-page-container [id^="station-zone-"]').forEach(el => el.innerText = data.customZone);
+        }
+        if (data.customCoord !== undefined && data.customCoord !== '') {
+          const sfCoord = document.getElementById('sf-info-coord');
+          if (sfCoord) sfCoord.value = data.customCoord;
+          const coord1 = document.getElementById('station-coord-1');
+          if (coord1) coord1.innerText = data.customCoord;
+          const coordInput = document.getElementById('coord-input');
+          if (coordInput) coordInput.value = data.customCoord;
+        }
 
         if (data.textInputs) {
           const allInputs = document.querySelectorAll('#a4-page-container input[type="text"]');
