@@ -3446,7 +3446,7 @@
       <!-- Completion Status Strip -->
       <div class="sf-progress-strip">
         <div class="sf-progress-badges">
-          <button type="button" id="stat-checks" class="sf-stat-pill" onclick="jumpToChecklist()" title="กดเพื่อไปยังรายการเช็คลิสต์ (Step 2)">☑️ เช็คลิสต์: 0/0</button>
+          <button type="button" id="stat-checks" class="sf-stat-pill" onclick="jumpToChecklist()" title="กดเพื่อไปยังรายการตรวจสอบ (Step 2)">☑️ รายการตรวจสอบ: 0/0</button>
           <button type="button" id="stat-inputs" class="sf-stat-pill" onclick="jumpToInputs()" title="กดเพื่อไปยังรายการบันทึกค่าการวัดและหมายเลขประจำเครื่อง">⌨️ ช่องกรอกค่าและ S/N: 0/0</button>
           <button type="button" id="stat-photos" class="sf-stat-pill" onclick="jumpToPhotos()" title="กดเพื่อไปยังส่วนแนบรูปภาพ (Step 3)">📷 รูปภาพ: 0/6</button>
         </div>
@@ -9635,7 +9635,7 @@
 
       const elChecks = document.getElementById('stat-checks');
       if (elChecks) {
-        elChecks.innerText = '☑️ เช็คลิสต์: ' + checkedRows + '/' + totalRows;
+        elChecks.innerText = '☑️ รายการตรวจสอบ: ' + checkedRows + '/' + totalRows;
         elChecks.classList.toggle('done', totalRows > 0 && checkedRows === totalRows);
       }
 
@@ -9686,7 +9686,7 @@
       }, 1800);
     }
 
-    // 1. กดที่ '☑️ เช็คลิสต์: X/Y' -> เลื่อนไป Step 2 รายการตรวจสอบ
+    // 1. กดที่ '☑️ รายการตรวจสอบ: X/Y' -> เลื่อนไป Step 2 รายการตรวจสอบ
     function jumpToChecklist() {
       if (typeof currentViewMode !== 'undefined' && currentViewMode !== 'smart') {
         setViewMode('smart');
