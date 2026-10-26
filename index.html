@@ -3422,7 +3422,7 @@
       <div class="sf-progress-strip">
         <div class="sf-progress-badges">
           <button type="button" id="stat-checks" class="sf-stat-pill" onclick="jumpToChecklist()" title="กดเพื่อไปยังรายการเช็คลิสต์ (Step 2)">☑️ เช็คลิสต์: 0/0</button>
-          <button type="button" id="stat-inputs" class="sf-stat-pill" onclick="jumpToInputs()" title="กดเพื่อไปยังรายการบันทึกค่าการวัดและหมายเลขประจำเครื่อง">⌨️ ช่องกรอกค่า/S/N: 0/0</button>
+          <button type="button" id="stat-inputs" class="sf-stat-pill" onclick="jumpToInputs()" title="กดเพื่อไปยังรายการบันทึกค่าการวัดและหมายเลขประจำเครื่อง">⌨️ ช่องกรอกค่าและ S/N: 0/0</button>
           <button type="button" id="stat-photos" class="sf-stat-pill" onclick="jumpToPhotos()" title="กดเพื่อไปยังส่วนแนบรูปภาพ (Step 3)">📷 รูปภาพ: 0/6</button>
         </div>
         <div style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: flex-end;">
@@ -9598,7 +9598,7 @@
 
       const elInputs = document.getElementById('stat-inputs');
       if (elInputs) {
-        elInputs.innerText = '⌨️ ช่องกรอกค่า/S/N: ' + filledInputs + '/' + totalInputs;
+        elInputs.innerText = '⌨️ ช่องกรอกค่าและ S/N: ' + filledInputs + '/' + totalInputs;
         elInputs.classList.toggle('done', totalInputs === 0 || filledInputs === totalInputs);
       }
 
@@ -9670,7 +9670,7 @@
       }, 70);
     }
 
-    // 2. กดที่ '⌨️ ช่องกรอกค่า/S/N: X/Y' -> กรองเฉพาะข้อที่ต้องกรอกค่า + เลื่อนไปช่องแรกที่ยังว่าง + โฟกัสพิมพ์ได้ทันที
+    // 2. กดที่ '⌨️ ช่องกรอกค่าและ S/N: X/Y' -> กรองเฉพาะข้อที่ต้องกรอกค่า + เลื่อนไปช่องแรกที่ยังว่าง + โฟกัสพิมพ์ได้ทันที
     function jumpToInputs() {
       if (typeof currentViewMode !== 'undefined' && currentViewMode !== 'smart') {
         setViewMode('smart');
