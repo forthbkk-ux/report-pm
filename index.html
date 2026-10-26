@@ -837,7 +837,7 @@
       font-size: 12px;
       font-weight: 700;
       color: #0369a1;
-      text-transform: uppercase;
+      text-transform: none;
     }
 
     .sf-info-val {
@@ -3362,21 +3362,21 @@
         <div class="sf-top-actions">
           <div class="sf-mode-switch">
             <button type="button" id="btn-mode-smart" class="sf-mode-btn active" onclick="setViewMode('smart')">
-              📝 โหมดกรอกข้อมูลง่าย
+              📝 แบบกรอกข้อมูลทั่วไป
             </button>
             <button type="button" id="btn-mode-a4" class="sf-mode-btn" onclick="setViewMode('a4')">
-              📄 ดูหน้ากระดาษ A4 จริง
+              📄 แสดงแบบพิมพ์เอกสารฉบับจริง
             </button>
           </div>
 
           <button type="button" class="sf-btn sf-btn-checkall" onclick="checkAllNormal()">
-            ⭐ ติ๊กปกติทั้งหมด
+            ⭐ เลือกปกติทั้งหมด
           </button>
           <button type="button" class="sf-btn sf-btn-drive" onclick="uploadReportToGoogleDrive()" title="บันทึกและส่งรายงานขึ้น Google Drive (แยกโฟลเดอร์ ครั้งที่ > จังหวัด อัตโนมัติ)">
-            ☁️ บันทึกลง Drive
+            ☁️ บันทึกลงคลาวด์
           </button>
           <button type="button" class="sf-btn sf-btn-drive-view" onclick="openDriveReportsModal()" title="ดูข้อมูลรายงานและค้นหาประวัติบน Google Drive">
-            📂 ดูข้อมูล Drive
+            📂 เปิดโฟลเดอร์ Drive
           </button>
           <button type="button" class="sf-btn sf-btn-save" onclick="savePdfToDevice()" title="บันทึกและดาวน์โหลดไฟล์ PDF ลงเครื่องทันที" style="display: none !important;">
             💾 บันทึกเป็น PDF
@@ -3462,12 +3462,12 @@
 
   <!-- ================= SMART FORM EASY ENTRY VIEW ================= -->
   <main id="smart-form-wrapper">
-    <!-- STEP 1: ข้อมูลสถานีและหน้าปก -->
+    <!-- STEP 1: ข้อมูลสถานีและรายละเอียดการดำเนินงาน -->
     <section class="sf-card" id="sf-card-step-1">
       <div class="sf-card-header">
         <div class="sf-card-title">
           <span class="sf-step-num">1</span>
-          <span>ข้อมูลสถานี วันที่ดำเนินการ และผู้รับผิดชอบ (หน้าปก)</span>
+          <span>ข้อมูลสถานีและรายละเอียดการดำเนินงาน</span>
         </div>
         <span id="sf-active-report-badge" style="font-size: 13px; font-weight: 700; color: #1d4ed8; background: #dbeafe; padding: 4px 12px; border-radius: 999px;">
           Analog Gateway
@@ -3480,7 +3480,7 @@
             <label class="sf-label">
               <span>📍 เลือกสถานี (Station)</span>
               <button type="button" id="sf-btn-search-station" onclick="openStationModal()" style="border: none; background: #eff6ff; color: #1d4ed8; font-size: 12.5px; font-weight: 700; padding: 3px 10px; border-radius: 6px; cursor: pointer;">
-                🔍 ค้นหาจากรายชื่อสถานีทั้งหมด
+                🔍 ค้นหารายชื่อสถานี
               </button>
             </label>
             <select id="sf-station-select" class="sf-select" onchange="onSmartStationChange(this.value)"></select>
@@ -3527,7 +3527,7 @@
             <span id="sf-info-zone" class="sf-info-val">-</span>
           </div>
           <div class="sf-info-item">
-            <span class="sf-info-label">พิกัด (Latitude, Longitude)</span>
+            <span class="sf-info-label">พิกัดที่ตั้ง (Latitude, Longitude)</span>
             <span id="sf-info-coord" class="sf-info-val">-</span>
           </div>
         </div>
@@ -3538,7 +3538,7 @@
             <label class="sf-label">
               <span>📅 วันที่ดำเนินการ</span>
               <button type="button" onclick="setTodayThaiDate()" style="border: none; background: #dcfce7; color: #15803d; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 6px; cursor: pointer;">
-                ใช้วันนี้
+                ระบุวันที่ปัจจุบัน
               </button>
             </label>
             <div style="display: flex; gap: 6px;">
@@ -3548,7 +3548,7 @@
           </div>
 
           <div class="sf-field">
-            <label class="sf-label">👷 ผู้เข้าดำเนินการ (FORTH)</label>
+            <label class="sf-label">👷 เจ้าหน้าที่ผู้เข้าดำเนินการ (FORTH)</label>
             <select id="sf-operator-select" class="sf-select" onchange="onSmartOperatorChange(this.value)"></select>
           </div>
 
@@ -3573,7 +3573,7 @@
           <span>รายการตรวจสอบและบันทึกค่าการวัด</span>
         </div>
         <button type="button" class="sf-btn sf-btn-checkall" style="padding: 6px 12px; font-size: 13px;" onclick="checkAllNormal()">
-          ⭐ ติ๊ก 'ปกติ' ทั้งหมดในตาราง
+          ⭐ เลือก 'ปกติ' ทั้งหมดในตาราง
         </button>
       </div>
       <div class="sf-card-body">
@@ -3590,7 +3590,7 @@
             </button>
           </div>
           <div style="font-size: 12.5px; color: #64748b;">
-            💡 ทิป: กด <b>ติ๊กปกติทั้งหมด</b> แล้วเลือกตัวกรอง <b>รายการบันทึกค่าการวัดและหมายเลขประจำเครื่อง</b> เพื่อกรอกค่าอย่างรวดเร็ว
+            💡 ทิป: กด <b>เลือกปกติทั้งหมด</b> แล้วเลือกตัวกรอง <b>รายการบันทึกค่าการวัดและหมายเลขประจำเครื่อง</b> เพื่อกรอกค่าอย่างรวดเร็ว
           </div>
         </div>
 
@@ -3635,16 +3635,16 @@
       </div>
       <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
         <button type="button" class="sf-btn sf-btn-checkall" style="padding: 7px 14px;" onclick="checkAllNormal()">
-          ⭐ ติ๊กปกติทั้งหมด
+          ⭐ เลือกปกติทั้งหมด
         </button>
         <button type="button" id="sf-bottom-toggle-view" class="sf-btn" style="background: #334155; padding: 7px 14px;" onclick="toggleViewMode()">
-          📄 สลับดูหน้ากระดาษ A4
+          📄 สลับแสดงแบบพิมพ์เอกสารฉบับจริง
         </button>
         <button type="button" class="sf-btn sf-btn-drive" style="padding: 7px 16px; font-size: 15px;" onclick="uploadReportToGoogleDrive()" title="บันทึกและส่งรายงานขึ้น Google Drive (แยกโฟลเดอร์ตาม ครั้งที่ และ จังหวัด อัตโนมัติ)">
-          ☁️ บันทึกลง Drive
+          ☁️ บันทึกลงคลาวด์
         </button>
         <button type="button" class="sf-btn sf-btn-drive-view" style="padding: 7px 14px;" onclick="openDriveReportsModal()" title="ดูข้อมูลรายงานและค้นหาประวัติบน Google Drive">
-          📂 ดูข้อมูล Drive
+          📂 เปิดโฟลเดอร์ Drive
         </button>
         <button type="button" class="sf-btn sf-btn-save" style="display: none !important; padding: 7px 18px; font-size: 15px;" onclick="savePdfToDevice()" title="บันทึกและดาวน์โหลดไฟล์ PDF ลงเครื่องทันที">
           💾 บันทึกเป็น PDF
@@ -8930,7 +8930,7 @@
         a4Wrap.classList.add('active-view');
         btnSmart.classList.remove('active');
         btnA4.classList.add('active');
-        if (btnBottom) btnBottom.innerText = '📝 กลับโหมดกรอกข้อมูลง่าย';
+        if (btnBottom) btnBottom.innerText = '📝 กลับแบบกรอกข้อมูลทั่วไป';
         document.querySelectorAll('#a4-page-container .photo-img').forEach(img => fitPhotoImgToBox(img));
       } else {
         // Refresh Smart Form UI from A4 DOM in case user edited directly on A4
@@ -8939,7 +8939,7 @@
         sfWrap.style.display = 'block';
         btnA4.classList.remove('active');
         btnSmart.classList.add('active');
-        if (btnBottom) btnBottom.innerText = '📄 สลับดูหน้ากระดาษ A4';
+        if (btnBottom) btnBottom.innerText = '📄 สลับแสดงแบบพิมพ์เอกสารฉบับจริง';
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
